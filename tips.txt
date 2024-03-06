@@ -1,0 +1,19 @@
+para ferifiar as fontes do sistema
+```bash
+pygames.font.get_fonts()
+```
+
+CONVENÇÔES
+
+GameObject = tudos os objetos em tela do jogo. Ex: caixa, bola, personagem, etc...
+AudioListener = gerealmente usada na camera do jogo, responsável por ouvir os audios
+AudioSource = emitem sons no jogo
+Camera = equivalente a tela do jogo
+RigidBody = aplica fisica ao objet 
+*Coliders = colisores, além de detectar colisões, possuem eventos de triggers onColiderEnter, onColiderExit
+Terrain = para mapas no jogo
+Scene = loade, estagios, fases, etc...
+InputSystem = para configurações de controle de personagens
+Canva = relacionada com a UI. Ex: botão, inputText, areaText, etc...
+Chareacter = sujestão de nome para personagem do jogo.
+Player = se refere a quem está controlando o jogo
