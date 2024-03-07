@@ -43,15 +43,49 @@ pip install -r requirements.txt
 ```plaintext
 fubanguy/
 │
-├── assets/          # Game features (images, sounds, etc.) 
+├── assets/
+│   ├── imagens/
+│   │   ├── jogador.png
+│   │   ├── inimigo.png
+│   │   ├── fundo.png
+│   │   └── ...
+│   ├── sons/
+│   │   ├── trilha_sonora.mp3
+│   │   ├── efeito_sonoro1.wav
+│   │   └── ...
+│   └── fontes/
+│       ├── fonte1.ttf
+│       ├── fonte2.ttf
+│       └── ...
 │
-├── include/         # Arquivos de cabeçalho (.h)
-│   └── SDL2/        # Headers da SDL2 e outros
+├── src/
+│   ├── domain/
+│   │   ├── jogador.py
+│   │   ├── inimigo.py
+│   │   ├── mapa.py
+│   │   └── ...
+│   │
+│   ├── usecases/
+│   │   ├── mover_jogador.py
+│   │   ├── criar_inimigo.py
+│   │   ├── verificar_colisao.py
+│   │   └── ...
+│   │
+│   ├── adapters/
+│   │   ├── pygame_adapter.py
+│   │   ├── input_adapter.py
+│   │   ├── output_adapter.py
+│   │   └── ...
+│   │
+│   ├── interface_usuario/
+│   │   ├── tela.py
+│   │   ├── menu.py
+│   │   └── ...
+│   │
+│   ├── main.py
+│   └── config.py
 │
-├── src/             # Arquivos de código-fonte (.cpp)
-│   └── main.cpp     # Arquivo principal (main)
-│
-└── Makefile         # Arquivo de configuração do Make
+└── README.md
 ```
 
 **Love Fubanguy? Give our repo a star :star: :arrow_up:.**
