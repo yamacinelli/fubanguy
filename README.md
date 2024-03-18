@@ -35,8 +35,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 * Windows
-<br>
- ```open powershell with administrator privileges```
+* ```open powershell with administrator privileges```
 
 ```powershell
 Set-ExecutionPolicy AllSigned
