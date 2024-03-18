@@ -29,13 +29,62 @@ cd fubanguy
 
 ```bash
 python3 -m venv venv
+```
+* Linux
+```bash
 source venv/bin/activate
+```
+* Windows
+<br>
+ ```open powershell with administrator privileges```
+
+```powershell
+Set-ExecutionPolicy AllSigned
+```
+* ```Activate```
+```powershell
+.\.venv\Scripts\Activate.ps1
 ```
 
 4. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+## Settings for vscode
+
+
+Download and import the profile containing the extensions into vscode, [Extentions](https://drive.google.com/file/d/1FIF-ZdqTT4A0Ocv8bIXZG7sMWGT3OkfF/view)
+
+* ```settings.json```
+```json
+{
+    "files.autoSave": "afterDelay",
+    "python.defaultInterpreterPath": "${workspaceFolder}.venv/bin/python3",
+
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
+}
+```
+
+* ```launch.json```
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: main.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+        },
+    ]
+}
 ```
 
 ## Project structure
