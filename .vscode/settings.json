@@ -1,0 +1,6 @@
+{
+    "files.autoSave": "afterDelay",
+    "pylint.args": [
+        "\"python.linting.pylintArgs\": [     \"--unsafe-load-any-extension=y\" ]"
+    ]
+}

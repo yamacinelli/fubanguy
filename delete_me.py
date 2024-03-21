@@ -1,9 +1,11 @@
+import dataclasses
+import pygame
+
 from sys import exit
 from random import randint
 from typing import Type
-import dataclasses
-import pygame
-from pygame.locals import *
+from audio_source.music import Music, MusicPygameImpl
+from audio_source.sound import Sound, SoundPygameImpl
 from player_controller import PlayerController
 from player_controller_pg_impl import PlayerControllerPGImpl
 
@@ -19,9 +21,6 @@ class Main:
     _summary_
     """
 
-    def __init__(self, player_controller: Type[PlayerController]) -> None:
-        self.__player_controller = player_controller
-
     width = 640
     height = 480
     x = int(width / 2)
@@ -34,30 +33,38 @@ class Main:
     font = pygame.font.SysFont("arial", 40, True, True)
     score = 0
 
-    # volume da musica de fundo
-    pygame.mixer.music.set_volume(0.3)
-    bg_music = pygame.mixer.music.load("assets/sounds/bg_loop.mp3")
-    # -1 para a musica tocar em loop
-    pygame.mixer.music.play(-1)
+    def __init__(self, player_controller: Type[PlayerController], music: Type[Music], sound: Type[Sound]) -> None:
+        self._player_controller = player_controller
+        self._music = music
+        self._sound = sound
 
-    # todos arquivos de som devem ter a extenção .wav exeto a musica de fundo
-    score_sound = pygame.mixer.Sound("assets/sounds/smb_coin.wav")
-    score_sound.set_volume(0.2)
-    window = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("FUBANGUY")
-    delta_time = pygame.time.Clock()
+        self.run()
 
     def run(self):
         """
         _summary_
         """
+        
+        # carrega musica na memória
+        self._music.load_music(self._music, "./assets/sounds/bg_loop.mp3")
+        # -1 para a musica tocar em loop
+        self._music.play_music(self._music, -1)
+
+        # carrega som na memória
+        # todos arquivos de som devem ter a extenção .wav
+        self._sound.load_sound(self._sound, "./assets/sounds/smb_coin.wav")
+
+        window = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("FUBANGUY")
+        delta_time = pygame.time.Clock()
+
         while True:
 
             # região responsável por formatar o texto conteudo, serrilhado, cor
             message = f"Score: {self.score}"
             formated_text = self.font.render(message, True, (150, 150, 8))
             # preenche a tela com a cor preta, isso para não ficar o rastro do movimento do retangulo
-            self.window.fill(
+            window.fill(
                 (
                     0,
                     0,
@@ -66,14 +73,14 @@ class Main:
             )
 
             # controla a taxa de frames por segundo
-            self.delta_time.tick(60)
+            delta_time.tick(60)
 
             # loop responsavel por capiturar eventos de entrada
             # TODO separar essa lógica para eventos de input
             for event in pygame.event.get():
 
                 # capitura evento ao clicar no x da janela
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     pygame.quit()
 
                     # função do sistema
@@ -94,22 +101,22 @@ class Main:
                 #         y += 20
 
                 # executado enquanto a tecla for pressionada
-                if self.__player_controller.move_left(self):
+                if self._player_controller.move_left(self):
                     self.x -= self.velocity
 
-                if self.__player_controller.move_right(self):
+                if self._player_controller.move_right(self):
                     self.x += self.velocity
 
-                if self.__player_controller.move_up(self):
+                if self._player_controller.move_up(self):
                     self.y -= self.velocity
 
-                if self.__player_controller.move_down(self):
+                if self._player_controller.move_down(self):
                     self.y += self.velocity
 
             # TODO separa lógica para 2 objetos serem distintos sem repetir código (POO)
             # meu personagem
             character = pygame.draw.rect(
-                self.window, (234, 0, 0), (self.x, self.y, 40, 50)
+                window, (234, 0, 0), (self.x, self.y, 40, 50)
             )
 
             if self.y > self.height:
@@ -124,7 +131,7 @@ class Main:
 
             # meu inimigo
             enemy = pygame.draw.rect(
-                self.window, (0, 0, 156), (self.x_enemy, self.y_enemy, 40, 50)
+                window, (0, 0, 156), (self.x_enemy, self.y_enemy, 40, 50)
             )
 
             # lógica que detecta colisões
@@ -132,10 +139,10 @@ class Main:
                 self.x_enemy = randint(40, (self.width - 40))
                 self.y_enemy = randint(50, (self.height - 50))
                 self.score += 1
-                self.score_sound.play()
+                self._sound.play_sound(self._sound)
 
             # renderiza o texto na tela na posição definida
-            self.window.blit(
+            window.blit(
                 formated_text, ((self.width - 200), self.height - (self.height - 40))
             )
 
@@ -143,8 +150,4 @@ class Main:
             pygame.display.flip()
 
 
-# Controller = InputSystem
-player_controller_impl = PlayerControllerPGImpl()
-
-jogo = Main(player_controller_impl)
-jogo.run()
+Main(PlayerControllerPGImpl, MusicPygameImpl, SoundPygameImpl)

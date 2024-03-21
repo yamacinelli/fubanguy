@@ -19,28 +19,28 @@ class PlayerControllerPGImpl(PlayerController):
     docstring
     """
 
-    def move_up(self, main) -> bool:
+    def move_up(self) -> bool:
         """
         docstring
         """
 
         return pygame.key.get_pressed()[W]
 
-    def move_left(self, main) -> bool:
+    def move_left(self) -> bool:
         """
         docstring
         """
 
         return pygame.key.get_pressed()[A]
 
-    def move_down(self, main) -> bool:
+    def move_down(self) -> bool:
         """
         docstring
         """
 
         return pygame.key.get_pressed()[S]
 
-    def move_right(self, main) -> bool:
+    def move_right(self) -> bool:
         """
         docstring
         """
