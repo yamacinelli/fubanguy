@@ -4,7 +4,8 @@
 import dataclasses
 
 import pygame
-from vector_2 import Vector2
+
+from entities.vector_2 import Vector2
 
 
 @dataclasses.dataclass
@@ -17,6 +18,8 @@ class Window:
 
         self._set_mode()
         self._set_caption()
+
+        self.surface = pygame.display.get_surface()
 
     def _set_mode(self):
         """_summary_

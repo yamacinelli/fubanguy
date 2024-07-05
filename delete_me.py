@@ -6,8 +6,8 @@ from random import randint
 from typing import Type
 from audio_source.music import Music, MusicPygameImpl
 from audio_source.sound import Sound, SoundPygameImpl
-from player_controller import PlayerController
-from player_controller_pg_impl import PlayerControllerPGImpl
+from port.player_controller import PlayerController
+from adapter.player_controller_pg_impl import PlayerControllerPGImpl
 
 pygame.init = pygame.init
 pygame.quit = pygame.quit
