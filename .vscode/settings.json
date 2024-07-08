@@ -1,10 +1,45 @@
+// {
+//     "files.autoSave": "afterDelay",
+//     "python.defaultInterpreterPath": "${workspaceFolder}.venv/bin/python3",
+
+//     "[python]": {
+//         "editor.formatOnSave": true,
+//         "editor.formatOnPaste": true,
+//         "editor.defaultFormatter": "ms-python.black-formatter"
+//     },
+
+//     "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+//     "terminal.integrated.env.windows": {
+//         "PYTHONPATH": "${workspaceFolder}/src;${env:PYTHONPATH}"
+//     },
+//     "terminal.integrated.env.linux": {
+//         "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+//     },
+//     "terminal.integrated.env.osx": {
+//         "PYTHONPATH": "${workspaceFolder}/src:${env:PYTHONPATH}"
+//     }
+// }
+
 {
     "files.autoSave": "afterDelay",
     "python.defaultInterpreterPath": "${workspaceFolder}.venv/bin/python3",
-
     "[python]": {
         "editor.formatOnSave": true,
         "editor.formatOnPaste": true,
         "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.pythonPath": "${workspaceFolder}/.venv/Scripts/python.exe",  // Windows
+    // "python.pythonPath": "${workspaceFolder}/.venv/bin/python",  // Linux/macOS
+    "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+    "python.autoComplete.extraPaths": ["${workspaceFolder}/src"],
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": [
+        "--init-hook",
+        "import sys; sys.path.append('${workspaceFolder}/src')"
+    ],
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none"
     }
 }

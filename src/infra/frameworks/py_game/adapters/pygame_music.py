@@ -1,5 +1,5 @@
 import pygame
-from ports.music import Music
+from core.interfaces.music import Music
 
 
 class PygameMusic(Music):

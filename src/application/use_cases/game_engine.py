@@ -1,5 +1,4 @@
-from entities.fighter import Fighter
-from entities.stage import Stage
+from domain.entities.stage import Stage
 
 
 class GameEngine:
