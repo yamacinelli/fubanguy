@@ -1,4 +1,4 @@
-from entities.fighter import Fighter
+from domain.entities.fighter import Fighter
 
 
 class FightUseCase:
@@ -8,3 +8,5 @@ class FightUseCase:
 
     def perform_attack(self, attacker: Fighter, defender: Fighter):
         defender.take_damage(attacker.attack)
+
+

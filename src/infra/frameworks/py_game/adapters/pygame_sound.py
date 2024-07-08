@@ -1,6 +1,5 @@
 import pygame
-from ports.sound import Sound
-
+from core.interfaces.sound import Sound
 
 class PygameSound(Sound):
 

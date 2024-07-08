@@ -91,48 +91,29 @@ Download and import the profile containing the extensions into vscode, [Extentio
 ```plaintext
 fubanguy/
 │
-├── assets/
-│   ├── imagens/
-│   │   ├── jogador.png
-│   │   ├── inimigo.png
-│   │   ├── fundo.png
-│   │   └── ...
-│   ├── sons/
-│   │   ├── trilha_sonora.mp3
-│   │   ├── efeito_sonoro1.wav
-│   │   └── ...
-│   └── fontes/
-│       ├── fonte1.ttf
-│       ├── fonte2.ttf
-│       └── ...
-│
 ├── src/
+│   ├── main.py                         # Entrada principal do sistema
 │   ├── domain/
-│   │   ├── jogador.py
-│   │   ├── inimigo.py
-│   │   ├── mapa.py
-│   │   └── ...
-│   │
-│   ├── usecases/
-│   │   ├── mover_jogador.py
-│   │   ├── criar_inimigo.py
-│   │   ├── verificar_colisao.py
-│   │   └── ...
-│   │
-│   ├── adapters/
-│   │   ├── pygame_adapter.py
-│   │   ├── input_adapter.py
-│   │   ├── output_adapter.py
-│   │   └── ...
-│   │
-│   ├── interface_usuario/
-│   │   ├── tela.py
-│   │   ├── menu.py
-│   │   └── ...
-│   │
-│   ├── main.py
-│   └── config.py
-│
+│   │   └── entities/
+│   │       ├── fighter.py              # Entidade Fighter
+│   │       └── stage.py                # Entidade Stage
+│   ├── core/
+│   │   ├── value_object/
+│   │   │   └── transform.py            # Objetos de Valor
+│   │   └── interfaces/                 # Diretório para Portas (Interfaces)
+│   │       ├── display_interface.py    # Interface para Display (Output Port)
+│   │       ├── controls_interface.py   # Interface para Controls (Input Port)
+│   │       └── music_interface.py      # Interface para Music (Output Port)
+│   ├── application/
+│   │   └── use_cases/
+│   │       ├── fight_use_case.py      # Caso de Uso para lutas
+│   │       └── game_engine.py         # Motor do jogo que gerencia o loop principal
+│   └── infra/
+│       └── frameworks/
+│           └── py_game/
+│               ├── pygame_controls.py # Adaptador para Controls usando Pygame
+│               ├── pygame_display.py  # Adaptador para Display usando Pygame
+│               └── pygame_music.py    # Adaptador para Music usando Pygame
 └── README.md
 ```
 

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-from entities.fighter import Fighter
+from domain.entities.fighter import Fighter
+
 
 
 class GameDisplay(ABC):

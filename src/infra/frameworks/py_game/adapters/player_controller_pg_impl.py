@@ -1,8 +1,7 @@
 """ module providing a implmentation pygame input system """
 
 import pygame
-
-from ports.player_controller import PlayerController
+from core.interfaces.player_controller import PlayerController
 
 pygame.init = pygame.init
 

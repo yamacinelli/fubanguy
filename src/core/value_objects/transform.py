@@ -2,7 +2,8 @@
 """
 
 import dataclasses
-from vector_2 import Vector2
+from core.value_objects.vector_2 import Vector2
+
 
 
 @dataclasses.dataclass

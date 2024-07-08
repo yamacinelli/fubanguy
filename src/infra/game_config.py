@@ -1,8 +1,11 @@
 """Module that provides settings for the game."""
 
-# __Screen__
+# __SCREEN__
 SCREENSIZEWIDTH = 800
-SCREENSIZEHEIGHT = 650
+SCREENSIZEHEIGHT = 340
 
 # __FPS__
 FPS = 60
+
+# __MUSIC__
+STAGE_VOLUME = 0.1
