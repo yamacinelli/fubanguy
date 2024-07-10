@@ -7,6 +7,6 @@ class GameEngine:
 
     def update(self):
         # Lógica para atualizar o estado do jogo a cada frame
-        for fighter in self.stage.fighters:
-            if not fighter.is_alive():
-                self.stage.remove_fighter(fighter)
+        # for fighter in self.stage.fighters:
+        #     if not fighter.is_alive():
+        #         self.stage.remove_fighter(fighter)

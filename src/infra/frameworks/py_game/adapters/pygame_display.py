@@ -4,6 +4,7 @@ from application.use_cases.stage_factory import StageFactory
 from core.interfaces.game_display import GameDisplay
 from domain.entities.fighter import Fighter
 
+
 class PygameDisplay(GameDisplay):
 
     music_path: str
@@ -31,8 +32,8 @@ class PygameDisplay(GameDisplay):
 
         # Converter a lista de tuplas em objetos Fighter
         for fighter_info in fighters_status:
-            name, health, attack, position, scale = fighter_info
-            fighter = Fighter(name, health, attack, position, scale)
+            name, health, position, velocity, attack_power = fighter_info
+            fighter = Fighter(name, health, position, velocity, attack_power)
             fighters.append(fighter)
 
         for fighter in fighters:
@@ -45,7 +46,8 @@ class PygameDisplay(GameDisplay):
 
             # Desenha o lutador na tela
             pygame.draw.rect(
-                self.screen, (255, 0, 0), pygame.Rect((fighter.position, fighter.scale))
+                self.screen, (255, 0, 0), pygame.Rect((fighter.position, fighter.size))
             )
-            x_position += 500  # Incrementa a posição Y para o próximo lutador
+
+            x_position += 500  # Incrementa a posição Y para a próxima barra de vida
         pygame.display.flip()

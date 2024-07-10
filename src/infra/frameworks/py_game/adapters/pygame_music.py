@@ -1,8 +1,8 @@
 import pygame
-from core.interfaces.music import Music
+from core.interfaces.music import MusicInterface
 
 
-class PygameMusic(Music):
+class PygameMusic(MusicInterface):
 
     music = pygame.mixer.music
 

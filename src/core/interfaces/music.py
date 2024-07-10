@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Music(ABC):
+class MusicInterface(ABC):
 
     @abstractmethod
     def __init__(self) -> None:
@@ -14,7 +14,7 @@ class Music(ABC):
     @abstractmethod
     def play_music(self, loop: int) -> None:
         raise ValueError("Should implement method: play_music")
-    
+
     @abstractmethod
     def volume_music(self, volume: float) -> None:
         raise ValueError("Should implement method: volume_music")
