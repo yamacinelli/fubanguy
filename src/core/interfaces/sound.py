@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Sound(ABC):
+class SoundInterface(ABC):
 
     @abstractmethod
     def __init__(self) -> None:

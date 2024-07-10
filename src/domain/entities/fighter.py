@@ -1,100 +1,57 @@
-"""
-fighter.py
-
-This module defines the Fighter class, which represents a fighter in the game.
-It includes attributes for the fighter's name, health, attack power, position,
-and scale, and methods for combat actions such as taking damage, moving, and 
-attacking enemies.
-
-The Fighter class interacts with the game stage and other fighters during gameplay.
-"""
-
 from dataclasses import dataclass
-from typing import Type
-
-from core.value_objects.transform import Transform
+import infra.game_config as GC
 
 
 @dataclass
 class Fighter:
-    """
-    Represents a fighter in the game.
+    name: str
+    health: int
+    position: tuple
+    velocity: tuple
+    attack_power: int
+    screen_width: int = (
+        GC.SCREENSIZEWIDTH
+    )  # Adiciona a largura da tela como um atributo
+    screen_height: int = (
+        GC.SCREENSIZEHEIGHT
+    )  # Adiciona a altura da tela como um atributo
+    size: tuple = (60, 160)
+    on_ground: bool = True  # Verifica se o lutador está no chão
+    gravity: float = 0.5  # Constante de gravidade
+    vertical_velocity: float = 0  # Velocidade vertical
+    jump_speed: float = 10
 
-    Attributes:
-        name (str): The name of the fighter.
-        health (int): The current health of the fighter.
-        attack (int): The attack power of the fighter.
-        position (Type[Transform.position]): The position of the fighter on the stage.
-        scale (Type[Transform.scale]): The scale (size) of the fighter.
-    """
+    def move(self, direction: str):
+        if direction == "left":
+            new_x = self.position[0] - self.velocity[0]
+            if new_x >= 0:  # Verifica se não sai pela esquerda
+                self.position = (new_x, self.position[1])
+        elif direction == "right":
+            new_x = self.position[0] + self.velocity[0]
+            if (
+                new_x <= self.screen_width - self.size[0]
+            ):  # Verifica se não sai pela direita
+                self.position = (new_x, self.position[1])
 
-    def __init__(
-        self,
-        name: str,
-        health: int,
-        attack: int,
-        position: Type[Transform.position],
-        scale: Type[Transform.scale],
-    ):
-        """
-        Initializes a new instance of the Fighter class.
+    def jump(self):
+        if self.on_ground:
+            self.vertical_velocity = -self.jump_speed
+            self.initial_y_position = self.position[1]  # Define a posição inicial em y
+            self.on_ground = False
 
-        Args:
-            name (str): The name of the fighter.
-            health (int): The initial health of the fighter.
-            attack (int): The attack power of the fighter.
-            position (Type[Transform.position]): The starting position of the fighter.
-            scale (Type[Transform.scale]): The scale (size) of the fighter.
-        """
-        self.name = name
-        self.health = health
-        self.attack = attack
-        self.position = position
-        self.scale = scale
+    def apply_gravity(self):
+        if not self.on_ground:
+            self.vertical_velocity += self.gravity
+            new_y = self.position[1] + self.vertical_velocity
+            # Verifica se o lutador atingiu o chão ou o teto
+            if new_y >= self.initial_y_position:
+                new_y = self.initial_y_position
+                self.on_ground = True
+                self.vertical_velocity = 0
+            elif new_y < 0:
+                new_y = 0
+                self.vertical_velocity = 0
+            self.position = (self.position[0], new_y)
 
-    def take_damage(self, damage: int):
-        """
-        Reduces the fighter's health by the specified damage amount.
-
-        Args:
-            damage (int): The amount of damage to inflict on the fighter.
-        """
-        self.health -= damage
-
-    def is_alive(self) -> bool:
-        """
-        Checks if the fighter is still alive.
-
-        Returns:
-            bool: True if the fighter's health is above zero, False otherwise.
-        """
-        return self.health > 0
-
-    def move_left(self):
-        """
-        Moves the fighter to the left.
-
-        This is a placeholder method. The actual logic for moving the fighter
-        to the left should be implemented here.
-        """
-        self.attack -= 1  # Example logic; adjust as needed
-
-    def move_right(self):
-        """
-        Moves the fighter to the right.
-
-        This is a placeholder method. The actual logic for moving the fighter
-        to the right should be implemented here.
-        """
-        self.attack += 1  # Example logic; adjust as needed
-
-    def attack_enemy(self, enemy: "Fighter"):
-        """
-        Attacks an enemy fighter.
-
-        Inflicts damage equal to this fighter's attack power on the enemy fighter.
-
-        Args:
-            enemy (Fighter): The enemy fighter to attack.
-        """
-        enemy.take_damage(self.attack)
+    def attack(self):
+        return self.attack_power

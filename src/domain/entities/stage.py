@@ -16,9 +16,9 @@ class Stage:
             (
                 fighter.name,
                 fighter.health,
-                fighter.attack,
                 fighter.position,
-                fighter.scale,
+                fighter.velocity,
+                fighter.attack_power,
             )
             for fighter in self.fighters
         ]

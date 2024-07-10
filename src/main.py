@@ -1,27 +1,41 @@
+from application.use_cases import get_fighter_details
+from domain.entities.fighter import Fighter
 import pygame
 from application.use_cases.fight_use_case import FightUseCase
-from application.use_cases.game_engine import GameEngine
+
+# from application.use_cases.game_engine import GameEngine
 from infra.frameworks.py_game.adapters.pygame_music import PygameMusic
-from infra.frameworks.py_game.adapters.pygame_controls import PygameControls
+from infra.frameworks.py_game.adapters.pygame_controls import (
+    PygameController,
+)
 from infra.frameworks.py_game.adapters.pygame_display import PygameDisplay
 from domain.entities.stage import Stage
 import infra.game_config as GC
-from application.dtos.fighter_dto import FighterDTO
-from infra.frameworks.py_game.adapters.pygame_fighter_factory import (
-    PygameFighterFactory,
-)
+
+# from infra.frameworks.py_game.adapters.pygame_fighter import (
+#     PygameFighter,
+# )
 
 
 def main():
     pygame.init()
 
     # cria os lutadores
-    fighter_factory = PygameFighterFactory()
-    fighter_1 = fighter_factory.create_fighter(
-        FighterDTO("Lutador 1", 100, 10, (200, 150), (60, 160))
+    # TODO implementar use_case para retornar fighter já com valores obtidos de um fighter_config
+    fighter_1 = get_fighter_details.execute(
+        name="Player 1",
+        health=100,
+        position=(200, 150),
+        velocity=(5, 10),
+        attack_power=10,
     )
-    fighter_2 = fighter_factory.create_fighter(
-        FighterDTO("Lutador 2", 100, 8, (500, 150), (60, 160))
+
+    fighter_2 = get_fighter_details.execute(
+        name="Player 2",
+        health=100,
+        position=(500, 150),
+        velocity=(5, 10),
+        attack_power=10,
     )
 
     # cria cenário
@@ -29,22 +43,14 @@ def main():
     stage.add_fighter(fighter_1)
     stage.add_fighter(fighter_2)
 
-    # Criação da fábrica e do caso de uso para configuração do jogo
-    # game_factory = PygameFighterFactory()
-    # setup_game_use_case = FighterFactoryUseCase(game_factory)
-
-    # # Configuração do cenário e lutadores
-    # stage = setup_game_use_case.setup()
+    # cria controle
+    player_1 = PygameController(fighter_1)
 
     # tela
     display = PygameDisplay()
 
-    # controle
-    controls = PygameControls()
-
-    engine = GameEngine(stage)
-
-    fight_use_case = FightUseCase(fighter_1, fighter_2)
+    # TODO validar
+    # engine = GameEngine(stage)
 
     # fps
     clock = pygame.time.Clock()
@@ -62,24 +68,15 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        # input_action = controls.get_input()
-        # if input_action == "MOVE_LEFT":
-        #     fighter_1.move_left()
-        # elif input_action == "MOVE_RIGHT":
-        #     fighter_1.move_right()
-        # elif input_action == "ATTACK":
-        #     fight_use_case.perform_attack(fighter_1, fighter_2)
-
-        engine.update()
+        player_1.update()
+        fighter_1.apply_gravity()
+        # engine.update()
 
         # Obtenha o status atual dos lutadores da Stage
         fighters_status = stage.get_status()
 
         # Atualiza o display com o status dos lutadores
         display.update(fighters_status)
-
-        if not fighter_1.is_alive() or not fighter_2.is_alive():
-            running = False
 
         pygame.display.flip()
         clock.tick(GC.FPS)  # Limita o jogo a 60 frames por segundo
