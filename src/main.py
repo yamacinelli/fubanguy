@@ -24,8 +24,18 @@ def main():
     # stage.add_fighter(fighter_2)
 
     # cria controle
+<<<<<<< HEAD
     player_1 = PygameController(fighter_1)
     player_2 = PygameController(fighter_2)
+=======
+    # cria controle
+    player_1 = PygameController(
+        fighter_1, [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_SPACE]
+    )
+    player_2 = PygameController(
+        fighter_2, [pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s]
+    )
+>>>>>>> 6294d70 (feat(controller): apply control to 2 players)
 
     # tela
     display = PygameDisplay(stage)
