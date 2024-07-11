@@ -44,7 +44,13 @@ def main():
     stage.add_fighter(fighter_2)
 
     # cria controle
-    player_1 = PygameController(fighter_1)
+    # cria controle
+    player_1 = PygameController(
+        fighter_1, [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_SPACE]
+    )
+    player_2 = PygameController(
+        fighter_2, [pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s]
+    )
 
     # tela
     display = PygameDisplay()
@@ -69,7 +75,9 @@ def main():
                 running = False
 
         player_1.update()
+        player_2.update()
         fighter_1.apply_gravity()
+        fighter_2.apply_gravity()
         # engine.update()
 
         # Obtenha o status atual dos lutadores da Stage
