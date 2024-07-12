@@ -20,7 +20,7 @@ Usage example:
 import random
 from typing import Optional
 from domain.entities.stage import Stage
-from data.stage_assets import STAGES_DATA
+from data.stage_data import STAGES_DATA
 
 
 def execute(stage_name: Optional[str] = None) -> Stage:

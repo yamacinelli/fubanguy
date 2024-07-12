@@ -19,19 +19,12 @@ def main():
     # pylint: disable=E1120
     stage = get_stage_details.execute()
 
-    # stage = Stage()
-    # stage.add_fighter(fighter_1)
-    # stage.add_fighter(fighter_2)
-
     # cria controle
-    player_1 = PygameController(fighter_1)
-    player_2 = PygameController(fighter_2)
+    player_1 = PygameController(fighter_1, "control_1")
+    player_2 = PygameController(fighter_2, "control_2")
 
     # tela
     display = PygameDisplay(stage)
-
-    # TODO validar
-    # engine = GameEngine(stage)
 
     # fps
     clock = pygame.time.Clock()
@@ -50,20 +43,13 @@ def main():
 
         player_1.update()
         player_2.update()
-        player_2.update()
         fighter_1.apply_gravity()
         fighter_2.apply_gravity()
-        fighter_2.apply_gravity()
-        # engine.update()
 
-        # Obtenha o status atual dos lutadores da Stage
-        # fighters_status = stage.get_status()
-
-        # Atualiza o display com o status dos lutadores
         display.update(player_1, player_2)
 
         pygame.display.flip()
-        clock.tick(GC.FPS)  # Limita o jogo a 60 frames por segundo
+        clock.tick(GC.FPS)
 
     pygame.quit()
 
