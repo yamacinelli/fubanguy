@@ -26,15 +26,14 @@ def execute(fighter_name: str) -> Fighter:
     Raises:
         ValueError: If no fighter with the given name is found in FIGHTERS_DATA.
     """
-    fighter_data = FIGHTERS_DATA.get(fighter_name)
+    __fighter_data = FIGHTERS_DATA.get(fighter_name)
 
-    if not fighter_data:
+    if not __fighter_data:
         raise ValueError(f"No fighter found with name: {fighter_name}")
 
-    fighter = Fighter(
-        name=fighter_data["name"],
-        health=fighter_data["health"],
-        position=fighter_data["position"],
-        attack_power=fighter_data["attack_power"],
+    return Fighter(
+        name=__fighter_data["name"],
+        health=__fighter_data["health"],
+        position=__fighter_data["position"],
+        attack_power=__fighter_data["attack_power"],
     )
-    return fighter
