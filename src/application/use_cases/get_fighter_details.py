@@ -9,7 +9,7 @@ Functions:
         Creates and returns a Fighter instance based on the provided fighter name.
 """
 
-from data.fighter_assets import FIGHTERS_DATA
+from data.fighter_data import FIGHTERS_DATA
 from domain.entities.fighter import Fighter
 
 

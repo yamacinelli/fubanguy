@@ -1,6 +1,6 @@
 import random
 from domain.entities.stage import Stage
-from data.stage_assets import STTAGE_DATA
+from data.stage_data import STTAGE_DATA
 
 
 class StageFactory:
