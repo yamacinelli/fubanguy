@@ -1,5 +1,5 @@
 # __STAGE__
-SCENES_ASSETS = {
+STAGES_DATA = {
     "forest": {
         "background_image": "src/infra/assets/images/stage/forest/stage_forest.jpg",
         "music": "src/infra/assets/sounds/forest.mp3",
