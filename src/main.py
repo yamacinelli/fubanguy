@@ -50,7 +50,9 @@ def main():
 
         player_1.update()
         player_2.update()
+        player_2.update()
         fighter_1.apply_gravity()
+        fighter_2.apply_gravity()
         fighter_2.apply_gravity()
         # engine.update()
 
