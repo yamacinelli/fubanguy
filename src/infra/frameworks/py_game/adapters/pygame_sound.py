@@ -2,7 +2,7 @@ import pygame
 from core.interfaces.sound import SoundInterface
 
 
-class PygameSound(SoundInterface):
+class PyGameSound(SoundInterface):
 
     sound = None
 

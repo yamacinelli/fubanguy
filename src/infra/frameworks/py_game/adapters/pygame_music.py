@@ -2,7 +2,7 @@ import pygame
 from core.interfaces.music import MusicInterface
 
 
-class PygameMusic(MusicInterface):
+class PyGameMusic(MusicInterface):
 
     music = pygame.mixer.music
 

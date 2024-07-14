@@ -1,9 +1,9 @@
 import pygame
 import infra.game_config as GC
-from core.interfaces.game_display import GameDisplay
+from core.interfaces.display import DisplayInterface
 
 
-class PygameDisplay(GameDisplay):
+class PyGameDisplay(DisplayInterface):
 
     music_path: str
 
