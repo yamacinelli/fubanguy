@@ -3,13 +3,19 @@
 <p align="center">
   <img src="assets/images/fubanguy_logo.png" alt="fubanguy-logo" width="120px" height="120px"/>
   <br>
-  <em>The objective of this project is to create a video game. A challenge proposed by the Instituto Federal do Paraná (IFPR) campus Paranavaí - PR.
+  <em>Fubanguy! Esse game é fuminante cara! Personagens muito locos, só as lendas!
+
+Imagina só, você controlando o Tiringa, Maike da SWAT,  Ninja e muito mais! Cada personagem tem suas manhas e golpes especiais que vão fazer você dar muita risada e se surpreender.
+
+Os cenários são insanos também, meu parceiro! Você vai lutar no "Bar", na "Favela" e até no "QGs". É espetaculoso!
+
+Nesse game você pode jogar de 2 kkkk, então chama seu parceiro e prepare-se para dar muita risada.
+
+Fubanguy reune toda a zoeira e insanidade BR direto pro mundo dos games. Vlw meu parceiro! É nóis!
   <br>
 </p>
 
-<h4 align="center">
-    :construction: README :rocket: Under construction... :construction:
-</h4>
+
 
 ### Local Development
 
