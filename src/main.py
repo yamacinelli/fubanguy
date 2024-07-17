@@ -1,4 +1,5 @@
 import pygame
+from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
 from infra.frameworks.py_game.adapters.pygame_music import PyGameMusic
 from infra.frameworks.py_game.adapters.pygame_controls import (
@@ -6,7 +7,6 @@ from infra.frameworks.py_game.adapters.pygame_controls import (
 )
 from infra.frameworks.py_game.adapters.pygame_display import PyGameDisplay
 import infra.game_config as GC
-from application.use_cases import get_fighter_details, get_stage_details
 from presentation.presenters.health_bar_presenter import HealthBarPresenter
 from presentation.ui.health_bar_view import HealthBarView
 
