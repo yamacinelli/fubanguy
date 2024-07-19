@@ -9,7 +9,7 @@ Usage example:
     display.update(player_1, player_2)
 """
 
-import pygame
+import pygame # pylint: disable=E1101
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
@@ -38,7 +38,7 @@ class PyGameDisplay(DisplayInterface):
             stage: The stage object containing the background image path.
         """
 
-        pygame.init()
+        pygame.init() # pylint: disable=E1101
 
         # CONFIGURAÇÔES DA TELA
         self.screen = pygame.display.set_mode((GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT))

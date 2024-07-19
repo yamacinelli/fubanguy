@@ -1,4 +1,4 @@
-import pygame
+import pygame  # pylint: disable=E1101
 from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
 from infra.frameworks.py_game.adapters.pygame_music import PyGameMusic
@@ -12,7 +12,7 @@ from presentation.ui.health_bar_view import HealthBarView
 
 
 def main():
-    pygame.init()
+    pygame.init()  # pylint: disable=E1101
 
     # cria os lutadores
     fighter_1 = get_fighter_details.execute("Player1")
@@ -68,7 +68,7 @@ def main():
     running = True
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:  # pylint: disable=E1101
                 running = False
 
         player_1.update()
@@ -92,7 +92,7 @@ def main():
         pygame.display.flip()
         clock.tick(GC.FPS)
 
-    pygame.quit()
+    pygame.quit()  # pylint: disable=E1101
 
 
 if __name__ == "__main__":
