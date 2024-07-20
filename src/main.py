@@ -1,4 +1,3 @@
-from tkinter import W
 import pygame  # pylint: disable=E1101
 from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
@@ -68,13 +67,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # pylint: disable=E1101
                 running = False
-        
-        if object_list[0].colliderect(object_list[1]) or object_list[0].collidelist(display.walls) >= 0:
+
+        if (
+            object_list[0].colliderect(object_list[1])
+            or object_list[0].collidelist(display.walls) >= 0
+        ):
             physic.apply_collision_physic()
 
         player_1.update(physic, delta_time)
         player_2.update(physic, delta_time)
-        
+
         display.update(object_list)
 
         # if player_1.controller.fighter.health > 0:
