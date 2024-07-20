@@ -42,3 +42,6 @@ class PyGameRenderer(Renderer):
             dimensions (Tuple[int, int]): The (width, height) dimensions of the rectangle.
         """
         pygame.draw.rect(self.screen, color, (*position, *dimensions))
+
+    def object_game(self, position: Tuple[int, int], dimensions: Tuple[int, int]) -> pygame.Rect:
+        return pygame.Rect(position, dimensions)

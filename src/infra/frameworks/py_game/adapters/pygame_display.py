@@ -9,6 +9,7 @@ Usage example:
     display.update(player_1, player_2)
 """
 
+from typing import List
 import pygame # pylint: disable=E1101
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 import infra.game_config as GC
@@ -49,10 +50,17 @@ class PyGameDisplay(DisplayInterface):
             self.bg, (GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT)
         )
 
+        self.walls = [
+            pygame.Rect((0, 0), (1, GC.SCREENSIZEHEIGHT)),
+            pygame.Rect((GC.SCREENSIZEWIDTH - 1, 0), (1, GC.SCREENSIZEHEIGHT)),
+            pygame.Rect((0, 0), (GC.SCREENSIZEWIDTH, 1)),
+            pygame.Rect((0, GC.SCREENSIZEHEIGHT - 1), (GC.SCREENSIZEWIDTH, 1)),
+        ]
+
         # RENDER DO PLAYER
         self.rectangle_renderer = PyGameRenderer(self.screen)
 
-    def update(self, player_1, player_2):
+    def update(self, object_list: List[pygame.Rect]):
         """
         Updates the game display with the current positions and states of the players.
 
@@ -65,19 +73,12 @@ class PyGameDisplay(DisplayInterface):
 
         self.screen.blit(self.bg_scaleed, (0, 0))
 
-        # Desenha o lutador na tela
-        # PLAYER 1
-        self.rectangle_renderer.draw(
-            (255, 0, 0),
-            player_1.controller.fighter.position,
-            player_1.controller.fighter.size,
-        )
+        # Desenha paredes
+        for wall in self.walls:
+            pygame.draw.rect(self.screen, (0, 255, 0), wall)
 
-        # PLAYER 2
-        self.rectangle_renderer.draw(
-            (255, 255, 0),
-            player_2.controller.fighter.position,
-            player_2.controller.fighter.size,
-        )
+        # Desenha o lutador na tela
+        for object_game in object_list:
+            pygame.draw.rect(self.screen, (255, 0, 0), object_game)
 
         pygame.display.flip()
