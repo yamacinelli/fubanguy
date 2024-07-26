@@ -6,7 +6,6 @@ with x and y coordinates.
 The class provides methods to access and modify the coordinates in an encapsulated manner.
 """
 
-
 class Vector2:
     """
     Represents a vector in two dimensions.
