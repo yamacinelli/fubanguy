@@ -1,6 +1,7 @@
 import pygame  # pylint: disable=E1101
 from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
+from core.interfaces.display import DisplayInterface
 from infra.frameworks.py_game.adapters.pygame_music import PyGameMusic
 from infra.frameworks.py_game.adapters.pygame_controls import (
     PyGameController,
@@ -27,8 +28,8 @@ def main():
     player_2 = PyGameController(fighter_2, "control_2")
 
     # tela
-    display = PyGameDisplay(stage)
-
+    display: DisplayInterface = PyGameDisplay(stage)
+    
     # health bar
     health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
     health_bar_view = HealthBarView(
