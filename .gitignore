@@ -134,6 +134,7 @@ venv.bak/
 
 # IDE and code editor
 .vscode
+.vscode
 
 # Spyder project settings
 .spyderproject
