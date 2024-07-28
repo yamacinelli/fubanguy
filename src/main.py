@@ -1,7 +1,9 @@
 import pygame  # pylint: disable=E1101
 from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
+from core.interfaces.control import ControlInterface
 from core.interfaces.display import DisplayInterface
+from core.interfaces.music import MusicInterface
 from infra.frameworks.py_game.adapters.pygame_music import PyGameMusic
 from infra.frameworks.py_game.adapters.pygame_controls import (
     PyGameController,
@@ -24,12 +26,12 @@ def main():
     stage = get_stage_details.execute()
 
     # cria controle
-    player_1 = PyGameController(fighter_1, "control_1")
-    player_2 = PyGameController(fighter_2, "control_2")
+    player_1: ControlInterface = PyGameController(fighter_1, "control_1")
+    player_2: ControlInterface = PyGameController(fighter_2, "control_2")
 
     # tela
     display: DisplayInterface = PyGameDisplay(stage)
-    
+
     # health bar
     health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
     health_bar_view = HealthBarView(
@@ -41,7 +43,7 @@ def main():
     clock = pygame.time.Clock()
 
     # musica
-    music = PyGameMusic()
+    music: MusicInterface = PyGameMusic()
     music.load_music(stage.music)
     music.play_music(GC.LOOP)
     music.volume_music(GC.STAGE_VOLUME)
