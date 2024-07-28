@@ -82,7 +82,7 @@ Download and import the profile containing the extensions into vscode, [Extentio
             "name": "Python Debugger: main.py",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/main.py",
+            "program": "${workspaceFolder}/src/main.py",
             "console": "integratedTerminal",
         },
     ]
