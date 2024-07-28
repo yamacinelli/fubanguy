@@ -66,13 +66,10 @@ Download and import the profile containing the extensions into vscode, [Extentio
 ```json
 {
     "files.autoSave": "afterDelay",
-    "python.defaultInterpreterPath": "${workspaceFolder}.venv/bin/python3",
-
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.formatOnPaste": true,
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python3",
+    "python.autoComplete.extraPaths": ["${workspaceFolder}/src"],
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.analysis.extraPaths": ["${workspaceFolder}/src"],
 }
 ```
 
