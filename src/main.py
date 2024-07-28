@@ -1,6 +1,9 @@
 import pygame  # pylint: disable=E1101
 from application.use_cases import get_fighter_details, get_stage_details
 from application.use_cases.update_health import UpdateHealthUseCase
+from core.interfaces.control import ControlInterface
+from core.interfaces.display import DisplayInterface
+from core.interfaces.music import MusicInterface
 from infra.frameworks.py_game.adapters.pygame_music import PyGameMusic
 from infra.frameworks.py_game.adapters.pygame_controls import (
     PyGameController,
@@ -23,31 +26,11 @@ def main():
     stage = get_stage_details.execute()
 
     # cria controle
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    player_1 = PygameController(fighter_1)
-    player_2 = PygameController(fighter_2)
-=======
-    # cria controle
-    player_1 = PygameController(
-        fighter_1, [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_SPACE]
-    )
-    player_2 = PygameController(
-        fighter_2, [pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s]
-    )
->>>>>>> 6294d70 (feat(controller): apply control to 2 players)
-=======
-    player_1 = PygameController(fighter_1, "control_1")
-    player_2 = PygameController(fighter_2, "control_2")
->>>>>>> 1d6b4f5 (refactoring)
-=======
-    player_1 = PyGameController(fighter_1, "control_1")
-    player_2 = PyGameController(fighter_2, "control_2")
->>>>>>> b4433cf (feat: [restructure] implements health bar)
+    player_1: ControlInterface = PyGameController(fighter_1, "control_1")
+    player_2: ControlInterface = PyGameController(fighter_2, "control_2")
 
     # tela
-    display = PyGameDisplay(stage)
+    display: DisplayInterface = PyGameDisplay(stage)
 
     # health bar
     health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
@@ -60,7 +43,7 @@ def main():
     clock = pygame.time.Clock()
 
     # musica
-    music = PyGameMusic()
+    music: MusicInterface = PyGameMusic()
     music.load_music(stage.music)
     music.play_music(GC.LOOP)
     music.volume_music(GC.STAGE_VOLUME)
@@ -75,10 +58,6 @@ def main():
         player_2.update()
         fighter_1.apply_gravity()
         fighter_2.apply_gravity()
-<<<<<<< HEAD
-        # engine.update()
-=======
->>>>>>> 1d6b4f5 (refactoring)
 
         display.update(player_1, player_2)
 

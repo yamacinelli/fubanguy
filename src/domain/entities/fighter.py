@@ -1,152 +1,20 @@
 """
-Module defining the Physics class for handling character movement physics.
+Module defining the Fighter class for handling character movement physics.
 
-This module provides the Physics class with methods to apply gravity and handle jumps
+This module provides the Fighter class with methods to apply gravity and handle jumps
 for character movement in a game or simulation.
 
 Classes:
-    Physics: Handles the physics properties for character movement.
+    Fighter: Handles the movement and physics properties for character movement.
 
 Usage example:
-    physics = Physics(gravity=9.8, jump_speed=10.0)
-    new_position = physics.apply_gravity(current_position)
-    physics.jump(current_position)
+    fighter = Fighter(name="Ryu", health=100, position=(0, 0), attack_power=10)
+    fighter.apply_gravity()
+    fighter.jump()
 """
 
-from typing import Tuple
+from core.shared.vector_2 import Vector2
 import infra.game_config as GC
-
-
-class Physics:
-    """
-    Handles the physics properties for character movement.
-
-    Attributes:
-        gravity (float): The gravity value affecting vertical movement.
-        jump_speed (float): The speed at which the character jumps.
-        vertical_velocity (float): The current vertical velocity of the character.
-        initial_y_position (int): The initial y-position of the character.
-    """
-
-    def __init__(self, gravity: float, jump_speed: float):
-        """
-        Initializes a new instance of the Physics class.
-
-        Args:
-            gravity (float): The gravity value affecting vertical movement.
-            jump_speed (float): The speed at which the character jumps.
-        """
-        self.gravity = gravity
-        self.jump_speed = jump_speed
-        self.vertical_velocity = 0
-        self.initial_y_position = 0
-
-    def apply_gravity(self, position: Tuple[int, int]) -> Tuple[int, int]:
-        """
-        Applies gravity to the character's position.
-
-        Args:
-            position (Tuple[int, int]): The current position of the character.
-
-        Returns:
-            Tuple[int, int]: The new position after applying gravity.
-        """
-        new_y = position[1] + self.vertical_velocity
-        return (position[0], new_y)
-
-    def jump(self, position: Tuple[int, int]) -> Tuple[int, int]:
-        """
-        Makes the character jump.
-
-        Args:
-            position (Tuple[int, int]): The current position of the character.
-
-        Returns:
-            Tuple[int, int]: The new position after jumping.
-        """
-        self.vertical_velocity = -self.jump_speed
-        self.initial_y_position = position[1]
-        return position
-
-
-class Movement:
-    """
-    Handles the movement logic for a character.
-
-    Attributes:
-        position (Tuple[int, int]): The position of the character.
-        velocity (Tuple[int, int]): The velocity of the character.
-        screen_dimensions (Tuple[int, int]): The dimensions of the game screen.
-        size (Tuple[int, int]): The size of the character.
-        on_ground (bool): Whether the character is on the ground.
-        physics (Physics): The physics properties of the character.
-    """
-
-    def __init__(
-        self,
-        position: Tuple[int, int],
-        velocity: Tuple[int, int],
-        screen_dimensions: Tuple[int, int],
-        size: Tuple[int, int],
-        physics: Physics,
-    ):
-        """
-        Initializes a new instance of the Movement class.
-
-        Args:
-            position (Tuple[int, int]): The initial position of the character.
-            velocity (Tuple[int, int]): The initial velocity of the character.
-            screen_dimensions (Tuple[int, int]): The dimensions of the game screen.
-            size (Tuple[int, int]): The size of the character.
-            physics (Physics): The physics properties of the character.
-        """
-        self.position = position
-        self.velocity = velocity
-        self.screen_width, self.screen_height = screen_dimensions
-        self.size = size
-        self.on_ground = True
-        self.physics = physics
-
-    def move(self, direction: str):
-        """
-        Moves the character in the specified direction.
-
-        Args:
-            direction (str): The direction to move ("left" or "right").
-        """
-        if direction == "left":
-            new_x = self.position[0] - self.velocity[0]
-            if new_x >= 0:
-                self.position = (new_x, self.position[1])
-        elif direction == "right":
-            new_x = self.position[0] + self.velocity[0]
-            if new_x <= self.screen_width - self.size[0]:
-                self.position = (new_x, self.position[1])
-
-    def jump(self):
-        """
-        Makes the character jump.
-        """
-        if self.on_ground:
-            self.physics.vertical_velocity = -self.physics.jump_speed
-            self.physics.initial_y_position = self.position[1]
-            self.on_ground = False
-
-    def apply_gravity(self):
-        """
-        Applies gravity to the character, making it fall if not on the ground.
-        """
-        if not self.on_ground:
-            self.physics.vertical_velocity += self.physics.gravity
-            new_y = self.position[1] + self.physics.vertical_velocity
-            if new_y >= self.physics.initial_y_position:
-                new_y = self.physics.initial_y_position
-                self.on_ground = True
-                self.physics.vertical_velocity = 0
-            elif new_y < 0:
-                new_y = 0
-                self.physics.vertical_velocity = 0
-            self.position = (self.position[0], new_y)
 
 
 class Fighter:
@@ -158,13 +26,18 @@ class Fighter:
         health (int): The health of the fighter.
         attack_power (int): The attack power of the fighter.
         size (Tuple[int, int]): The size of the fighter.
+        position (Tuple[int, int]): The position of the fighter.
+        velocity (Tuple[int, int]): The velocity of the fighter.
+        screen_width (int): The width of the game screen.
+        screen_height (int): The height of the game screen.
         on_ground (bool): Whether the fighter is on the ground.
-        movement (Movement): The movement properties of the fighter.
+        gravity (float): The gravity value affecting vertical movement.
+        jump_speed (float): The speed at which the fighter jumps.
+        vertical_velocity (float): The current vertical velocity of the fighter.
+        initial_y_position (int): The initial y-position of the fighter.
     """
 
-    def __init__(
-        self, name: str, health: int, position: Tuple[int, int], attack_power: int
-    ):
+    def __init__(self, name: str, health: int, position: Vector2, attack_power: int):
         """
         Initializes a new instance of the Fighter class.
 
@@ -178,15 +51,17 @@ class Fighter:
         self._health = health
         self._attack_power = attack_power
         self._size = (60, 160)
-        self._on_ground = True
-        physics = Physics(GC.GRAVITY, 10)
-        self.movement = Movement(
-            position,
-            GC.VELOCITY,
-            (GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT),
-            self._size,
-            physics,
+        self._position = position
+        self._velocity = GC.VELOCITY
+        self._screen_width, self._screen_height = (
+            GC.SCREENSIZEWIDTH,
+            GC.SCREENSIZEHEIGHT,
         )
+        self._on_ground = True
+        self._gravity = GC.GRAVITY
+        self._jump_speed = 10.0
+        self._vertical_velocity = 0.0
+        self._initial_y_position = position[1]
 
     @property
     def name(self) -> str:
@@ -224,17 +99,17 @@ class Fighter:
         self._health = value
 
     @property
-    def position(self) -> Tuple[int, int]:
+    def position(self) -> Vector2:
         """
         Gets the position of the fighter.
 
         Returns:
             Tuple[int, int]: The position of the fighter.
         """
-        return self.movement.position
+        return self._position
 
     @position.setter
-    def position(self, value: Tuple[int, int]):
+    def position(self, value: Vector2):
         """
         Sets the position of the fighter.
 
@@ -246,10 +121,10 @@ class Fighter:
         """
         if value[0] < 0 or value[1] < 0:
             raise ValueError("Position coordinates cannot be negative")
-        self.movement.position = value
+        self._position = value
 
     @property
-    def size(self) -> Tuple[int, int]:
+    def size(self) -> Vector2:
         """
         Gets the size of the fighter.
 
@@ -259,17 +134,17 @@ class Fighter:
         return self._size
 
     @property
-    def velocity(self) -> Tuple[int, int]:
+    def velocity(self) -> Vector2:
         """
         Gets the velocity of the fighter.
 
         Returns:
             Tuple[int, int]: The velocity of the fighter.
         """
-        return self.movement.velocity
+        return self._velocity
 
     @velocity.setter
-    def velocity(self, value: Tuple[int, int]):
+    def velocity(self, value: Vector2):
         """
         Sets the velocity of the fighter.
 
@@ -281,7 +156,7 @@ class Fighter:
         """
         if value[0] < 0 or value[1] < 0:
             raise ValueError("Velocity components cannot be negative")
-        self.movement.velocity = value
+        self._velocity = value
 
     @property
     def attack_power(self) -> int:
@@ -300,19 +175,39 @@ class Fighter:
         Args:
             direction (str): The direction to move ("left" or "right").
         """
-        self.movement.move(direction)
+        if direction == "left":
+            new_x = self._position[0] - self._velocity[0]
+            if new_x >= 0:
+                self._position = (new_x, self._position[1])
+        elif direction == "right":
+            new_x = self._position[0] + self._velocity[0]
+            if new_x <= self._screen_width - self._size[0]:
+                self._position = (new_x, self._position[1])
 
     def jump(self):
         """
         Makes the fighter jump.
         """
-        self.movement.jump()
+        if self._on_ground:
+            self._vertical_velocity = -self._jump_speed
+            self._initial_y_position = self._position[1]
+            self._on_ground = False
 
     def apply_gravity(self):
         """
         Applies gravity to the fighter, making it fall if not on the ground.
         """
-        self.movement.apply_gravity()
+        if not self._on_ground:
+            self._vertical_velocity += self._gravity
+            new_y = self._position[1] + self._vertical_velocity
+            if new_y >= self._initial_y_position:
+                new_y = self._initial_y_position
+                self._on_ground = True
+                self._vertical_velocity = 0
+            elif new_y < 0:
+                new_y = 0
+                self._vertical_velocity = 0
+            self._position = (self._position[0], new_y)
 
     def attack(self) -> int:
         """

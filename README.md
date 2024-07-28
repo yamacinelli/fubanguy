@@ -1,7 +1,7 @@
 <h1 align="center">Fubanguy - The Game</h1>
 
 <p align="center">
-  <img src="assets/images/fubanguy_logo.png" alt="fubanguy-logo" width="120px" height="120px"/>
+  <img src="src/infra/assets/images/fubanguy_logo.png" alt="fubanguy-logo" width="120px" height="120px"/>
   <br>
   <em>Fubanguy! Esse game é fuminante cara! Personagens muito locos, só as lendas!
 
