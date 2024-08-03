@@ -7,6 +7,7 @@ from typing import Any, Tuple
 import pygame
 
 from core.interfaces.renderer import Renderer
+from core.shared.vector_2 import Vector2
 
 
 class PyGameRenderer(Renderer):
@@ -29,7 +30,7 @@ class PyGameRenderer(Renderer):
     def draw(
         self,
         color: Tuple[int, int, int],
-        position: Tuple[int, int],
+        position: Vector2,
         dimensions: Tuple[int, int],
     ):
         """
@@ -37,8 +38,12 @@ class PyGameRenderer(Renderer):
 
         Args:
             color (Tuple[int, int, int]): The color of the rectangle in RGB format.
-            position (Tuple[int, int]): The (x, y) coordinates of the rectangle's
-                top-left corner.
+            position (Vector2): The (x, y) coordinates of the rectangle's top-left corner.
             dimensions (Tuple[int, int]): The (width, height) dimensions of the rectangle.
         """
-        pygame.draw.rect(self.screen, color, (*position, *dimensions))
+
+        rect_args = (position.x, position.y, *dimensions)
+
+        # Desenhe o retângulo
+        pygame.draw.rect(self.screen, color, rect_args)
+        # pygame.draw.rect(self.screen, color, (position, *dimensions))

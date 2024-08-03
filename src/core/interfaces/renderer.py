@@ -5,6 +5,8 @@ This module contains the abstract base class for renderers.
 from abc import ABC, abstractmethod
 from typing import Tuple
 
+from core.shared.vector_2 import Vector2
+
 
 class Renderer(ABC):
     """
@@ -17,7 +19,7 @@ class Renderer(ABC):
     def draw(
         self,
         color: Tuple[int, int, int],
-        position: Tuple[int, int],
+        position: Vector2,
         dimensions: Tuple[int, int],
     ):
         """
