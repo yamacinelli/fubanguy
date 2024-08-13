@@ -13,6 +13,7 @@ Usage example:
     fighter.jump()
 """
 
+from core.shared.physic import Physic
 from core.shared.vector_2 import Vector2
 import infra.game_config as GC
 
@@ -20,21 +21,6 @@ import infra.game_config as GC
 class Fighter:
     """
     Represents a fighter in the game.
-
-    Attributes:
-        name (str): The name of the fighter.
-        health (int): The health of the fighter.
-        attack_power (int): The attack power of the fighter.
-        size (Tuple[int, int]): The size of the fighter.
-        position (Tuple[int, int]): The position of the fighter.
-        velocity (Tuple[int, int]): The velocity of the fighter.
-        screen_width (int): The width of the game screen.
-        screen_height (int): The height of the game screen.
-        on_ground (bool): Whether the fighter is on the ground.
-        gravity (float): The gravity value affecting vertical movement.
-        jump_speed (float): The speed at which the fighter jumps.
-        vertical_velocity (float): The current vertical velocity of the fighter.
-        initial_y_position (int): The initial y-position of the fighter.
     """
 
     def __init__(self, name: str, health: int, position: Vector2, attack_power: int):
@@ -44,7 +30,7 @@ class Fighter:
         Args:
             name (str): The name of the fighter.
             health (int): The health of the fighter.
-            position (Tuple[int, int]): The initial position of the fighter.
+            position (Vector2): The initial position of the fighter.
             attack_power (int): The attack power of the fighter.
         """
         self._name = name
@@ -52,120 +38,67 @@ class Fighter:
         self._attack_power = attack_power
         self._size = (60, 160)
         self._position = position
-        self._velocity = GC.VELOCITY
+
         self._screen_width, self._screen_height = (
             GC.SCREENSIZEWIDTH,
             GC.SCREENSIZEHEIGHT,
         )
         self._on_ground = True
-        self._gravity = GC.GRAVITY
-        self._jump_speed = 10.0
-        self._vertical_velocity = 0.0
-        self._initial_y_position = position[1]
+        self._jump_speed = GC.GRAVITY
+        # self._vertical_velocity = 0.0
+        self._initial_y_position = position.y
+        self._physic = Physic(GC.INITIAL_SPEED, GC.ACCELERATION, GC.GRAVITY)
+        self._delta_time = 0
 
     @property
     def name(self) -> str:
-        """
-        Gets the name of the fighter.
-
-        Returns:
-            str: The name of the fighter.
-        """
+        """Gets the name of the fighter."""
         return self._name
 
     @property
     def health(self) -> int:
-        """
-        Gets the health of the fighter.
-
-        Returns:
-            int: The health of the fighter.
-        """
+        """Gets the health of the fighter."""
         return self._health
 
     @health.setter
     def health(self, value: int):
-        """
-        Sets the health of the fighter.
-
-        Args:
-            value (int): The new health value.
-
-        Raises:
-            ValueError: If the health value is negative.
-        """
+        """Sets the health of the fighter."""
         if value < 0:
             raise ValueError("Health cannot be negative")
         self._health = value
 
     @property
     def position(self) -> Vector2:
-        """
-        Gets the position of the fighter.
-
-        Returns:
-            Tuple[int, int]: The position of the fighter.
-        """
+        """Gets the position of the fighter."""
         return self._position
 
     @position.setter
     def position(self, value: Vector2):
-        """
-        Sets the position of the fighter.
-
-        Args:
-            value (Tuple[int, int]): The new position value.
-
-        Raises:
-            ValueError: If any position coordinate is negative.
-        """
-        if value[0] < 0 or value[1] < 0:
+        """Sets the position of the fighter."""
+        if value.x < 0 or value.y < 0:
             raise ValueError("Position coordinates cannot be negative")
         self._position = value
 
     @property
     def size(self) -> Vector2:
-        """
-        Gets the size of the fighter.
-
-        Returns:
-            Tuple[int, int]: The size of the fighter.
-        """
+        """Gets the size of the fighter."""
         return self._size
 
     @property
     def velocity(self) -> Vector2:
-        """
-        Gets the velocity of the fighter.
-
-        Returns:
-            Tuple[int, int]: The velocity of the fighter.
-        """
+        """Gets the velocity of the fighter."""
         return self._velocity
 
     @velocity.setter
     def velocity(self, value: Vector2):
-        """
-        Sets the velocity of the fighter.
-
-        Args:
-            value (Tuple[int, int]): The new velocity value.
-
-        Raises:
-            ValueError: If any velocity component is negative.
-        """
-        if value[0] < 0 or value[1] < 0:
+        """Sets the velocity of the fighter."""
+        if value.x < 0 or value.y < 0:
             raise ValueError("Velocity components cannot be negative")
         self._velocity = value
 
     @property
     def attack_power(self) -> int:
-        """
-        Gets the attack power of the fighter.
-
-        Returns:
-            int: The attack power of the fighter.
-        """
+        """Gets the attack power of the fighter."""
         return self._attack_power
 
     def move(self, direction: str):
@@ -175,45 +108,47 @@ class Fighter:
         Args:
             direction (str): The direction to move ("left" or "right").
         """
+
+        displacement = self._physic.update_horizontal(self._delta_time)
+
         if direction == "left":
-            new_x = self._position[0] - self._velocity[0]
+            new_x = self._position.x - displacement
+            print(f"Moving left: {self._position.x} -> {new_x}")
             if new_x >= 0:
-                self._position = (new_x, self._position[1])
+                self._position.x = new_x
         elif direction == "right":
-            new_x = self._position[0] + self._velocity[0]
+            new_x = self._position.x + displacement
+            print(f"Moving right: {self._position.x} -> {new_x}")
             if new_x <= self._screen_width - self._size[0]:
-                self._position = (new_x, self._position[1])
+                self._position.x = new_x
+
+        print(f"Current position: {self._position.x}")
 
     def jump(self):
-        """
-        Makes the fighter jump.
-        """
+        """Makes the fighter jump."""
         if self._on_ground:
-            self._vertical_velocity = -self._jump_speed
-            self._initial_y_position = self._position[1]
+            self._physic.vertical_speed = -self._jump_speed
+            self._initial_y_position = self._position.y
             self._on_ground = False
 
     def apply_gravity(self):
-        """
-        Applies gravity to the fighter, making it fall if not on the ground.
-        """
+        """Applies gravity to the fighter, making it fall if not on the ground."""
+
         if not self._on_ground:
-            self._vertical_velocity += self._gravity
-            new_y = self._position[1] + self._vertical_velocity
+            vertical_displacement = self._physic.update_vertical(self._delta_time)
+            new_y = self._position.y + vertical_displacement
+
             if new_y >= self._initial_y_position:
                 new_y = self._initial_y_position
                 self._on_ground = True
-                self._vertical_velocity = 0
-            elif new_y < 0:
-                new_y = 0
-                self._vertical_velocity = 0
-            self._position = (self._position[0], new_y)
+                self._physic.vertical_speed = 0
+
+            self._position.y = new_y
 
     def attack(self) -> int:
-        """
-        Executes an attack and returns the attack power.
-
-        Returns:
-            int: The attack power of the fighter.
-        """
+        """Executes an attack and returns the attack power."""
         return self._attack_power
+
+    def update(self, delta_time):
+        self._delta_time = delta_time
+        self.apply_gravity()

@@ -9,10 +9,14 @@ Usage example:
     display.update(player_1, player_2)
 """
 
-import pygame # pylint: disable=E1101
+import pygame  # pylint: disable=E1101
+from application.use_cases.update_health import UpdateHealthUseCase
+from core.shared.vector_2 import Vector2
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
+from presentation.presenters.health_bar_presenter import HealthBarPresenter
+from presentation.ui.health_bar_view import HealthBarView
 
 
 class PyGameDisplay(DisplayInterface):
@@ -38,7 +42,7 @@ class PyGameDisplay(DisplayInterface):
             stage: The stage object containing the background image path.
         """
 
-        pygame.init() # pylint: disable=E1101
+        pygame.init()  # pylint: disable=E1101
 
         # CONFIGURAÇÔES DA TELA
         self.screen = pygame.display.set_mode((GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT))
@@ -51,6 +55,13 @@ class PyGameDisplay(DisplayInterface):
 
         # RENDER DO PLAYER
         self.rectangle_renderer = PyGameRenderer(self.screen)
+
+        # health bar
+        health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
+        self.health_bar_view = HealthBarView(
+            self.screen, Vector2(10, 10), health_bar_presenter, max_bar_length=300
+        )
+        health_bar_presenter.view = self.health_bar_view
 
     def update(self, player_1, player_2):
         """
@@ -79,5 +90,13 @@ class PyGameDisplay(DisplayInterface):
             player_2.controller.fighter.position,
             player_2.controller.fighter.size,
         )
+
+        # HEALTH_BAR
+        if player_1.controller.fighter.health > 0:
+            player_1.controller.fighter.health -= (
+                1  # Simula dano para fins de demonstração
+            )
+
+        self.health_bar_view.update_health(player_1.controller.fighter.health)
 
         pygame.display.flip()
