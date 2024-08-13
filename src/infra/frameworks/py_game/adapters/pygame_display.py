@@ -59,7 +59,7 @@ class PyGameDisplay(DisplayInterface):
         # health bar
         health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
         self.health_bar_view = HealthBarView(
-            self.screen, Vector2(10, 10), health_bar_presenter, max_bar_length=200
+            self.screen, Vector2(10, 10), health_bar_presenter, max_bar_length=300
         )
         health_bar_presenter.view = self.health_bar_view
 
@@ -91,12 +91,12 @@ class PyGameDisplay(DisplayInterface):
             player_2.controller.fighter.size,
         )
 
-        # HEALTH_BAR   
+        # HEALTH_BAR
         if player_1.controller.fighter.health > 0:
             player_1.controller.fighter.health -= (
                 1  # Simula dano para fins de demonstração
             )
 
-        self.health_bar_view.update_health(player_1.controller.fighter.health)     
+        self.health_bar_view.update_health(player_1.controller.fighter.health)
 
         pygame.display.flip()

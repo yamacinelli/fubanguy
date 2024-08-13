@@ -38,14 +38,14 @@ class Fighter:
         self._attack_power = attack_power
         self._size = (60, 160)
         self._position = position
+
         self._screen_width, self._screen_height = (
             GC.SCREENSIZEWIDTH,
             GC.SCREENSIZEHEIGHT,
         )
         self._on_ground = True
-        self._gravity = GC.GRAVITY
-        self._jump_speed = 50.0
-        self._vertical_velocity = 0.0
+        self._jump_speed = GC.GRAVITY
+        # self._vertical_velocity = 0.0
         self._initial_y_position = position.y
         self._physic = Physic(GC.INITIAL_SPEED, GC.ACCELERATION, GC.GRAVITY)
         self._delta_time = 0

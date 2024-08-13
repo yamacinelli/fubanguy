@@ -52,15 +52,15 @@ class HealthBarView:
         """
         bar_length = (health / 100) * self.max_bar_length  # Assuming max_health = 100
         color = (255, 255, 0)
-        dimensions = (bar_length, 30)
-        bg_helthbar = (204, 34)
+        dimensions = (bar_length, 28)
+        bg_helthbar = (self.max_bar_length + 4, dimensions[1] + 4)
         position_x = self.position.x + (bg_helthbar[0] / 2) - (self.max_bar_length / 2)
         position_y = self.position.y + (bg_helthbar[1] / 2) - (dimensions[1] / 2)
-        positio_health_bar = Vector2(position_x, position_y)
+        position_health_bar = Vector2(position_x, position_y)
         bg_dimensions = (self.max_bar_length, dimensions[1])
         self.rectangle_renderer.draw((255, 255, 255), self.position, bg_helthbar)
-        self.rectangle_renderer.draw((255, 0, 0), positio_health_bar, bg_dimensions)
-        self.rectangle_renderer.draw(color, positio_health_bar, dimensions)
+        self.rectangle_renderer.draw((255, 0, 0), position_health_bar, bg_dimensions)
+        self.rectangle_renderer.draw(color, position_health_bar, dimensions)
 
     def take_damage(self, fighter: Type[Fighter], damage: int):
         """
