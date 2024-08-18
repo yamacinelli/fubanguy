@@ -15,7 +15,7 @@ import infra.game_config as GC
 def main():
     pygame.init()  # pylint: disable=E1101
 
-    last_time = 0
+    last_time = pygame.time.get_ticks() / 1000.0
 
     # cria os lutadores
     fighter_1 = get_fighter_details.execute("Player1")
@@ -48,16 +48,16 @@ def main():
                 running = False
 
         # PEGA O TEMPO CONSTANTIMENTE
-        current_time = time.time()
+        current_time = pygame.time.get_ticks() / 1000.0
         delta_time = current_time - last_time
         last_time = current_time
 
-        player_1.update()
-        player_2.update()
-        fighter_1.update(delta_time)
-        fighter_2.update(delta_time)
+        # player_1.update()
+        # player_2.update()
+        # fighter_1.update(delta_time)
+        # fighter_2.update(delta_time)
 
-        display.update(player_1, player_2)
+        display.update(player_1, player_2, delta_time)
 
         # pygame.display.flip()
         clock.tick(GC.FPS)

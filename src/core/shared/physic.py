@@ -20,5 +20,5 @@ class Physic:
         )
         self.vertical_speed += (
             self.gravity * delta_time
-        )  # Atualização correta da velocidade vertical
+        )  
         return vertical_displacement
