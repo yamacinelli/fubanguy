@@ -45,7 +45,6 @@ class Fighter:
         )
         self._on_ground = True
         self._jump_speed = GC.GRAVITY
-        # self._vertical_velocity = 0.0
         self._initial_y_position = position.y
         self._physic = Physic(GC.INITIAL_SPEED, GC.ACCELERATION, GC.GRAVITY)
         self._delta_time = 0

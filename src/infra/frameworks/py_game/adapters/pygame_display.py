@@ -16,7 +16,9 @@ from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
 from presentation.presenters.health_bar_presenter import HealthBarPresenter
+from presentation.presenters.playing_time_presenter import PlayingTimePresenter
 from presentation.ui.health_bar_view import HealthBarView
+from presentation.ui.playing_time_view import PlayingTimeView
 
 
 class PyGameDisplay(DisplayInterface):
@@ -34,7 +36,7 @@ class PyGameDisplay(DisplayInterface):
 
     music_path: str
 
-    def __init__(self, stage):
+    def __init__(self, stage, initial_time: int = 90):
         """
         Initializes the PyGameDisplay with the provided stage.
 
@@ -56,14 +58,32 @@ class PyGameDisplay(DisplayInterface):
         # RENDER DO PLAYER
         self.rectangle_renderer = PyGameRenderer(self.screen)
 
-        # health bar
+        # health bar 1
         health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
-        self.health_bar_view = HealthBarView(
+        self.health_bar_view_1 = HealthBarView(
             self.screen, Vector2(10, 10), health_bar_presenter, max_bar_length=300
         )
-        health_bar_presenter.view = self.health_bar_view
+        health_bar_presenter.view = self.health_bar_view_1
 
-    def update(self, player_1, player_2):
+        # health bar 2
+        health_bar_presenter = HealthBarPresenter(None, UpdateHealthUseCase())
+        self.health_bar_view_2 = HealthBarView(
+            self.screen,
+            Vector2(GC.SCREENSIZEWIDTH - 310, 10),
+            health_bar_presenter,
+            max_bar_length=300,
+        )
+        health_bar_presenter.view = self.health_bar_view_2
+
+        self.playing_time_presenter = PlayingTimePresenter(initial_time)
+        self.playing_time_view = PlayingTimeView(
+            screen=self.screen,
+            position=Vector2((GC.SCREENSIZEWIDTH / 2) - 10, 10),
+            playing_time_presenter=self.playing_time_presenter,
+            initial_time=initial_time,
+        )
+
+    def update(self, player_1, player_2, delta_time):
         """
         Updates the game display with the current positions and states of the players.
 
@@ -71,6 +91,11 @@ class PyGameDisplay(DisplayInterface):
             player_1: The first player's controller with fighter attributes.
             player_2: The second player's controller with fighter attributes.
         """
+
+        player_1.update()
+        player_2.update()
+        player_1.controller.fighter.update(delta_time)
+        player_2.controller.fighter.update(delta_time)
 
         self.screen.fill((0, 0, 0))
 
@@ -91,12 +116,22 @@ class PyGameDisplay(DisplayInterface):
             player_2.controller.fighter.size,
         )
 
-        # HEALTH_BAR
+        # HEALTH_BAR 1
         if player_1.controller.fighter.health > 0:
             player_1.controller.fighter.health -= (
                 1  # Simula dano para fins de demonstração
             )
 
-        self.health_bar_view.update_health(player_1.controller.fighter.health)
+        self.health_bar_view_1.update_health(player_1.controller.fighter.health)
+
+        # HEALTH_BAR 2
+        if player_2.controller.fighter.health > 0:
+            player_2.controller.fighter.health -= (
+                1  # Simula dano para fins de demonstração
+            )
+
+        self.health_bar_view_2.update_health(player_2.controller.fighter.health)
+
+        self.playing_time_view.update_time(delta_time)
 
         pygame.display.flip()

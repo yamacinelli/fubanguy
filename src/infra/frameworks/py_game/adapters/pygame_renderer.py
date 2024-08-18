@@ -44,6 +44,19 @@ class PyGameRenderer(Renderer):
 
         rect_args = (position.x, position.y, *dimensions)
 
-        # Desenhe o retângulo
         pygame.draw.rect(self.screen, color, rect_args)
-        # pygame.draw.rect(self.screen, color, (position, *dimensions))
+
+    def draw_text(self, text: str, position: Vector2, font_size: int, color: tuple):
+        """
+        Draws text on the screen at the specified position.
+
+        Args:
+            text (str): The text to be rendered.
+            position (Vector2): The position (x, y) where the text should be drawn.
+            font_size (int): The size of the font.
+            color (tuple): The RGB color of the text.
+        """
+
+        font = pygame.font.SysFont(None, font_size)
+        text_surface = font.render(text, True, color)
+        self.screen.blit(text_surface, (position.x, position.y))
