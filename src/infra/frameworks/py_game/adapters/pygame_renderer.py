@@ -46,7 +46,7 @@ class PyGameRenderer(Renderer):
 
         pygame.draw.rect(self.screen, color, rect_args)
 
-    def draw_text(self, text: str, position: Vector2, font_size: int, color: tuple):
+    def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple):
         """
         Draws text on the screen at the specified position.
 
@@ -57,6 +57,7 @@ class PyGameRenderer(Renderer):
             color (tuple): The RGB color of the text.
         """
 
-        font = pygame.font.SysFont(None, font_size)
+        # font = pygame.font.SysFont(None, font_size)
+        font = fonts
         text_surface = font.render(text, True, color)
         self.screen.blit(text_surface, (position.x, position.y))

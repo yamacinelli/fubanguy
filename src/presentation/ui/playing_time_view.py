@@ -8,6 +8,9 @@ from core.shared.vector_2 import Vector2
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 from presentation.presenters.playing_time_presenter import PlayingTimePresenter
 
+# TODO remover dependencia do pygame da view
+import pygame
+
 
 class PlayingTimeView:
     """
@@ -61,9 +64,12 @@ class PlayingTimeView:
             self.time_left = 0
 
         time_text = f"{self.time_left}"
-        font_size = 48
-        self.time_renderer.draw_text(time_text, self.position, font_size, (255, 255, 0))
-        print(delta_time)
+        font_size = 30
+        font = pygame.font.Font(
+            "/home/marcio/projects/fubanguy/src/infra/assets/fonts/vintage_warehouse/VintageWarehouse.ttf",
+            font_size,
+        )
+        self.time_renderer.draw_text(font, time_text, self.position, (255, 255, 0))
 
     def on_time_tick(self, time_delta: int):
         """
