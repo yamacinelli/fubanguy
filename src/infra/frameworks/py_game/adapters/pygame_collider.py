@@ -1,22 +1,25 @@
-import pygame
 
 from core.interfaces.collider import ColliderInterface
 from core.shared.vector_2 import Vector2
 
 class PyGameCollider(ColliderInterface):
 
-    def _init_(self, rect: pygame.Rect):
+    def __init__(self, player, direction, rect, rects):
+        self.player = player
+        self.direction = direction
         self.rect = rect
+        self.rects = rects
+        self.resolve_collision()
 
-    def get_collider(self):
-        return self.rect
-
-    def resolve_collision(self, new_position: Vector2) -> Vector2:
-        # Atualiza a posição do rect temporariamente
-        self.rect.topleft = (new_position.x, new_position.y)
-
-        # Detecta colisão com o solo (por exemplo, y = 150)
-        if self.rect.bottom >= 150:
-            new_position.y = 150 - self.rect.height + 0.01  # Ajusta para ficar logo acima do solo
-
-        return new_position
+    def get_collision(self, rect) -> bool:
+        return self.rect.colliderect(rect)
+    
+    def resolve_collision(self) -> None:
+        for rect in self.rects:
+            if self.get_collision(rect):
+                if self.rect.y > rect.y:
+                    self.player.controller.fighter.position.y = 150
+                # if self.direction == "left":
+                #     self.player.controller.fighter.position.x += 2
+                # elif self.direction == "right":
+                #     self.player.controller.fighter.position.x -= 2
