@@ -10,6 +10,7 @@ FPS = 60
 
 # __MUSIC__
 STAGE_VOLUME = 0.0
+FX_VOLUME = 0.5
 LOOP = -1
 
 # __PHYSICS
