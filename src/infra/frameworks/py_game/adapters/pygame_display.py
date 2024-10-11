@@ -10,11 +10,11 @@ Usage example:
 """
 
 import pygame  # pylint: disable=E1101
+import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
 from core.shared.vector_2 import Vector2
 from application.use_cases.update_health import UpdateHealthUseCase
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
-import infra.game_config as GC
 from presentation.presenters.health_bar_presenter import HealthBarPresenter
 from presentation.presenters.playing_time_presenter import PlayingTimePresenter
 from presentation.ui.health_bar_view import HealthBarView
@@ -133,5 +133,8 @@ class PyGameDisplay(DisplayInterface):
         self.health_bar_view_2.update_health(player_2.controller.fighter.health)
 
         self.playing_time_view.update_time(delta_time)
+
+        """Animator"""
+        # animations = player_1.controller.fighter.
 
         pygame.display.flip()
