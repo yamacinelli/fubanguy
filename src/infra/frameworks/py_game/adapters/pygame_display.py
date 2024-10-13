@@ -50,11 +50,6 @@ class PyGameDisplay(DisplayInterface):
         self.player_1 = player_1
         self.player_2 = player_2
 
-        self.sprite_sheet_player_1 = self.player_1.controller.fighter._sprite_sheet
-        self.sprite_sheet_player_2 = self.player_2.controller.fighter._sprite_sheet
-        self.sprite_sheet_player_1.convert_alpha()
-        self.sprite_sheet_player_2.convert_alpha()
-
         # CONFIGURAÇÔES DA TELA
         self.screen = screen_size
 
@@ -94,6 +89,14 @@ class PyGameDisplay(DisplayInterface):
     
         self.time = 0.0
 
+         # Carregar as sprite sheets originais dos jogadores
+        self.sprite_sheet_player_1 = self.player_1.controller.fighter._sprite_sheet.convert_alpha()
+        self.sprite_sheet_player_2 = self.player_2.controller.fighter._sprite_sheet.convert_alpha()
+
+        # Criar versões invertidas das sprite sheets para uso posterior
+        self.sprite_sheet_player_1_flipped = pygame.transform.flip(self.sprite_sheet_player_1, True, False)
+        self.sprite_sheet_player_2_flipped = pygame.transform.flip(self.sprite_sheet_player_2, True, False)
+
     def update(self, delta_time):
         """
         Updates the game display with the current positions and states of the players.
@@ -112,23 +115,7 @@ class PyGameDisplay(DisplayInterface):
 
         self.screen.blit(self.bg_scaleed, (0, 0))
 
-        # Desenha o lutador na tela
-        # PLAYER 1
-        # self.rectangle_renderer.draw(
-        #     (255, 0, 0),
-        #     player_1.controller.fighter.position,
-        #     player_1.controller.fighter.size,
-        # )
-
-        # PLAYER 2
-        # self.rectangle_renderer.draw(
-        #     (255, 255, 0),
-        #     player_2.controller.fighter.position,
-        #     player_2.controller.fighter.size,
-        # )
-
-
-        # gismo do hitbox
+        # gismo do sprite_sheet
         pygame.draw.rect(
             self.screen,
             (0, 252, 6),
@@ -153,46 +140,33 @@ class PyGameDisplay(DisplayInterface):
             2
         )
 
-        # HEALTH_BAR 1
-        # if player_1.controller.fighter.health > 0:
-        #     player_1.controller.fighter.health -= (
-        #         1  # Simula dano para fins de demonstração
-        #     )
-
         self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
-
-        # HEALTH_BAR 2
-        # if player_2.controller.fighter.health > 0:
-        #     player_2.controller.fighter.health -= (
-        #         1  # Simula dano para fins de demonstração
-        #     )
-
         self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
 
         self.playing_time_view.update_time(delta_time)
 
         """Animator"""
-
-        self.screen.blit(
-            self.sprite_sheet_player_1,
-            (self.player_1.controller.fighter.position.x, self.player_1.controller.fighter.position.y),
-            (
-                self.player_1.controller.fighter.coordinate.x,
-                self.player_1.controller.fighter.coordinate.y,
-                self.player_1.controller.fighter.size.x,
-                self.player_1.controller.fighter.size.y,
+        # Verifica as posições para ajustar a orientação dos lutadores
+        for player, opponent, sprite_sheet in [(self.player_1, self.player_2, self.sprite_sheet_player_1),
+                                            (self.player_2, self.player_1, self.sprite_sheet_player_2)]:
+            # Recorte a sprite atual da sprite sheet
+            sprite = sprite_sheet.subsurface(
+                (
+                    player.controller.fighter.coordinate.x,
+                    player.controller.fighter.coordinate.y,
+                    player.controller.fighter.size.x,
+                    player.controller.fighter.size.y,
+                )
             )
-        )
 
-        self.screen.blit(
-            self.sprite_sheet_player_2,
-            (self.player_2.controller.fighter.position.x, self.player_2.controller.fighter.position.y),
-            (
-                self.player_2.controller.fighter.coordinate.x,
-                self.player_2.controller.fighter.coordinate.y,
-                self.player_2.controller.fighter.size.x,
-                self.player_2.controller.fighter.size.y,
+            # Inverte a sprite se o lutador estiver virado para o outro lado
+            if player.controller.fighter.position.x > opponent.controller.fighter.position.x:
+                sprite = pygame.transform.flip(sprite, True, False)
+
+            # Desenha a sprite na tela
+            self.screen.blit(
+                sprite,
+                (player.controller.fighter.position.x, player.controller.fighter.position.y)
             )
-        )
 
         pygame.display.flip()

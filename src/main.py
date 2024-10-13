@@ -32,8 +32,8 @@ def main():
     land_fx.load_sound(os.path.join(SOUND_DIR, "land_fx.mp3"))
     punch_fx.load_sound(os.path.join(SOUND_DIR, "punch_fx.mp3"))
 
-    sprite_sheet_fighter_1 = pygame.image.load(os.path.join(IMAGE_DIR, "quico.png"))
-    sprite_sheet_fighter_2 = pygame.image.load(os.path.join(IMAGE_DIR, "madruga.png"))
+    sprite_sheet_fighter_1 = pygame.image.load(os.path.join(IMAGE_DIR, "quico_2.png"))
+    sprite_sheet_fighter_2 = pygame.image.load(os.path.join(IMAGE_DIR, "madruga_2.png"))
 
     # cria os lutadores
     fighter_1 = get_fighter_details.execute("quico", jump_fx, land_fx, punch_fx, sprite_sheet_fighter_1)
