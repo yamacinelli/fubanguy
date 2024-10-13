@@ -14,7 +14,7 @@ from data.fighter_data import FIGHTERS_DATA
 from domain.entities.fighter import Fighter
 
 
-def execute(fighter_name: str, jump_fx, land_fx, punch_fx) -> Fighter:
+def execute(fighter_name: str, jump_fx, land_fx, punch_fx, sprite_sheet) -> Fighter:
     """
     Creates and returns a Fighter instance based on the provided fighter name.
 
@@ -38,9 +38,10 @@ def execute(fighter_name: str, jump_fx, land_fx, punch_fx) -> Fighter:
         name=_fighter_data["name"],
         health=_fighter_data["health"],
         position=_fighter_data["position"],
+        size=_fighter_data["size"],
         attack_power=_fighter_data["attack_power"],
         animations=animations,
-        sprite_path=_fighter_data["sprite_path"],
+        sprite_sheet=sprite_sheet,
         jump_fx=jump_fx,
         land_fx=land_fx,
         punch_fx=punch_fx,

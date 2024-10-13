@@ -15,11 +15,11 @@ class Sprite:
         self._coordinate = value
 
     @property
-    def speed_animaton(self) -> float:
+    def speed_animation(self) -> float:
         return self._speed_animation
 
-    @speed_animaton.setter
-    def speed_animaton(self, value) -> None:
+    @speed_animation.setter
+    def speed_animation(self, value) -> None:
         self._speed_animation = value
 
     def __repr__(self):
