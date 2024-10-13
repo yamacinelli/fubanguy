@@ -46,18 +46,41 @@ class PyGameRenderer(Renderer):
 
         pygame.draw.rect(self.screen, color, rect_args)
 
-    def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple):
+    # def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple):
+    #     """
+    #     Draws text on the screen at the specified position.
+
+    #     Args:
+    #         text (str): The text to be rendered.
+    #         position (Vector2): The position (x, y) where the text should be drawn.
+    #         font_size (int): The size of the font.
+    #         color (tuple): The RGB color of the text.
+    #     """
+
+    #     # font = pygame.font.SysFont(None, font_size)
+    #     font = fonts
+    #     text_surface = font.render(text, True, color)
+    #     self.screen.blit(text_surface, (position.x, position.y))
+
+    def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple, centered=False):
         """
-        Draws text on the screen at the specified position.
+        Draws text on the screen at the specified position, with an option to center the text.
 
         Args:
+            fonts (any): The font object to use for rendering the text.
             text (str): The text to be rendered.
             position (Vector2): The position (x, y) where the text should be drawn.
-            font_size (int): The size of the font.
             color (tuple): The RGB color of the text.
+            centered (bool): Whether to center the text on the given position.
         """
+        text_surface = fonts.render(text, True, color)
+        text_rect = text_surface.get_rect()
 
-        # font = pygame.font.SysFont(None, font_size)
-        font = fonts
-        text_surface = font.render(text, True, color)
-        self.screen.blit(text_surface, (position.x, position.y))
+        if centered:
+            # Centraliza o texto na posição fornecida
+            text_rect.center = (position.x, position.y)
+        else:
+            # Coloca o texto no canto superior esquerdo da posição fornecida
+            text_rect.topleft = (position.x, position.y)
+
+        self.screen.blit(text_surface, text_rect)
