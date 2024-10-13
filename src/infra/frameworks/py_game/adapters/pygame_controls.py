@@ -4,7 +4,6 @@ from domain.entities.fighter import Fighter
 from domain.entities.control import Control
 from data.control_data import CONTROLS_DATA
 
-
 class PyGameController:
     def __init__(self, fighter: Fighter, control_name: str):
         self.controller = Controller(fighter)

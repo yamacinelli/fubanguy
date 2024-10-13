@@ -89,6 +89,58 @@ Download and import the profile containing the extensions into vscode, [Extentio
 }
 ```
 
+## Set Workspace
+
+- Download and install pyenv for Windows or Mac or Linux
+- Install and configure version python global
+```bash
+pyenv install x.xx.xx
+```
+```bash
+pyenv global x.xx.xx
+```
+
+- Active a version in yor root project dir
+```bash
+pyenv local x.xx.xx
+```
+
+- Download and configuration `Poetry` this instalations  must be make every python version.
+```bash
+pip install poetry
+```
+- Create project with poretry
+```besh
+poetry new name_project
+```
+- Creates a basic pyproject.toml file in the current directory.
+```bash
+poetry init
+```
+
+- Configure the poetry for create the virtual envs inner project
+```bash
+poetry config virtualenvs.in-project true
+```
+
+- Create and activate venvs with poetry
+```bash
+poetry shell
+```
+- Install libs with poetry
+```bash
+poetry add lib_name
+```
+- For after clone this project to github
+```bash
+poetry install
+```
+
+- For more information about poetry
+```bash
+poetry list
+```
+
 ## Project structure
 
 ```plaintext
