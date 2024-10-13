@@ -3,13 +3,16 @@ This module contains the PlayingTimeView class, which is responsible
 for rendering and updating the playing time in the game.
 """
 
+import os
 from typing import Any, Type
 from core.shared.vector_2 import Vector2
 from infra.frameworks.py_game.adapters.pygame_renderer import PyGameRenderer
 from presentation.presenters.playing_time_presenter import PlayingTimePresenter
+from core.settings import FONTS_DIR
 
 # TODO remover dependencia do pygame da view
 import pygame
+
 
 
 class PlayingTimeView:
@@ -65,10 +68,8 @@ class PlayingTimeView:
 
         time_text = f"{self.time_left}"
         font_size = 30
-        font = pygame.font.Font(
-            "/home/marcio/projects/fubanguy/src/infra/assets/fonts/vintage_warehouse/VintageWarehouse.ttf",
-            font_size,
-        )
+        font_path = os.path.join(FONTS_DIR, "Vintage Warehouse.ttf")
+        font = pygame.font.Font(font_path, font_size)
         self.time_renderer.draw_text(font, time_text, self.position, (255, 255, 0))
 
     def on_time_tick(self, time_delta: int):
