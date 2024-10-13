@@ -270,7 +270,8 @@ class PyGameDisplay(DisplayInterface):
                 print(f"Posição do jogador 2: {self.player_2.controller.fighter.position}")
 
                 # Reiniciar o tempo para o valor inicial, chamando o método com a flag True
-                # self.playing_time_presenter.reset_time(True)
+                self.playing_time_presenter.reset_time()  # Reseta o tempo
+                self.playing_time_view.reset_time()  # Reseta a view
 
                 # Iniciar um novo round
                 self.round_presenter.start_new_round()
