@@ -16,7 +16,7 @@ FIGHTERS_DATA = {
         # Posiciona o Quico à esquerda do centro da tela, levando em consideração a largura do lutador
         "position": Vector2((GC.SCREENSIZEWIDTH / 2) - fighter_width * 1.5, (GC.SCREENSIZEHEIGHT / 2) - vertical_offset),
         "size": Vector2(fighter_width, 160),
-        "attack_power": 10,
+        "attack_power": 1.5,
         "animations": ANIMATION_DATA,
     },
     "madruga": {
@@ -25,7 +25,7 @@ FIGHTERS_DATA = {
         # Posiciona o Madruga à direita do centro da tela, levando em consideração a largura do lutador
         "position": Vector2((GC.SCREENSIZEWIDTH / 2) + fighter_width * 0.5, (GC.SCREENSIZEHEIGHT / 2) - vertical_offset),
         "size": Vector2(fighter_width, 160),
-        "attack_power": 10,
+        "attack_power": 1.5,
         "animations": ANIMATION_DATA,
     },
 }

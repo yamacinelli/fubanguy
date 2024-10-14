@@ -109,15 +109,13 @@ class Fighter:
         return self._name
 
     @property
-    def health(self) -> int:
+    def health(self) -> float:
         """Gets the health of the fighter."""
         return self._health
 
     @health.setter
-    def health(self, value: int):
+    def health(self, value: float):
         """Sets the health of the fighter."""
-        if value < 0:
-            raise ValueError("Health cannot be negative")
         self._health = value
 
     @property
