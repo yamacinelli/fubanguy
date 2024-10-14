@@ -21,7 +21,7 @@ ANIMATION_DATA = [
     {
         "name": "attack",
         "sprites": [
-            # {"coordinate": Vector2(5, 150), "speed_animation": 0.1},
+            # {"coordinate": Vector2(0, 240), "speed_animation": 0.1},
             {"coordinate": Vector2(100, 240), "speed_animation": 0.1},
             # {"coordinate": Vector2(600, 0), "speed_animation": 0.2},
             # {"coordinate": Vector2(600, 0), "speed_animation": 0.2},

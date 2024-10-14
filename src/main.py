@@ -65,6 +65,10 @@ def main():
             if event.type == pygame.QUIT:  # pylint: disable=E1101
                 running = False
 
+            # Verifica eventos de ataque
+            player_1.handle_event(event)
+            player_2.handle_event(event)
+
         # PEGA O TEMPO CONSTANTIMENTE
         current_time = pygame.time.get_ticks() / 1000.0
         delta_time = current_time - last_time
