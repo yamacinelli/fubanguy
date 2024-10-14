@@ -296,6 +296,7 @@ class PyGameDisplay(DisplayInterface):
                 # print(f"Posição do jogador 1: {self.player_1.controller.fighter.position}")
                 # print(f"Posição do jogador 2: {self.player_2.controller.fighter.position}")
 
+
                 # Reiniciar o tempo para o valor inicial, chamando o método com a flag True
                 self.playing_time_presenter.reset_time()  # Reseta o tempo
                 self.playing_time_view.reset_time()  # Reseta a view
@@ -330,6 +331,8 @@ class PyGameDisplay(DisplayInterface):
             self.player_2.controller.fighter.stop_attacking(False)
             if self.hit_box_hand_player_2.check_collision(self.hit_box_body_player_1) and not self.player_1.controller.fighter.current_action == "block":
                 self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
+
+        self.playing_time_presenter.update(delta_time)
 
         pygame.display.flip()
 
