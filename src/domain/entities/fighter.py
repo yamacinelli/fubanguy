@@ -20,6 +20,7 @@ from core.shared.vector_2 import Vector2
 from domain.entities.animation import Animation
 from infra.frameworks.py_game.adapters.pygame_sound import PyGameSound
 import infra.game_config as GC
+import random
 
 
 class Fighter:
@@ -39,6 +40,7 @@ class Fighter:
         jump_fx: SoundInterface = PyGameSound(),
         land_fx: SoundInterface = PyGameSound(),
         punch_fx: SoundInterface = PyGameSound(),
+        sound_fx_list = []
     ):
         """
         Initializes a new instance of the Fighter class.
@@ -77,7 +79,11 @@ class Fighter:
         self._land_fx = land_fx
         self._punch_fx = punch_fx
 
-        self._sound: SoundInterface = PyGameSound()
+        self._sound_fx_list = sound_fx_list
+        self._sound_fx: SoundInterface = PyGameSound()
+
+        self.time_speak = random.randint(4, 12)
+        self.speak_accumulated_time = 0
 
         ''' sprite_sheet '''
         self._sprite_sheet = sprite_sheet
@@ -259,18 +265,34 @@ class Fighter:
             self._current_sprite_index = (self._current_sprite_index + 1) % len(sprites)
             self.time = 0  # Reseta o tempo após trocar de sprite
 
+    def speake(self) -> None:
+        if not self._sound_fx_list:
+            print("No sound effects available.")
+            return
+        
+        # Gera um índice aleatório entre 0 e o tamanho da lista menos 1
+        random_index = random.randint(0, len(self._sound_fx_list) - 1)
+        
+        # Toca o som que está no índice aleatório
+        self._sound_fx = self._sound_fx_list[random_index]
+        self._sound_fx.play_sound()
+        # TODO trocar para melhor volume
+        self._sound_fx.volume_sound(0.2)
 
     def update(self, delta_time):
         self._delta_time = delta_time
         self.apply_gravity()
         self.set_coordinate()  
         self.idle_time += self._delta_time
-        # self.attack_time += self._delta_time
         if self.idle_time >= 0.5 and self._on_ground:
             self.idle_time = 0
             self.set_action("idle")
 
-        # if self.attack_time >= 2:
-        #     self._is_attacking = False
-        #     self.attack_time = 0
+        # Verifica se o tempo acumulado é maior ou igual ao tempo aleatório definido
+        self.speak_accumulated_time += self._delta_time
+        if self.speak_accumulated_time >= self.time_speak:
+            self.speake()  # Chama a função speak()
+            self.speak_accumulated_time = 0  # Zera o tempo acumulado
+            self.time_speak = random.randint(4, 12)  # Redefine o tempo aleatório para falar
+
 
