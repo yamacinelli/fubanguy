@@ -10,7 +10,9 @@ Usage example:
 """
 
 import pygame  # pylint: disable=E1101
+from core.interfaces.collision import CollisionInterface
 from data.fighter_data import FIGHTERS_DATA
+from infra.frameworks.py_game.adapters.pygame_collider import PyGameCollider
 import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
 from core.shared.vector_2 import Vector2
@@ -129,6 +131,40 @@ class PyGameDisplay(DisplayInterface):
         self.health_reduction_timer = 0
 
         self.round_presenter.start_new_round()
+
+        # Hitboxes
+        self.size_hit_box_body_player_1 = Vector2(50, 50)
+        self.size_hit_box_hand_player_1 = Vector2(20, 20)
+        # Obtenha a posição do lutador 1
+        self.position_player_1 = player_1.controller.fighter.position
+        # Obtenha a domenção do lutador 1
+        self.size_player_1 = player_1.controller.fighter.size
+
+        # Calcule a nova posição para centralizar o hitbox do corpo
+        self.position_hit_box_body_player_1 = Vector2(
+            self.position_player_1.x + self.size_player_1.x / 2 - self.size_hit_box_body_player_1.x / 2,
+            self.position_player_1.y + self.size_player_1.y / 2 - self.size_hit_box_body_player_1.y / 2 - 10
+        )
+
+        self.hit_box_body_player_1: CollisionInterface = PyGameCollider(self.position_hit_box_body_player_1, self.size_hit_box_body_player_1)
+        self.hit_box_hand_player_1: CollisionInterface = PyGameCollider(self.position_hit_box_body_player_1, self.size_hit_box_hand_player_1)
+
+        self.size_hit_box_body_player_2 = Vector2(50, 50)
+        self.size_hit_box_hand_player_2 = Vector2(20, 20)
+
+        # Obtenha a posição do lutador 2
+        self.position_player_2 = player_2.controller.fighter.position
+        # Obtenha a domenção do lutador 2
+        self.size_player_2 = player_2.controller.fighter.size
+
+        # Calcule a nova posição para centralizar o hitbox do corpo
+        self.position_hit_box_body_player_2 = Vector2(
+            self.position_player_2.x + self.size_player_2.x / 2 - self.size_hit_box_body_player_2.x / 2,
+            self.position_player_2.y + self.size_player_2.y / 2 - self.size_hit_box_body_player_2.y / 2 - 10
+        )
+
+        self.hit_box_body_player_2: CollisionInterface = PyGameCollider(self.position_hit_box_body_player_2, self.size_hit_box_body_player_2)
+        self.hit_box_hand_player_2: CollisionInterface = PyGameCollider(self.position_hit_box_body_player_2, self.size_hit_box_hand_player_2)
 
     def update(self, delta_time):
         """
@@ -265,6 +301,9 @@ class PyGameDisplay(DisplayInterface):
                 self.player_1.controller.fighter.position = Vector2((GC.SCREENSIZEWIDTH / 2) - self.player_1.controller.fighter.size.x * 1.5, (GC.SCREENSIZEHEIGHT / 2) - 20)  # Posição do jogador 1
                 self.player_2.controller.fighter.position = Vector2((GC.SCREENSIZEWIDTH / 2) + self.player_2.controller.fighter.size.x * 0.5, (GC.SCREENSIZEHEIGHT / 2) - 20)  # Posição do jogador 2
 
+                # Atualizar as posições dos hitboxes após redefinir as posições dos jogadores
+                self.update_hitboxes()
+
                 # Debug das posições
                 print(f"Posição do jogador 1: {self.player_1.controller.fighter.position}")
                 print(f"Posição do jogador 2: {self.player_2.controller.fighter.position}")
@@ -283,4 +322,65 @@ class PyGameDisplay(DisplayInterface):
         print(f"Round Atual: {self.round_presenter.current_round}")  # Verificação para debug
         self.round_view.update_round()
 
+    #    # Atualizar as posições dos hitboxes body
+    #     self.hit_box_body_player_1.update(Vector2(
+    #         self.position_player_1.x + self.size_player_1.x / 2 - self.size_hit_box_body_player_1.x / 2,
+    #         self.position_player_1.y + self.size_player_1.y / 2 - self.size_hit_box_body_player_1.y / 2 - 40
+    #     ))
+    #     self.hit_box_body_player_2.update(Vector2(
+    #         self.position_player_2.x + self.size_player_2.x / 2 - self.size_hit_box_body_player_2.x / 2,
+    #         self.position_player_2.y + self.size_player_2.y / 2 - self.size_hit_box_body_player_2.y / 2 - 40
+    #     ))
+
+        # Renderizar o hit_box_body para prioridade de renderização ser 1ª
+        self.hit_box_body_player_1.draw(self.screen, True)
+        self.hit_box_body_player_2.draw(self.screen, True)
+
+
+        # # Atualizar as posições dos hitboxes hand
+        # self.hit_box_hand_player_1.update(Vector2(
+        #     self.position_player_1.x + self.size_player_1.x / 2 - self.size_hit_box_body_player_1.x / 2 + 50,
+        #     self.position_player_1.y + self.size_player_1.y / 2 - self.size_hit_box_body_player_1.y / 2 - 15
+        # ))
+        # self.hit_box_hand_player_2.update(Vector2(
+        #     self.position_player_2.x + self.size_player_2.x / 2 - self.size_hit_box_body_player_2.x / 2 + 50,
+        #     self.position_player_2.y + self.size_player_2.y / 2 - self.size_hit_box_body_player_2.y / 2 - 15
+        # ))
+
+        # Renderizar o hit_box_body para prioridade de renderização ser 1ª
+        self.hit_box_hand_player_1.draw(self.screen, True)
+        self.hit_box_hand_player_2.draw(self.screen, True)
+
+        # Atualiza a posição das hitboxes para que sigam os lutadores
+        self.update_hitboxes()
+
         pygame.display.flip()
+
+    def update_hitboxes(self):
+        # Atualiza a posição da hitbox do corpo do jogador 1
+        self.position_hit_box_body_player_1 = Vector2(
+            self.player_1.controller.fighter.position.x + self.player_1.controller.fighter.size.x / 2 - self.size_hit_box_body_player_1.x / 2,
+            self.player_1.controller.fighter.position.y + self.player_1.controller.fighter.size.y / 2 - self.size_hit_box_body_player_1.y / 2 - 10
+        )
+        self.hit_box_body_player_1.update(self.position_hit_box_body_player_1)
+
+        # Atualiza a posição da hitbox da mão do jogador 1
+        self.position_hit_box_hand_player_1 = Vector2(
+            self.player_1.controller.fighter.position.x + self.player_1.controller.fighter.size.x / 2 - self.size_hit_box_body_player_1.x / 2 + 50,
+            self.player_1.controller.fighter.position.y + self.player_1.controller.fighter.size.y / 2 - self.size_hit_box_body_player_1.y / 2 - 15
+        )
+        self.hit_box_hand_player_1.update(self.position_hit_box_hand_player_1)
+
+        # Atualiza a posição da hitbox do corpo do jogador 2
+        self.position_hit_box_body_player_2 = Vector2(
+            self.player_2.controller.fighter.position.x + self.player_2.controller.fighter.size.x / 2 - self.size_hit_box_body_player_2.x / 2,
+            self.player_2.controller.fighter.position.y + self.player_2.controller.fighter.size.y / 2 - self.size_hit_box_body_player_2.y / 2 - 10
+        )
+        self.hit_box_body_player_2.update(self.position_hit_box_body_player_2)
+
+        # Atualiza a posição da hitbox da mão do jogador 2
+        self.position_hit_box_hand_player_2 = Vector2(
+            self.player_2.controller.fighter.position.x + self.player_2.controller.fighter.size.x / 2 - self.size_hit_box_body_player_2.x / 2 + 50,
+            self.player_2.controller.fighter.position.y + self.player_2.controller.fighter.size.y / 2 - self.size_hit_box_body_player_2.y / 2 - 15
+        )
+        self.hit_box_hand_player_2.update(self.position_hit_box_hand_player_2)
