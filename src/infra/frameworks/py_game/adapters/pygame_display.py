@@ -11,7 +11,9 @@ Usage example:
 
 import pygame  # pylint: disable=E1101
 from core.interfaces.collision import CollisionInterface
+from core.interfaces.sound import SoundInterface
 from infra.frameworks.py_game.adapters.pygame_collider import PyGameCollider
+from infra.frameworks.py_game.adapters.pygame_sound import PyGameSound
 import infra.game_config as GC
 from core.interfaces.display import DisplayInterface
 from core.shared.vector_2 import Vector2
@@ -42,7 +44,7 @@ class PyGameDisplay(DisplayInterface):
 
     music_path: str
 
-    def __init__(self, stage, screen_size, player_1, player_2, initial_time: int = 90):
+    def __init__(self, stage, screen_size, player_1, player_2, fight_fx: SoundInterface = PyGameSound(), initial_time: int = 90):
         """
         Initializes the PyGameDisplay with the provided stage.
 
@@ -51,6 +53,9 @@ class PyGameDisplay(DisplayInterface):
         """
 
         pygame.init()  # pylint: disable=E1101
+
+        # Sounds FX
+        self._fight_fx = fight_fx
 
         # Players
         self.player_1 = player_1
@@ -129,7 +134,7 @@ class PyGameDisplay(DisplayInterface):
         # só para teste
         self.health_reduction_timer = 0
 
-        self.round_presenter.start_new_round()
+        self.round_presenter.start_new_round(self._fight_fx)
 
         # Hitboxes
         self.hit_box_offset_y = 40
@@ -302,7 +307,7 @@ class PyGameDisplay(DisplayInterface):
                 self.playing_time_view.reset_time()  # Reseta a view
 
                 # Iniciar um novo round
-                self.round_presenter.start_new_round()
+                self.round_presenter.start_new_round(self._fight_fx)
 
         except Exception as e:
             print(f"Ocorreu um erro: {e}")
