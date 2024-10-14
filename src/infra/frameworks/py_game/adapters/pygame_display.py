@@ -305,8 +305,8 @@ class PyGameDisplay(DisplayInterface):
                 self.update_hitboxes()
 
                 # Debug das posições
-                print(f"Posição do jogador 1: {self.player_1.controller.fighter.position}")
-                print(f"Posição do jogador 2: {self.player_2.controller.fighter.position}")
+                # print(f"Posição do jogador 1: {self.player_1.controller.fighter.position}")
+                # print(f"Posição do jogador 2: {self.player_2.controller.fighter.position}")
 
                 # Reiniciar o tempo para o valor inicial, chamando o método com a flag True
                 self.playing_time_presenter.reset_time()  # Reseta o tempo
@@ -319,7 +319,7 @@ class PyGameDisplay(DisplayInterface):
             print(f"Ocorreu um erro: {e}")
 
         # Desenhar o round na tela
-        print(f"Round Atual: {self.round_presenter.current_round}")  # Verificação para debug
+        # print(f"Round Atual: {self.round_presenter.current_round}")  # Verificação para debug
         self.round_view.update_round()
 
         # Renderizar o hit_box_body para prioridade de renderização ser 1ª
@@ -330,6 +330,9 @@ class PyGameDisplay(DisplayInterface):
 
         # Atualiza a posição das hitboxes para que sigam os lutadores
         self.update_hitboxes()
+
+        # if self.player_1.controller.fighter._is_attacking:
+        #     print('atacou')
 
         pygame.display.flip()
 

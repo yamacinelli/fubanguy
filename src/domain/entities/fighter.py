@@ -87,7 +87,6 @@ class Fighter:
         self.idle_time = 0
 
         self._current_sprite_index = 0
-        self._is_attacking = False  # Controla se o lutador está no meio de um ataque
         self._is_attacking = False
 
     # apenas teste
@@ -97,7 +96,7 @@ class Fighter:
         return self._on_ground
 
     @property
-    def is_attacking(self):
+    def is_attacking(self) -> bool:
         return self._is_attacking
 
     @property
@@ -223,32 +222,12 @@ class Fighter:
     def attack(self) -> int:
         """Executes an attack and returns the attack power."""
         if self._current_action != ("jump"):
+            self._is_attacking = True
             self.set_action("attack")
             self._punch_fx.play_sound()
             self._punch_fx.volume_sound(GC.FX_VOLUME)
+            print('attack!!!!')
             return self._attack_power
-
-    # def attack(self) -> int:
-    #     """Executes an attack and returns the attack power."""
-    #     if not self._is_attacking and self._current_action != "jump":
-    #         self._is_attacking = True
-    #         self.set_action("attack")
-    #         self._current_sprite_index = 0  # Reinicia a animação de ataque
-    #         self.time = 0  # Reinicia o tempo para controlar a animação
-    #         self._punch_fx.play_sound()
-    #         self._punch_fx.volume_sound(GC.FX_VOLUME)
-    #         return self._attack_power
-    #     return 0  # Retorna 0 se o lutador já estiver atacando
-
-    # esse deu certo
-    # def attack(self):
-    #     if not self._is_attacking and self._current_action != "jump":
-    #         self._is_attacking = True
-    #         self._current_sprite_index = 0  # Reinicia a animação de ataque
-    #         self.time = 0  # Reinicia o tempo para controlar a animação
-    #         self.set_action("attack")  # Muda para a ação de ataque
-    #         self._punch_fx.play_sound()  # Executa o som do ataque
-    #         self._punch_fx.volume_sound(GC.FX_VOLUME)
 
 
     def set_coordinate(self):
@@ -267,40 +246,11 @@ class Fighter:
                 sprites[self._current_sprite_index].coordinate.x,
                 sprites[self._current_sprite_index].coordinate.y,
             )
-            print(f"Coordenada atualizada para: {self.coordinate}")
+            # print(f"Coordenada atualizada para: {self.coordinate}")
             
             # Avançar para o próximo sprite ou reiniciar o índice
             self._current_sprite_index = (self._current_sprite_index + 1) % len(sprites)
             self.time = 0  # Reseta o tempo após trocar de sprite
-
-
-    # # esse funcionou
-    # def set_coordinate(self):
-    #     self.time += self._delta_time  # Incrementa o tempo usando delta_time
-
-    #     # Obter a lista de sprites da animação atual
-    #     sprites = self._current_animation.sprites
-
-    #     # Garantir que _current_sprite_index não ultrapasse o tamanho da lista
-    #     if self._current_sprite_index < len(sprites):
-    #         # Verificar se o tempo acumulado é suficiente para trocar para a próxima sprite
-    #         if self.time >= sprites[self._current_sprite_index].speed_animation:
-    #             self.coordinate = Vector2(
-    #                 sprites[self._current_sprite_index].coordinate.x,
-    #                 sprites[self._current_sprite_index].coordinate.y,
-    #             )
-    #             print(f"Coordenada atualizada para: {self.coordinate}")
-
-    #             # Avançar para o próximo sprite ou reiniciar o índice se a animação terminou
-    #             self._current_sprite_index += 1
-    #             self.time = 0  # Reseta o tempo após trocar de sprite
-
-    #             # Se a animação de ataque terminou, redefina o estado do ataque
-    #             if self._current_sprite_index >= len(sprites):
-    #                 self._current_sprite_index = 0  # Reinicia o índice da animação
-    #                 if self._current_action == "attack":  # Se era uma animação de ataque
-    #                     self._is_attacking = False  # Permitir novos ataques
-    #                     self.set_action("idle")  # Voltar para a ação idle
 
 
     def update(self, delta_time):
@@ -310,22 +260,4 @@ class Fighter:
         self.idle_time += self._delta_time
         if self.idle_time >= 0.5 and self._on_ground:
             self.set_action("idle")
-
-    # esse deu certo
-    # def update(self, delta_time):
-    #     self._delta_time = delta_time
-    #     self.apply_gravity()  # Aplica a gravidade sempre que atualizar
-        
-    #     if self._is_attacking:
-    #         self.set_coordinate()  # Atualiza a posição com base na animação de ataque
-    #         # Verifica se a animação de ataque terminou
-    #         if self._current_sprite_index >= len(self._current_animation.sprites):
-    #             self._is_attacking = False  # Permite novos ataques
-    #             self.set_action("idle")  # Volta para a ação idle
-    #     else:
-    #         self.set_coordinate()  # Atualiza a posição normalmente se não estiver atacando
-    #         self.idle_time += self._delta_time
-    #         if self.idle_time >= 0.5 and self._on_ground:
-    #             self.set_action("idle")  # Permite que o lutador volte para o estado idle
-
 
