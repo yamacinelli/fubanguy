@@ -88,6 +88,7 @@ class Fighter:
 
         self._current_sprite_index = 0
         self._is_attacking = False
+        self.attack_time = 0
 
     # apenas teste
     @property
@@ -98,6 +99,9 @@ class Fighter:
     @property
     def is_attacking(self) -> bool:
         return self._is_attacking
+    
+    def stop_attacking(self, stop_attack: bool):
+        self._is_attacking = stop_attack
 
     @property
     def name(self) -> str:
@@ -226,7 +230,6 @@ class Fighter:
             self.set_action("attack")
             self._punch_fx.play_sound()
             self._punch_fx.volume_sound(GC.FX_VOLUME)
-            print('attack!!!!')
             return self._attack_power
 
 
@@ -258,6 +261,12 @@ class Fighter:
         self.apply_gravity()
         self.set_coordinate()  
         self.idle_time += self._delta_time
+        # self.attack_time += self._delta_time
         if self.idle_time >= 0.5 and self._on_ground:
+            self.idle_time = 0
             self.set_action("idle")
+
+        # if self.attack_time >= 2:
+        #     self._is_attacking = False
+        #     self.attack_time = 0
 

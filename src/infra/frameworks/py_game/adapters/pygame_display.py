@@ -192,15 +192,15 @@ class PyGameDisplay(DisplayInterface):
             self.player_2.controller.fighter.update(delta_time)
 
         # Acumula o tempo usando delta_time para controlar a redução de vida
-        self.health_reduction_timer += delta_time
-        if self.health_reduction_timer >= 5:  # Verifica se 5 segundos se passaram
-            self.health_reduction_timer = 0  # Reinicia o temporizador
-            self.player_1.controller.fighter.health -= 10  # Reduz a vida do jogador 1
-            self.player_2.controller.fighter.health -= 10  # Reduz a vida do jogador 2
+        # self.health_reduction_timer += delta_time
+        # if self.health_reduction_timer >= 5:  # Verifica se 5 segundos se passaram
+        #     self.health_reduction_timer = 0  # Reinicia o temporizador
+        #     self.player_1.controller.fighter.health -= 10  # Reduz a vida do jogador 1
+        #     self.player_2.controller.fighter.health -= 10  # Reduz a vida do jogador 2
 
-            # Atualiza as barras de vida para refletir as mudanças
-            self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
-            self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
+        #     # Atualiza as barras de vida para refletir as mudanças
+        #     self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
+        #     self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
 
         self.screen.fill((0, 0, 0))
 
@@ -331,8 +331,16 @@ class PyGameDisplay(DisplayInterface):
         # Atualiza a posição das hitboxes para que sigam os lutadores
         self.update_hitboxes()
 
-        # if self.player_1.controller.fighter._is_attacking:
-        #     print('atacou')
+        # promove o dano no inimigo
+        if self.player_1.controller.fighter.is_attacking:
+            self.player_1.controller.fighter.stop_attacking(False)
+            if self.hit_box_hand_player_1.check_collision(self.hit_box_body_player_2):
+                self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power
+
+        if self.player_2.controller.fighter.is_attacking:
+            self.player_2.controller.fighter.stop_attacking(False)
+            if self.hit_box_hand_player_2.check_collision(self.hit_box_body_player_1):
+                self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
 
         pygame.display.flip()
 

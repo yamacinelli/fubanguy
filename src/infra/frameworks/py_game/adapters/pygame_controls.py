@@ -115,10 +115,8 @@ class PyGameController:
     def handle_event(self, event):
         """Lida com eventos de entrada, como teclas pressionadas."""
         if event.type == pygame.KEYDOWN:
-            print(f"Tecla pressionada: {event.key}")  # Debug para teclas
             if event.key == self._get_key(self.control_key["attack"]):
                 self.controller.handle_input(Control(False, False, False, True))  # Atacar
-                print("Ataque realizado!")  # Debug para ataque
 
     def update(self):
         """Atualiza o estado do controlador e processa a entrada."""
