@@ -16,4 +16,4 @@ class PyGameCollider(CollisionInterface):
 
     def draw(self, surface: pygame.Surface, draw_borders: bool = False) -> None:
         if draw_borders:
-            pygame.draw.rect(surface, (0, 252, 6), self.rect, 2)
+            pygame.draw.rect(surface, (0, 6, 252), self.rect, 2)
