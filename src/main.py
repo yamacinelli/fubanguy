@@ -21,18 +21,20 @@ def main():
 
     last_time = pygame.time.get_ticks() / 1000.0
 
-
-    
     # sound
     jump_fx: SoundInterface = PyGameSound()
     land_fx: SoundInterface = PyGameSound()
     punch_fx: SoundInterface = PyGameSound()
     fight_fx: SoundInterface = PyGameSound()
 
+    pesadao_sound: SoundInterface = PyGameSound()
+
     jump_fx.load_sound(os.path.join(SOUND_DIR, "jump_fx.mp3"))
     land_fx.load_sound(os.path.join(SOUND_DIR, "land_fx.mp3"))
     punch_fx.load_sound(os.path.join(SOUND_DIR, "punch_fx.mp3"))
     fight_fx.load_sound(os.path.join(SOUND_DIR, "fight_fx.mp3"))
+
+    pesadao_sound.load_sound(os.path.join(SOUND_DIR, "pesadao.mp3"))
 
     # TODO Adicionar no get_fighter_details depois
 
@@ -77,6 +79,8 @@ def main():
     sprite_sheet_fighter_1 = pygame.image.load(os.path.join(IMAGE_DIR, "quico_2.png"))
     sprite_sheet_fighter_2 = pygame.image.load(os.path.join(IMAGE_DIR, "madruga_2.png"))
 
+    pesadao_sprite = pygame.image.load(os.path.join(IMAGE_DIR, "pesadao.png"))
+
     # cria os lutadores
     fighter_1 = get_fighter_details.execute("quico", jump_fx, land_fx, punch_fx, sound_fx_list_quico, sprite_sheet_fighter_1)
     fighter_2 = get_fighter_details.execute("madruga", jump_fx, land_fx, punch_fx, sound_fx_list_madruga, sprite_sheet_fighter_2)
@@ -90,7 +94,21 @@ def main():
     # pylint: disable=E1120
     stage = get_stage_details.execute()
 
-    display: DisplayInterface = PyGameDisplay(stage, pygame.display.set_mode((GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT)), player_1, player_2, fight_fx)
+    # Verifique se o som foi carregado corretamente
+    if fight_fx.sound is None:
+        print("Erro: fight_fx não foi carregado corretamente.")
+    else:
+        print("fight_fx carregado com sucesso.")
+
+    display: DisplayInterface = PyGameDisplay(
+        stage,
+        pygame.display.set_mode((GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT)),
+        player_1,
+        player_2,
+        pesadao_sprite,
+        pesadao_sound,
+        fight_fx
+    )
 
     # fps
     clock = pygame.time.Clock()

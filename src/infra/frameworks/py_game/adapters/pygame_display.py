@@ -27,6 +27,7 @@ from presentation.ui.health_bar_view import HealthBarView
 from presentation.ui.playing_time_view import PlayingTimeView
 from presentation.ui.round_view import RoundView
 from presentation.ui.score_view import ScoreView
+import random
 
 
 class PyGameDisplay(DisplayInterface):
@@ -44,7 +45,7 @@ class PyGameDisplay(DisplayInterface):
 
     music_path: str
 
-    def __init__(self, stage, screen_size, player_1, player_2, fight_fx: SoundInterface = PyGameSound(), initial_time: int = 90):
+    def __init__(self, stage, screen_size, player_1, player_2, pesadao_sprite, pesadao_sound: SoundInterface = PyGameSound(), fight_fx: SoundInterface = PyGameSound(), initial_time: int = 90):
         """
         Initializes the PyGameDisplay with the provided stage.
 
@@ -54,8 +55,15 @@ class PyGameDisplay(DisplayInterface):
 
         pygame.init()  # pylint: disable=E1101
 
+        # pesadao
+        self._pesadao_dound = pesadao_sound
+        self._pesadao_sprite = pesadao_sprite.convert_alpha()
+        self._active_critical_damage: bool = False
+        self._has_played_sound = False 
+        
         # Sounds FX
         self._fight_fx = fight_fx
+
 
         # Players
         self.player_1 = player_1
@@ -101,6 +109,7 @@ class PyGameDisplay(DisplayInterface):
         )
     
         self.time = 0.0
+        self._accumulated_time = 0
 
          # Carregar as sprite sheets originais dos jogadores
         self.sprite_sheet_player_1 = self.player_1.controller.fighter._sprite_sheet.convert_alpha()
@@ -196,45 +205,9 @@ class PyGameDisplay(DisplayInterface):
             self.player_1.controller.fighter.update(delta_time)
             self.player_2.controller.fighter.update(delta_time)
 
-        # Acumula o tempo usando delta_time para controlar a redução de vida
-        # self.health_reduction_timer += delta_time
-        # if self.health_reduction_timer >= 5:  # Verifica se 5 segundos se passaram
-        #     self.health_reduction_timer = 0  # Reinicia o temporizador
-        #     self.player_1.controller.fighter.health -= 10  # Reduz a vida do jogador 1
-        #     self.player_2.controller.fighter.health -= 10  # Reduz a vida do jogador 2
-
-        #     # Atualiza as barras de vida para refletir as mudanças
-        #     self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
-        #     self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
-
         self.screen.fill((0, 0, 0))
 
         self.screen.blit(self.bg_scaleed, (0, 0))
-
-        # gismo do sprite_sheet
-        # pygame.draw.rect(
-        #     self.screen,
-        #     (0, 252, 6),
-        #     (
-        #         self.player_1.controller.fighter.position.x,
-        #         self.player_1.controller.fighter.position.y,
-        #         self.player_1.controller.fighter.size.x,
-        #         self.player_1.controller.fighter.size.y
-        #     ),
-        #     2
-        # )
-
-        # pygame.draw.rect(
-        #     self.screen,
-        #     (0, 252, 6),
-        #     (
-        #         self.player_2.controller.fighter.position.x,
-        #         self.player_2.controller.fighter.position.y,
-        #         self.player_2.controller.fighter.size.x,
-        #         self.player_2.controller.fighter.size.y
-        #     ),
-        #     2
-        # )
 
         self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
         self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
@@ -330,16 +303,60 @@ class PyGameDisplay(DisplayInterface):
         if self.player_1.controller.fighter.is_attacking:
             self.player_1.controller.fighter.stop_attacking(False)
             if self.hit_box_hand_player_1.check_collision(self.hit_box_body_player_2) and not self.player_2.controller.fighter.current_action == "block":
-                self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power
+                
+                # Gera um número aleatório entre 0 e 1 para o dano critico
+                if random.random() < GC.CRITICAL_HIT_CHANCE:  # Se o número gerado for menor que a chance de dano crítico
+                    self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power * 2
+                    self._active_critical_damage = True
+                else:
+                    self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power
+                        
 
         if self.player_2.controller.fighter.is_attacking:
             self.player_2.controller.fighter.stop_attacking(False)
             if self.hit_box_hand_player_2.check_collision(self.hit_box_body_player_1) and not self.player_1.controller.fighter.current_action == "block":
-                self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
+                
+                # Gera um número aleatório entre 0 e 1 para o dano critico
+                if random.random() < GC.CRITICAL_HIT_CHANCE:  # Se o número gerado for menor que a chance de dano crítico
+                    self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power * 2
+                    self._active_critical_damage = True
+                else:
+                    self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
 
         self.playing_time_presenter.update(delta_time)
 
+        self.critical_damage(delta_time)
+
         pygame.display.flip()
+
+
+    def critical_damage(self, delta_time):
+        if self._active_critical_damage:
+            # Acumula o tempo
+            self._accumulated_time += delta_time
+            
+            # Define a nova posição no canto inferior direito
+            screen_size = (GC.SCREENSIZEWIDTH, GC.SCREENSIZEHEIGHT)
+            position_x = screen_size[0] - 100  # Subtrai a largura da sprite (100 pixels)
+            position_y = screen_size[1] - 100  # Subtrai a altura da sprite (100 pixels)
+
+            # Redimensiona a sprite
+            scaled_sprite = pygame.transform.scale(self._pesadao_sprite, (100, 100))
+
+            # Continua desenhando a sprite na tela na nova posição
+            self.screen.blit(scaled_sprite, (position_x, position_y))
+
+            # Toca o som de pesadao imediatamente se não estiver tocando
+            if not hasattr(self, '_has_played_sound') or not self._has_played_sound:
+                self._pesadao_dound.play_sound()  # Toca o som
+                self._pesadao_dound.volume_sound(1.0)  # Ajusta o volume
+                self._has_played_sound = True  # Marca que o som foi tocado
+
+            # Verifica se o tempo acumulado é maior ou igual a 3 segundos
+            if self._accumulated_time >= 1.5:
+                self._accumulated_time = 0.0  # Zera o tempo acumulado
+                self._active_critical_damage = False
+                self._has_played_sound = False  # Reseta a flag para tocar o som na próxima vez
 
     def update_hitboxes(self):
         # Atualiza a posição da hitbox do corpo do jogador 1
