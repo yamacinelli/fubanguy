@@ -39,7 +39,7 @@ class Fighter:
         sprite_sheet: Any,
         jump_fx: SoundInterface = PyGameSound(),
         land_fx: SoundInterface = PyGameSound(),
-        punch_fx: SoundInterface = PyGameSound(),
+        swoosh_fx: SoundInterface = PyGameSound(),
         sound_fx_list = []
     ):
         """
@@ -77,7 +77,7 @@ class Fighter:
         """ sound_fx """
         self._jump_fx = jump_fx
         self._land_fx = land_fx
-        self._punch_fx = punch_fx
+        self._swoosh_fx = swoosh_fx
 
         self._sound_fx_list = sound_fx_list
         self._sound_fx: SoundInterface = PyGameSound()
@@ -236,8 +236,8 @@ class Fighter:
         if self._current_action != ("jump"):
             self._is_attacking = True
             self.set_action("attack")
-            self._punch_fx.play_sound()
-            self._punch_fx.volume_sound(GC.FX_VOLUME)
+            self._swoosh_fx.play_sound()
+            self._swoosh_fx.volume_sound(GC.FX_VOLUME)
             return self._attack_power
         
     def block(self) -> None:

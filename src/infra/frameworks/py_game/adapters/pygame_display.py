@@ -45,7 +45,7 @@ class PyGameDisplay(DisplayInterface):
 
     music_path: str
 
-    def __init__(self, stage, screen_size, player_1, player_2, pesadao_sprite, pesadao_sound: SoundInterface = PyGameSound(), fight_fx: SoundInterface = PyGameSound(), initial_time: int = 90):
+    def __init__(self, stage, screen_size, player_1, player_2, pesadao_sprite, pesadao_sound: SoundInterface = PyGameSound(), fight_fx: SoundInterface = PyGameSound(), punch_fx: SoundInterface = PyGameSound() ,initial_time: int = 90):
         """
         Initializes the PyGameDisplay with the provided stage.
 
@@ -63,6 +63,7 @@ class PyGameDisplay(DisplayInterface):
         
         # Sounds FX
         self._fight_fx = fight_fx
+        self._punch_fx = punch_fx
 
 
         # Players
@@ -310,6 +311,9 @@ class PyGameDisplay(DisplayInterface):
                     self._active_critical_damage = True
                 else:
                     self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power
+
+                self._punch_fx.play_sound()
+                self._punch_fx.volume_sound(0.7)
                         
 
         if self.player_2.controller.fighter.is_attacking:
@@ -322,6 +326,9 @@ class PyGameDisplay(DisplayInterface):
                     self._active_critical_damage = True
                 else:
                     self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
+
+                self._punch_fx.play_sound()
+                self._punch_fx.volume_sound(0.7)
 
         self.playing_time_presenter.update(delta_time)
 

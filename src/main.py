@@ -24,13 +24,17 @@ def main():
     # sound
     jump_fx: SoundInterface = PyGameSound()
     land_fx: SoundInterface = PyGameSound()
-    punch_fx: SoundInterface = PyGameSound()
+    swoosh_fx: SoundInterface = PyGameSound()
+
     fight_fx: SoundInterface = PyGameSound()
+    punch_fx: SoundInterface = PyGameSound()
 
     pesadao_sound: SoundInterface = PyGameSound()
 
     jump_fx.load_sound(os.path.join(SOUND_DIR, "jump_fx.mp3"))
     land_fx.load_sound(os.path.join(SOUND_DIR, "land_fx.mp3"))
+    swoosh_fx.load_sound(os.path.join(SOUND_DIR, "swoosh_fx.mp3"))
+
     punch_fx.load_sound(os.path.join(SOUND_DIR, "punch_fx.mp3"))
     fight_fx.load_sound(os.path.join(SOUND_DIR, "fight_fx.mp3"))
 
@@ -82,8 +86,8 @@ def main():
     pesadao_sprite = pygame.image.load(os.path.join(IMAGE_DIR, "pesadao.png"))
 
     # cria os lutadores
-    fighter_1 = get_fighter_details.execute("quico", jump_fx, land_fx, punch_fx, sound_fx_list_quico, sprite_sheet_fighter_1)
-    fighter_2 = get_fighter_details.execute("madruga", jump_fx, land_fx, punch_fx, sound_fx_list_madruga, sprite_sheet_fighter_2)
+    fighter_1 = get_fighter_details.execute("quico", jump_fx, land_fx, swoosh_fx, sound_fx_list_quico, sprite_sheet_fighter_1)
+    fighter_2 = get_fighter_details.execute("madruga", jump_fx, land_fx, swoosh_fx, sound_fx_list_madruga, sprite_sheet_fighter_2)
 
     # cria controle
     player_1: ControlInterface = PyGameController(fighter_1, "control_1")
@@ -107,7 +111,8 @@ def main():
         player_2,
         pesadao_sprite,
         pesadao_sound,
-        fight_fx
+        fight_fx,
+        punch_fx,
     )
 
     # fps
