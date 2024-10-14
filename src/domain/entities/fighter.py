@@ -104,6 +104,10 @@ class Fighter:
         self._is_attacking = stop_attack
 
     @property
+    def current_action(self) -> str:
+        return self._current_action
+
+    @property
     def name(self) -> str:
         """Gets the name of the fighter."""
         return self._name
@@ -179,19 +183,19 @@ class Fighter:
 
         displacement = self._physic.update_horizontal(self._delta_time)
 
-        if direction == "left":
+        if direction == "left" and self._current_action not in ("block"):
             new_x = self._position.x - displacement
             if new_x >= 0:
                 self._position.x = new_x
-                if self._current_action != ("jump"):
+                if self._current_action not in ("jump"):
                     self.set_action("walk")
 
             
-        elif direction == "right":
+        elif direction == "right" and self._current_action not in ("block"):
             new_x = self._position.x + displacement
             if new_x <= self._screen_width - self._size.x:
                 self._position.x = new_x
-                if self._current_action != ("jump"):
+                if self._current_action not in ("jump"):
                     self.set_action("walk")
 
     def jump(self):
@@ -229,7 +233,9 @@ class Fighter:
             self._punch_fx.play_sound()
             self._punch_fx.volume_sound(GC.FX_VOLUME)
             return self._attack_power
-
+        
+    def block(self) -> None:
+        self.set_action("block")
 
     def set_coordinate(self):
         self.time += self._delta_time  # Incrementa o tempo usando delta_time

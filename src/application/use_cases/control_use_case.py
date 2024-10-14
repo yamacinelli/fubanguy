@@ -16,6 +16,8 @@ class Controller:
             self.fighter.jump()
         if control.attack:
             self.fighter.attack()
+        if control.block:
+            return self.fighter.block()
 
 
     def get_control(self) -> Control:

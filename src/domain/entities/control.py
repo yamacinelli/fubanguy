@@ -7,3 +7,4 @@ class Control:
     move_right: bool = False
     jump: bool = False
     attack: bool = False
+    block: bool = False

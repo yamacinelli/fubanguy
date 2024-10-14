@@ -81,6 +81,7 @@ class PyGameController:
         """Maps string key names to pygame key constants."""
         key_mapping = {
             "a": pygame.K_a,
+            "s": pygame.K_s,
             "d": pygame.K_d,
             "w": pygame.K_w,
             "space": pygame.K_SPACE,
@@ -88,13 +89,14 @@ class PyGameController:
             "right": pygame.K_RIGHT,
             "up": pygame.K_UP,
             "keypad_0": pygame.K_KP0,
+            "down": pygame.K_DOWN,
         }
         return key_mapping.get(key_name)
 
     def get_control(self) -> Control:
         """Obtém o estado dos controles do jogador."""
         if not self.enabled:
-            return Control(False, False, False, False)
+            return Control(False, False, False, False, False)
 
         # Obtém o estado das teclas para movimento e salto
         keys = pygame.key.get_pressed()
@@ -102,12 +104,14 @@ class PyGameController:
         move_right = keys[self._get_key(self.control_key["move_right"])]
         jump = keys[self._get_key(self.control_key["jump"])]
         attack = False  # Inicialmente, ataque é falso
+        block = keys[self._get_key(self.control_key["block"])]
 
         control = Control(
             move_left=move_left,
             move_right=move_right,
             jump=jump,
             attack=attack,
+            block=block,
         )
 
         return control
@@ -116,7 +120,7 @@ class PyGameController:
         """Lida com eventos de entrada, como teclas pressionadas."""
         if event.type == pygame.KEYDOWN:
             if event.key == self._get_key(self.control_key["attack"]):
-                self.controller.handle_input(Control(False, False, False, True))  # Atacar
+                self.controller.handle_input(Control(False, False, False, True, False))
 
     def update(self):
         """Atualiza o estado do controlador e processa a entrada."""

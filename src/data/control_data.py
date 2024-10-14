@@ -4,11 +4,13 @@ CONTROLS_DATA = {
         "move_right": "d",
         "jump": "w",
         "attack": "space",
+        "block": "s", 
     },
     "control_2": {
         "move_left": "left",
         "move_right": "right",
         "jump": "up",
         "attack": "keypad_0",
+        "block": "down",
     },
 }

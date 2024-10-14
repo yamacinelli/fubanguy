@@ -323,12 +323,12 @@ class PyGameDisplay(DisplayInterface):
         # promove o dano no inimigo
         if self.player_1.controller.fighter.is_attacking:
             self.player_1.controller.fighter.stop_attacking(False)
-            if self.hit_box_hand_player_1.check_collision(self.hit_box_body_player_2):
+            if self.hit_box_hand_player_1.check_collision(self.hit_box_body_player_2) and not self.player_2.controller.fighter.current_action == "block":
                 self.player_2.controller.fighter.health -= self.player_1.controller.fighter.attack_power
 
         if self.player_2.controller.fighter.is_attacking:
             self.player_2.controller.fighter.stop_attacking(False)
-            if self.hit_box_hand_player_2.check_collision(self.hit_box_body_player_1):
+            if self.hit_box_hand_player_2.check_collision(self.hit_box_body_player_1) and not self.player_1.controller.fighter.current_action == "block":
                 self.player_1.controller.fighter.health -= self.player_2.controller.fighter.attack_power
 
         pygame.display.flip()

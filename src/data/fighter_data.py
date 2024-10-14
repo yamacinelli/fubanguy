@@ -2,7 +2,6 @@
 import os
 from core.shared.vector_2 import Vector2
 from data.animation_data import ANIMATION_DATA
-from core.settings import IMAGE_DIR
 import infra.game_config as GC
 
 # Definindo a largura dos lutadores

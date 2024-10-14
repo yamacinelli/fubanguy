@@ -38,4 +38,14 @@ ANIMATION_DATA = [
             # {"coordinate": Vector2(4, 3), "speed_animation": 0.15},
         ],
     },
+    {
+        "name": "block",
+        "sprites": [
+            # {"coordinate": Vector2(0, 440), "speed_animation": 0.3},
+            {"coordinate": Vector2(100, 440), "speed_animation": 0.1},
+            # {"coordinate": Vector2(2, 3), "speed_animation": 0.15},
+            # {"coordinate": Vector2(3, 3), "speed_animation": 0.15},
+            # {"coordinate": Vector2(4, 3), "speed_animation": 0.15},
+        ],
+    },
 ]
