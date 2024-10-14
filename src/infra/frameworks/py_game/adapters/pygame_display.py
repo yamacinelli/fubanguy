@@ -207,44 +207,32 @@ class PyGameDisplay(DisplayInterface):
         self.screen.blit(self.bg_scaleed, (0, 0))
 
         # gismo do sprite_sheet
-        pygame.draw.rect(
-            self.screen,
-            (0, 252, 6),
-            (
-                self.player_1.controller.fighter.position.x,
-                self.player_1.controller.fighter.position.y,
-                self.player_1.controller.fighter.size.x,
-                self.player_1.controller.fighter.size.y
-            ),
-            2
-        )
+        # pygame.draw.rect(
+        #     self.screen,
+        #     (0, 252, 6),
+        #     (
+        #         self.player_1.controller.fighter.position.x,
+        #         self.player_1.controller.fighter.position.y,
+        #         self.player_1.controller.fighter.size.x,
+        #         self.player_1.controller.fighter.size.y
+        #     ),
+        #     2
+        # )
 
-        pygame.draw.rect(
-            self.screen,
-            (0, 252, 6),
-            (
-                self.player_2.controller.fighter.position.x,
-                self.player_2.controller.fighter.position.y,
-                self.player_2.controller.fighter.size.x,
-                self.player_2.controller.fighter.size.y
-            ),
-            2
-        )
+        # pygame.draw.rect(
+        #     self.screen,
+        #     (0, 252, 6),
+        #     (
+        #         self.player_2.controller.fighter.position.x,
+        #         self.player_2.controller.fighter.position.y,
+        #         self.player_2.controller.fighter.size.x,
+        #         self.player_2.controller.fighter.size.y
+        #     ),
+        #     2
+        # )
 
         self.health_bar_view_1.update_health(self.player_1.controller.fighter.health)
         self.health_bar_view_2.update_health(self.player_2.controller.fighter.health)
-
-        # Score
-        # Verifica se a vida do player 2 chegou a zero e adiciona ponto ao player 1
-        if self.player_2.controller.fighter.health <= 0:
-            self.score_presenter_player_1.add_point()
-            self.player_2.controller.fighter.health = 0 
-
-        # Verifica se a vida do player 1 chegou a zero e adiciona ponto ao player 2
-        if self.player_1.controller.fighter.health <= 0:
-            self.score_presenter_player_2.add_point()
-            self.player_1.controller.fighter.health = 0 
-
 
         self.playing_time_view.update_time(delta_time)
 
@@ -323,10 +311,11 @@ class PyGameDisplay(DisplayInterface):
         self.round_view.update_round()
 
         # Renderizar o hit_box_body para prioridade de renderização ser 1ª
-        self.hit_box_body_player_1.draw(self.screen, True)
-        self.hit_box_body_player_2.draw(self.screen, True)
-        self.hit_box_hand_player_1.draw(self.screen, True)
-        self.hit_box_hand_player_2.draw(self.screen, True)
+        # Ture para renderizar os gismos
+        self.hit_box_body_player_1.draw(self.screen, False)
+        self.hit_box_body_player_2.draw(self.screen, False)
+        self.hit_box_hand_player_1.draw(self.screen, False)
+        self.hit_box_hand_player_2.draw(self.screen, False)
 
         # Atualiza a posição das hitboxes para que sigam os lutadores
         self.update_hitboxes()
