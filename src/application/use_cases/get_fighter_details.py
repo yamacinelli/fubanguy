@@ -14,7 +14,7 @@ from data.fighter_data import FIGHTERS_DATA
 from domain.entities.fighter import Fighter
 
 
-def execute(fighter_name: str, jump_fx, land_fx, punch_fx, sprite_sheet) -> Fighter:
+def execute(fighter_name: str, jump_fx, land_fx, swoosh_fx, sound_fx_list, sprite_sheet) -> Fighter:
     """
     Creates and returns a Fighter instance based on the provided fighter name.
 
@@ -44,5 +44,6 @@ def execute(fighter_name: str, jump_fx, land_fx, punch_fx, sprite_sheet) -> Figh
         sprite_sheet=sprite_sheet,
         jump_fx=jump_fx,
         land_fx=land_fx,
-        punch_fx=punch_fx,
+        swoosh_fx=swoosh_fx,
+        sound_fx_list=sound_fx_list,
     )

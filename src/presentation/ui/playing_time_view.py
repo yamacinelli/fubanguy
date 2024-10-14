@@ -79,7 +79,7 @@ class PlayingTimeView:
         Args:
             time_delta (int): The amount of time that has passed since the last update.
         """
-        self.presenter.on_time_update(time_delta)
+        self.presenter.update(time_delta)
 
     def reset_time(self):
         """
