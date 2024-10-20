@@ -82,6 +82,7 @@ class PyGameDisplay(DisplayInterface):
 
         # CONFIGURAÇÔES DA TELA
         self.screen = screen_size
+        pygame.display.set_caption("Fubanguy Fighter")
 
         # MONTA STAGE
         self.bg = pygame.image.load(stage.background_image).convert_alpha()
@@ -383,10 +384,10 @@ class PyGameDisplay(DisplayInterface):
 
         # Renderizar o hit_box_body para prioridade de renderização ser 1ª
         # Ture para renderizar os gismos
-        self.hit_box_body_player_1.draw(self.screen, True)
-        self.hit_box_body_player_2.draw(self.screen, True)
-        self.hit_box_hand_player_1.draw(self.screen, True)
-        self.hit_box_hand_player_2.draw(self.screen, True)
+        self.hit_box_body_player_1.draw(self.screen, False)
+        self.hit_box_body_player_2.draw(self.screen, False)
+        self.hit_box_hand_player_1.draw(self.screen, False)
+        self.hit_box_hand_player_2.draw(self.screen, False)
 
         # Atualiza a posição das hitboxes para que sigam os lutadores
         self.update_hitboxes()

@@ -141,6 +141,12 @@ poetry install
 poetry list
 ```
 
+## Build .exe
+- Remove dir dist and build in your root
+```bash
+pyinstall main.spec
+```
+
 ## Project structure
 
 ```plaintext
