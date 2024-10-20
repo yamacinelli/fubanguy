@@ -401,10 +401,10 @@ class PyGameDisplay(DisplayInterface):
 
                 # Gera um número aleatório entre 0 e 1 para o dano critico
                 if (
-                    random.random() < GC.CRITICAL_HIT_CHANCE
+                    random.randint(0, 10) == GC.CRITICAL_HIT_CHANCE
                 ):  # Se o número gerado for menor que a chance de dano crítico
                     self.player_2.controller.fighter.health -= (
-                        self.player_1.controller.fighter.attack_power * 2
+                        self.player_1.controller.fighter.attack_power * 5
                     )
                     self._active_critical_damage = True
                 else:
@@ -425,10 +425,10 @@ class PyGameDisplay(DisplayInterface):
 
                 # Gera um número aleatório entre 0 e 1 para o dano critico
                 if (
-                    random.random() < GC.CRITICAL_HIT_CHANCE
+                    random.randint(0, 10) == GC.CRITICAL_HIT_CHANCE
                 ):  # Se o número gerado for menor que a chance de dano crítico
                     self.player_1.controller.fighter.health -= (
-                        self.player_2.controller.fighter.attack_power * 2
+                        self.player_2.controller.fighter.attack_power * 5
                     )
                     self._active_critical_damage = True
                 else:

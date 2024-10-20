@@ -10,7 +10,7 @@ ANIMATION_DATA = [
     {
         "name": "idle",
         "sprites": [
-            {"coordinate": Vector2(0, vertical_offset), "speed_animation": 0.8},
+            {"coordinate": Vector2(0, vertical_offset), "speed_animation": 0.5},
         ],
     },
     {

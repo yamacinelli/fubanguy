@@ -231,7 +231,7 @@ class Fighter:
 
     def attack(self) -> None:
         """Executes an attack and returns the attack power."""
-        if self._current_action not in ("jump"):
+        if self._current_action not in ("jump, block, attack"):
             self._is_attacking = True
             self.set_action("attack")
             self._swoosh_fx.play_sound()
