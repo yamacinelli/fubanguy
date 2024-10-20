@@ -1,8 +1,12 @@
 """Module that provides settings for the game."""
 
 # __SCREEN__
-SCREENSIZEWIDTH = 800
-SCREENSIZEHEIGHT = 340
+# SCREENSIZEWIDTH = 400
+# SCREENSIZEHEIGHT = 170
+SCREENSIZEWIDTH = 1200
+SCREENSIZEHEIGHT = 510
+# SCREENSIZEWIDTH = 800
+# SCREENSIZEHEIGHT = 340
 
 
 # __FPS__
@@ -20,4 +24,4 @@ MAX_SPEED = 90.0
 ACCELERATION = 1.5
 
 # Supondo que você tenha um valor de chance
-CRITICAL_HIT_CHANCE = 0.1  # 10% de chance
+CRITICAL_HIT_CHANCE = 5  # 10% de chance

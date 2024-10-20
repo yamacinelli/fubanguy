@@ -40,7 +40,7 @@ class Fighter:
         jump_fx: SoundInterface = PyGameSound(),
         land_fx: SoundInterface = PyGameSound(),
         swoosh_fx: SoundInterface = PyGameSound(),
-        sound_fx_list = []
+        sound_fx_list=[],
     ):
         """
         Initializes a new instance of the Fighter class.
@@ -73,7 +73,6 @@ class Fighter:
         self._current_action = "idle"
         self._current_animation = self.get_animation_by_name(self._current_action)
 
-
         """ sound_fx """
         self._jump_fx = jump_fx
         self._land_fx = land_fx
@@ -85,7 +84,7 @@ class Fighter:
         self.time_speak = random.randint(4, 12)
         self.speak_accumulated_time = 0
 
-        ''' sprite_sheet '''
+        """ sprite_sheet """
         self._sprite_sheet = sprite_sheet
 
         self.coordinate = Vector2(0, 40)
@@ -105,7 +104,7 @@ class Fighter:
     @property
     def is_attacking(self) -> bool:
         return self._is_attacking
-    
+
     def stop_attacking(self, stop_attack: bool):
         self._is_attacking = stop_attack
 
@@ -196,7 +195,6 @@ class Fighter:
                 if self._current_action not in ("jump"):
                     self.set_action("walk")
 
-            
         elif direction == "right" and self._current_action not in ("block"):
             new_x = self._position.x + displacement
             if new_x <= self._screen_width - self._size.x:
@@ -231,15 +229,14 @@ class Fighter:
                 self._land_fx.volume_sound(GC.FX_VOLUME)
             self._position.y = new_y
 
-    def attack(self) -> int:
+    def attack(self) -> None:
         """Executes an attack and returns the attack power."""
-        if self._current_action != ("jump"):
+        if self._current_action not in ("jump, block, attack"):
             self._is_attacking = True
             self.set_action("attack")
             self._swoosh_fx.play_sound()
             self._swoosh_fx.volume_sound(GC.FX_VOLUME)
-            return self._attack_power
-        
+
     def block(self) -> None:
         self.set_action("block")
 
@@ -251,7 +248,9 @@ class Fighter:
 
         # Verificar se o índice atual está dentro do intervalo válido
         if self._current_sprite_index >= len(sprites):
-            self._current_sprite_index = 0  # Reiniciar o índice se ultrapassar os limites
+            self._current_sprite_index = (
+                0  # Reiniciar o índice se ultrapassar os limites
+            )
 
         # Verificar se o tempo acumulado é suficiente para trocar para a próxima sprite
         if self.time >= sprites[self._current_sprite_index].speed_animation:
@@ -260,7 +259,7 @@ class Fighter:
                 sprites[self._current_sprite_index].coordinate.y,
             )
             # print(f"Coordenada atualizada para: {self.coordinate}")
-            
+
             # Avançar para o próximo sprite ou reiniciar o índice
             self._current_sprite_index = (self._current_sprite_index + 1) % len(sprites)
             self.time = 0  # Reseta o tempo após trocar de sprite
@@ -269,10 +268,10 @@ class Fighter:
         if not self._sound_fx_list:
             print("No sound effects available.")
             return
-        
+
         # Gera um índice aleatório entre 0 e o tamanho da lista menos 1
         random_index = random.randint(0, len(self._sound_fx_list) - 1)
-        
+
         # Toca o som que está no índice aleatório
         self._sound_fx = self._sound_fx_list[random_index]
         self._sound_fx.play_sound()
@@ -282,7 +281,7 @@ class Fighter:
     def update(self, delta_time):
         self._delta_time = delta_time
         self.apply_gravity()
-        self.set_coordinate()  
+        self.set_coordinate()
         self.idle_time += self._delta_time
         if self.idle_time >= 0.5 and self._on_ground:
             self.idle_time = 0
@@ -293,6 +292,6 @@ class Fighter:
         if self.speak_accumulated_time >= self.time_speak:
             self.speake()  # Chama a função speak()
             self.speak_accumulated_time = 0  # Zera o tempo acumulado
-            self.time_speak = random.randint(4, 12)  # Redefine o tempo aleatório para falar
-
-
+            self.time_speak = random.randint(
+                4, 12
+            )  # Redefine o tempo aleatório para falar
