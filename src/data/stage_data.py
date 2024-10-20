@@ -6,11 +6,11 @@ from core.settings import SOUND_DIR
 STAGES_DATA = {
     "forest": {
         "background_image": os.path.join(IMAGE_DIR, "stage_forest.jpg"),
-        "music": os.path.join(SOUND_DIR, "forest.mp3"),
+        "music": os.path.join(SOUND_DIR, "madruga_theme.mp3"),
     },
     "desert": {
-        "background_image": os.path.join(IMAGE_DIR, "stage/hell.jpg"),
-        "music": os.path.join(SOUND_DIR, "bg_loop.mp3"),
+        "background_image": os.path.join(IMAGE_DIR, "hell.jpg"),
+        "music": os.path.join(SOUND_DIR, "chaves_theme.mp3"),
     },
     "vila": {
         "background_image": os.path.join(IMAGE_DIR, "vila.png"),

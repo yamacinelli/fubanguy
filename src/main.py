@@ -100,7 +100,7 @@ def main():
     # tela
     # cria cenário
     # pylint: disable=E1120
-    stage = get_stage_details.execute('vila')
+    stage = get_stage_details.execute()
 
     # Verifique se o som foi carregado corretamente
     if fight_fx.sound is None:

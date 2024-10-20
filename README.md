@@ -16,6 +16,7 @@ Fubanguy reune toda a zoeira e insanidade BR direto pro mundo dos games. Vlw meu
 </p>
 
 
+## [Download](https://drive.google.com/file/d/1TCiYlrGc-fikG-mqr2OSc628dPrULmJV/view?usp=drive_link)
 
 ### Local Development
 
