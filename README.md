@@ -16,6 +16,7 @@ Fubanguy reune toda a zoeira e insanidade BR direto pro mundo dos games. Vlw meu
 </p>
 
 
+## [Download](https://drive.google.com/file/d/1TCiYlrGc-fikG-mqr2OSc628dPrULmJV/view?usp=drive_link)
 
 ### Local Development
 
@@ -139,6 +140,12 @@ poetry install
 - For more information about poetry
 ```bash
 poetry list
+```
+
+## Build .exe
+- Remove dir dist and build in your root
+```bash
+pyinstall main.spec
 ```
 
 ## Project structure

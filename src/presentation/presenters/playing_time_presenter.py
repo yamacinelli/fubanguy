@@ -22,7 +22,7 @@ class PlayingTimePresenter:
         self.initial_time = initial_time
         self.elapsed_time = 0
 
-    def on_time_update(self, delta_time: int):
+    def update(self, delta_time: int):
         """
         Updates the elapsed time and processes the logic for updating the view.
 
@@ -39,3 +39,9 @@ class PlayingTimePresenter:
             int: The remaining time in seconds.
         """
         return self.initial_time - self.elapsed_time
+
+    def reset_time(self):
+        """
+        Reseta o tempo de contagem para o tempo inicial.
+        """
+        self.elapsed_time = 0

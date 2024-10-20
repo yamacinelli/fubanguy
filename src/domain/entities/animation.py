@@ -23,3 +23,12 @@ class Animation:
     @sprites.setter
     def sprites(self, values: List[Type[Sprite]]) -> None:
         self._sprites = values
+
+    def get_duration(self) -> float:
+        """
+        Calcula e retorna a duração total da animação.
+        """
+        duration = 0
+        for sprite in self.sprites:
+            duration += sprite.speed_animation  # Soma o tempo de cada sprite
+        return duration
