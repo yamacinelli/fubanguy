@@ -10,7 +10,8 @@ from infra.frameworks.py_game.adapters.pygame_controls import (
     PyGameController,
 )
 from infra.frameworks.py_game.adapters.pygame_display import PyGameDisplay
-from infra.frameworks.py_game.adapters.pygame_ranking_screen import ranking_screen
+from infra.frameworks.py_game.adapters.pygame_player_name_screen import player_name_screen
+from infra.frameworks.py_game.adapters.pygame_ranking_screen import ranking_screen, salvar_ranking
 from infra.frameworks.py_game.adapters.pygame_sound import PyGameSound
 import infra.game_config as GC
 from core.settings import SOUND_DIR
@@ -145,6 +146,8 @@ def main():
     pygame.quit()  # pylint: disable=E1101
 
 
+
+
 def game_loop(display, player_1, player_2, clock):
     last_time = pygame.time.get_ticks() / 1000.0
     running = True
@@ -155,6 +158,7 @@ def game_loop(display, player_1, player_2, clock):
                 return GameState.QUIT
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    player_name_screen(display, clock)
                     return GameState.MENU # retornar ao menu
             
             player_1.handle_event(event)
@@ -171,9 +175,6 @@ def game_loop(display, player_1, player_2, clock):
         clock.tick(GC.FPS)
 
     return GameState.MENU
-
-
-
 
 if __name__ == "__main__":
     main()

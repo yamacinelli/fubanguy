@@ -1,7 +1,42 @@
 [
-    {"name": "Player2", "score": 1100},
-    {"name": "Player3", "score": 950},
-    {"name": "Player4", "score": 800},
-    {"name": "Player5", "score": 700},
-    {"name": "Player1", "score": 1200}
+    {
+        "name": "marcio",
+        "score": 1
+    },
+    {
+        "name": "marcio",
+        "score": 0
+    },
+    {
+        "name": "yago",
+        "score": 0
+    },
+    {
+        "name": "joao",
+        "score": 0
+    },
+    {
+        "name": "maria",
+        "score": 0
+    },
+    {
+        "name": "pedro",
+        "score": 0
+    },
+    {
+        "name": "jose",
+        "score": 0
+    },
+    {
+        "name": "jkfls",
+        "score": 0
+    },
+    {
+        "name": "",
+        "score": 0
+    },
+    {
+        "name": "\u001b\u001b\u001b",
+        "score": 0
+    }
 ]

@@ -17,7 +17,7 @@ def carregar_ranking():
 
 # Função para salvar o ranking no arquivo JSON
 def salvar_ranking(nome_jogador, pontuacao):
-    arquivo_ranking = "ranking.json"
+    arquivo_ranking = os.path.join(FILE_DIR, "ranking.json")
     ranking_data = carregar_ranking()
 
     # Adicionar o novo jogador ao ranking
