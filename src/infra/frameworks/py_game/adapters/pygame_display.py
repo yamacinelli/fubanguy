@@ -12,6 +12,7 @@ Usage example:
 import pygame  # pylint: disable=E1101
 from core.interfaces.collision import CollisionInterface
 from core.interfaces.sound import SoundInterface
+from core.shared.game_state import GameState
 from infra.frameworks.py_game.adapters.pygame_collider import PyGameCollider
 from infra.frameworks.py_game.adapters.pygame_sound import PyGameSound
 import infra.game_config as GC

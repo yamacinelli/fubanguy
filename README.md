@@ -18,6 +18,36 @@ Fubanguy reune toda a zoeira e insanidade BR direto pro mundo dos games. Vlw meu
 
 ## [Download](https://drive.google.com/file/d/1TCiYlrGc-fikG-mqr2OSc628dPrULmJV/view?usp=sharing)
 
+## Materiais Teóricos e Práticos
+
+### Linguagem de Programação
+ - [Pygame Docs](https://www.pygame.org/docs/)
+
+### Loops
+  - [Python Docs - Event Loop](https://docs.python.org/3/library/asyncio-eventloop.html)
+
+### Colisão
+  - [Collisions in Pygame - Beginner Tutorial](https://www.youtube.com/results?search_query=pygame+rect+collidelist)
+  - [Github - Collision and Intersection](https://github.com/Rabbid76/PyGameExamplesAndAnswers/blob/master/documentation/pygame/pygame_collision_and_intesection.md)
+
+### Física
+ - [How to Code Realistic Physics in Python Games! PyGame Tutorial (Gravity, Bounce, Throw, Friction)](https://www.youtube.com/watch?v=5j0uU3aJxJM)
+
+ ### Encapsulamento
+ - [Conceito de encapsulamento](https://cursos.alura.com.br/forum/topico-conceito-de-encapsulamento-104406)
+ - [Canal Python Nexus](https://youtu.be/bhg5EISbV0k?si=kEaRCwm6kvuiX_M_)
+
+ ### POO em Python
+ - [Como Funcionam Classes e Programação Orientada a Objetos em Python](https://youtu.be/97A_Cyyh-eU?si=x4lyXuLIW6aObW3g)
+ - [Python 3.13.0 documentation](https://docs.python.org/3/)
+
+ ### Clean Architecture 
+ - [Software Architeture PDF](https://agorism.dev/book/software-architecture/%28Robert%20C.%20Martin%20Series%29%20Robert%20C.%20Martin%20-%20Clean%20Architecture_%20A%20Craftsman%E2%80%99s%20Guide%20to%20Software%20Structure%20and%20Design-Prentice%20Hall%20%282017%29.pdf)
+
+## Vídeos
+- [Yago Macinelli](https://drive.google.com/drive/folders/1ZUe_18Ijkr9uaW1NkSsxhdJIPJtEtRfp?usp=sharing)
+- [Márcio Carvalho](https://drive.google.com/drive/folders/1MZ06If6TC8BfHqw3X1e86InFENjaXA33?usp=sharing)
+
 ### Local Development
 
 To contribute to Angular docs, you can setup a local environment with the following commands:

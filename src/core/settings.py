@@ -21,3 +21,4 @@ else:
 FONTS_DIR = os.path.join(BASE_DIR, "infra", "assets", "fonts")
 IMAGE_DIR = os.path.join(BASE_DIR, "infra", "assets", "images")
 SOUND_DIR = os.path.join(BASE_DIR, "infra", "assets", "sounds")
+FILE_DIR = os.path.join(BASE_DIR, "infra", "assets", "files")
