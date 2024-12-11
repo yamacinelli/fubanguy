@@ -3,3 +3,4 @@ class GameState:
     GAME = "game"
     CREDITS = "credits"
     QUIT = "quit"
+    RANKING = "ranking"

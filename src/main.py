@@ -1,6 +1,7 @@
 import pygame  # pylint: disable=E1101
 import os
 from application.use_cases import get_fighter_details, get_stage_details
+from core.interfaces.sound import SoundInterface
 from core.shared.game_state import GameState
 from infra.frameworks.py_game.adapters.pygame_credits_screen import credits_screen
 from infra.frameworks.py_game.adapters.pygame_menu_screen import menu_screen
@@ -9,6 +10,7 @@ from infra.frameworks.py_game.adapters.pygame_controls import (
     PyGameController,
 )
 from infra.frameworks.py_game.adapters.pygame_display import PyGameDisplay
+from infra.frameworks.py_game.adapters.pygame_ranking_screen import ranking_screen
 from infra.frameworks.py_game.adapters.pygame_sound import PyGameSound
 import infra.game_config as GC
 from core.settings import SOUND_DIR
@@ -42,28 +44,41 @@ def main():
     pesadao_sound.load_sound(os.path.join(SOUND_DIR, "pesadao.mp3"))
 
     # Sons específicos dos personagens
-    sound_fx_list_quico = [
-        PyGameSound().load_sound(os.path.join(SOUND_DIR, f"{sound}.mp3"))
-        for sound in [
-            "risada_quico",
-            "fala_quico",
-            "coisa_quico",
-            "cale_se_quico",
-            "gentalha_quico",
-            "mamae_quico",
-        ]
-    ]
-    sound_fx_list_madruga = [
-        PyGameSound().load_sound(os.path.join(SOUND_DIR, f"{sound}.mp3"))
-        for sound in [
-            "burro_madruga",
-            "diga_madruga",
-            "ladrao_madruga",
-            "nossa_madruga",
-            "reprovado_madruga",
-            "toma_madruga",
-        ]
-    ]
+    sound_fx_list_quico = []
+    sound_fx_list_madruga = []
+
+    # madruga
+    burro_fx: SoundInterface = PyGameSound()
+    diga_fx: SoundInterface = PyGameSound()
+    ladrao_fx: SoundInterface = PyGameSound()
+    nossa_fx: SoundInterface = PyGameSound()
+    reprovado_fx: SoundInterface = PyGameSound()
+    toma_fx: SoundInterface = PyGameSound()
+
+    burro_fx.load_sound(os.path.join(SOUND_DIR, "burro_madruga.mp3"))
+    diga_fx.load_sound(os.path.join(SOUND_DIR, "diga_madruga.mp3"))
+    ladrao_fx.load_sound(os.path.join(SOUND_DIR, "ladrao_madruga.mp3"))
+    nossa_fx.load_sound(os.path.join(SOUND_DIR, "nossa_madruga.mp3"))
+    reprovado_fx.load_sound(os.path.join(SOUND_DIR, "reprovado_madruga.mp3"))
+    toma_fx.load_sound(os.path.join(SOUND_DIR, "toma_madruga.mp3"))
+    
+    # quico
+    risada_fx: SoundInterface = PyGameSound()
+    fala_fx: SoundInterface = PyGameSound()
+    coisa_fx: SoundInterface = PyGameSound()
+    cale_se_fx: SoundInterface = PyGameSound()
+    gentalha_fx: SoundInterface = PyGameSound()
+    mamae_fx: SoundInterface = PyGameSound()
+
+    risada_fx.load_sound(os.path.join(SOUND_DIR, "risada_quico.mp3"))
+    fala_fx.load_sound(os.path.join(SOUND_DIR, "fala_quico.mp3"))
+    coisa_fx.load_sound(os.path.join(SOUND_DIR, "coisa_quico.mp3"))
+    cale_se_fx.load_sound(os.path.join(SOUND_DIR, "cale_se_quico.mp3"))
+    gentalha_fx.load_sound(os.path.join(SOUND_DIR, "gentalha_quico.mp3"))
+    mamae_fx.load_sound(os.path.join(SOUND_DIR, "mamae_quico.mp3"))
+
+    sound_fx_list_madruga.extend([burro_fx, diga_fx, ladrao_fx, nossa_fx, reprovado_fx, toma_fx])
+    sound_fx_list_quico.extend([risada_fx, fala_fx, coisa_fx, cale_se_fx, gentalha_fx, mamae_fx])
 
     # Sprites
     sprite_sheet_fighter_1 = pygame.image.load(os.path.join(IMAGE_DIR, "quico_2.png"))
@@ -124,6 +139,8 @@ def main():
             state = game_loop(display, player_1, player_2, clock)
         elif state == GameState.CREDITS:
             state = credits_screen(display.screen, clock)
+        elif state == GameState.RANKING:
+            state = ranking_screen(display.screen, clock)
 
     pygame.quit()  # pylint: disable=E1101
 
@@ -136,7 +153,10 @@ def game_loop(display, player_1, player_2, clock):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # pylint: disable=E1101
                 return GameState.QUIT
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return GameState.MENU # retornar ao menu
+            
             player_1.handle_event(event)
             player_2.handle_event(event)
 
@@ -151,6 +171,8 @@ def game_loop(display, player_1, player_2, clock):
         clock.tick(GC.FPS)
 
     return GameState.MENU
+
+
 
 
 if __name__ == "__main__":
