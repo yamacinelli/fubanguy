@@ -1,3 +1,10 @@
+"""
+Este módulo define os dados dos estágios do jogo, incluindo as imagens de fundo e as músicas associadas a cada estágio.
+Cada estágio tem suas informações associadas em um dicionário, contendo o caminho da imagem de fundo e da música a ser tocada.
+
+O caminho das imagens e músicas é gerado dinamicamente utilizando as constantes `IMAGE_DIR` e `SOUND_DIR` definidas em `settings`.
+"""
+
 import os
 from core.settings import IMAGE_DIR
 from core.settings import SOUND_DIR

@@ -1,6 +1,6 @@
 """
-This module contains the HealthBarView class, which is responsible 
-for rendering and updating the health bar of a fighter in the game.
+Este módulo contém a classe HealthBarView, que é responsável por renderizar 
+e atualizar a barra de saúde de um lutador no jogo.
 """
 
 from typing import Any, Type
@@ -13,10 +13,10 @@ from presentation.presenters.health_bar_presenter import HealthBarPresenter
 
 class HealthBarView:
     """
-    A view for displaying the health bar of a fighter in the game.
+    Uma visão para exibir a barra de saúde de um lutador no jogo.
 
-    This class handles the rendering of the health bar on the screen
-    and updates its visual representation based on the fighter's health.
+    Esta classe gerencia a renderização da barra de saúde na tela e atualiza 
+    sua representação visual com base na saúde do lutador.
     """
 
     def __init__(
@@ -28,15 +28,15 @@ class HealthBarView:
         reverse: bool = False,  # Flag para controlar a direção do desenho da barra
     ):
         """
-        Initializes the HealthBarView.
+        Inicializa a HealthBarView.
 
         Args:
-            screen: The Pygame screen surface where the health bar will be drawn.
-            position (Vector2): The (x, y) coordinates of the health bar's position.
-            health_bar_presenter (Type[HealthBarPresenter]): The presenter responsible for
-                managing health updates and interactions.
-            max_bar_length (int): The maximum length of the health bar in pixels.
-            reverse (bool): Flag to indicate if the health bar should be drawn in reverse.
+            screen: A superfície da tela do Pygame onde a barra de saúde será desenhada.
+            position (Vector2): As coordenadas (x, y) da posição da barra de saúde.
+            health_bar_presenter (Type[HealthBarPresenter]): O presenter responsável por
+                gerenciar as atualizações de saúde e interações.
+            max_bar_length (int): O comprimento máximo da barra de saúde em pixels.
+            reverse (bool): Flag para indicar se a barra de saúde deve ser desenhada de forma reversa.
         """
         self.screen = screen
         self.position = position
@@ -47,12 +47,12 @@ class HealthBarView:
 
     def update_health(self, health: int):
         """
-        Updates the health bar's visual representation based on the current health.
+        Atualiza a representação visual da barra de saúde com base na saúde atual.
 
         Args:
-            health (int): The current health value of the fighter.
+            health (int): O valor atual da saúde do lutador.
         """
-        bar_length = (health / 100) * self.max_bar_length  # Assuming max_health = 100
+        bar_length = (health / 100) * self.max_bar_length  # Assumindo que saúde máxima = 100
         color = (255, 255, 0)  # Cor da barra de vida
         health_bar_height = 28  # Altura da barra de vida
         bg_healthbar_size = (

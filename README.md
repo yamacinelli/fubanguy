@@ -178,6 +178,71 @@ poetry list
 pyinstall main.spec
 ```
 
+## Create a documentation
+- Crie uma estrutura básica de documentação: No terminal, navegue até o diretório do seu projeto e execute:
+```bash
+sphinx-quickstart
+```
+
+- Configure o arquivo `conf.py`: Após o comando acima, um diretório será criado contendo o arquivo `conf.py`. Aqui, você pode ajustar configurações, como extensões e temas. Para incluir docstrings do código, ative a extensão `'sphinx.ext.autodoc'`:
+```bash
+extensions = ['sphinx.ext.autodoc']
+```
+
+- Gerar a documentação automaticamente: Execute o comando para gerar a documentação de módulos Python:
+```bash
+sphinx-apidoc -o docs/source/ src/
+```
+- Compilar a documentação: Para gerar a documentação em HTML:
+### Windows
+- Navegue até a pasta docs do seu projeto: Certifique-se de estar no diretório onde o Sphinx foi configurado (onde está o arquivo conf.py).
+- Execute o comando Python para construir a documentação:
+```bash
+python -m sphinx -b html . _build/html
+```
+### Linux
+```bash
+make html
+```
+
+- Exemplo de conf.py 
+```bash
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
+import os
+import sys
+sys.path.insert(0, os.path.abspath('src'))
+
+project = 'Funbanguy'
+copyright = '2024, Márcio J. Carvalho, Yago S. Macinelli'
+author = 'Márcio J. Carvalho, Yago S. Macinelli'
+release = '1.0'
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosummary']
+autosummary_generate = True
+
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = 'alabaster'
+html_static_path = ['_static']
+
+```
+
 ## Project structure
 
 ```plaintext

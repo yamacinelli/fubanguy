@@ -1,22 +1,11 @@
-"""
-Module defining the execute function for retrieving a game stage.
+'''
+Módulo responsável por gerenciar a execução de estágios no jogo.
+Este módulo seleciona um estágio aleatório ou um estágio específico,
+baseando-se nas informações armazenadas em STAGES_DATA.
 
-This module provides the execute function, which retrieves a game stage by name.
-If no name is provided, a random stage is selected and returned.
-
-Functions:
-    execute: Retrieves a game stage by name or randomly if no name is provided.
-
-Usage example:
-    stage = execute("Desert")
-    print(stage.background_image)
-    print(stage.music)
-    
-    random_stage = execute()
-    print(random_stage.background_image)
-    print(random_stage.music)
-"""
-
+Funções:
+- execute: Retorna um estágio com base no nome ou um aleatório.
+'''
 import random
 from typing import Optional
 from domain.entities.stage import Stage
@@ -25,13 +14,15 @@ from data.stage_data import STAGES_DATA
 
 def execute(stage_name: Optional[str] = None) -> Stage:
     """
-    Retrieves a game stage by name or selects a random stage if no name is provided.
+    Executa a lógica de seleção de um estágio. Se um nome de estágio for fornecido,
+    retorna o estágio correspondente. Caso contrário, seleciona aleatoriamente um estágio
+    e retorna suas informações.
 
-    Args:
-        stage_name (Optional[str]): The name of the stage to retrieve. If None, a random stage is selected.
+    Parâmetros:
+    stage_name (Optional[str]): O nome do estágio a ser selecionado. Se None, um estágio aleatório será escolhido.
 
-    Returns:
-        Stage: The retrieved game stage.
+    Retorna:
+    Stage: Um objeto do tipo Stage com os dados do estágio, incluindo a imagem de fundo e a música.
     """
     __stage_name = stage_name
 

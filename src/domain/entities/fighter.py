@@ -1,13 +1,13 @@
 """
-Module defining the Fighter class for handling character movement physics.
+Módulo que define a classe `Fighter` para lidar com a física de movimento de um personagem.
 
-This module provides the Fighter class with methods to apply gravity and handle jumps
-for character movement in a game or simulation.
+Este módulo fornece a classe `Fighter` com métodos para aplicar gravidade e gerenciar saltos,
+movimento e ataques do personagem em um jogo ou simulação.
 
 Classes:
-    Fighter: Handles the movement and physics properties for character movement.
+    Fighter: Gerencia as propriedades de movimento e física de um personagem no jogo.
 
-Usage example:
+Exemplo de uso:
     fighter = Fighter(name="Ryu", health=100, position=(0, 0), attack_power=10)
     fighter.apply_gravity()
     fighter.jump()
@@ -25,7 +25,9 @@ import random
 
 class Fighter:
     """
-    Represents a fighter in the game.
+    Representa um lutador no jogo.
+    Esta classe gerencia as propriedades físicas e as animações do lutador, além de permitir
+    que o personagem realize ações como pular, atacar e se mover.
     """
 
     def __init__(
@@ -43,13 +45,20 @@ class Fighter:
         sound_fx_list=[],
     ):
         """
-        Initializes a new instance of the Fighter class.
+        Inicializa uma nova instância da classe Fighter.
 
         Args:
-            name (str): The name of the fighter.
-            health (int): The health of the fighter.
-            position (Vector2): The initial position of the fighter.
-            attack_power (int): The attack power of the fighter.
+            name (str): O nome do lutador.
+            health (int): A saúde do lutador.
+            position (Vector2): A posição inicial do lutador.
+            attack_power (int): O poder de ataque do lutador.
+            size (Vector2): O tamanho do lutador.
+            animations (List[Type[Animation]]): Lista de animações disponíveis para o lutador.
+            sprite_sheet (Any): A folha de sprites do lutador.
+            jump_fx (SoundInterface, opcional): Efeito sonoro para o pulo.
+            land_fx (SoundInterface, opcional): Efeito sonoro para o pouso.
+            swoosh_fx (SoundInterface, opcional): Efeito sonoro para o ataque.
+            sound_fx_list (list, opcional): Lista de efeitos sonoros disponíveis para o lutador.
         """
         self._name = name
         self._health = health
@@ -67,13 +76,12 @@ class Fighter:
         self._physic = Physic(GC.INITIAL_SPEED, GC.ACCELERATION, GC.GRAVITY)
         self._delta_time = 0
 
-        # Animations
+        # Animações
         self._animations = animations
-        # Define a animação atual como 'idle' por padrão
         self._current_action = "idle"
         self._current_animation = self.get_animation_by_name(self._current_action)
 
-        """ sound_fx """
+        """ Efeitos sonoros """
         self._jump_fx = jump_fx
         self._land_fx = land_fx
         self._swoosh_fx = swoosh_fx
@@ -95,7 +103,6 @@ class Fighter:
         self._is_attacking = False
         self.attack_time = 0
 
-    # apenas teste
     @property
     def on_ground(self) -> bool:
         """Verifica se o lutador está no chão."""
@@ -103,50 +110,58 @@ class Fighter:
 
     @property
     def is_attacking(self) -> bool:
+        """Retorna o estado atual de ataque do lutador."""
         return self._is_attacking
 
     def stop_attacking(self, stop_attack: bool):
+        """
+        Para ou inicia o ataque do lutador.
+
+        Args:
+            stop_attack (bool): Se True, o ataque será interrompido.
+        """
         self._is_attacking = stop_attack
 
     @property
     def current_action(self) -> str:
+        """Retorna a ação atual do lutador."""
         return self._current_action
 
     @property
     def name(self) -> str:
-        """Gets the name of the fighter."""
+        """Retorna o nome do lutador."""
         return self._name
 
     @property
     def health(self) -> float:
-        """Gets the health of the fighter."""
+        """Retorna a saúde do lutador."""
         return self._health
 
     @health.setter
     def health(self, value: float):
-        """Sets the health of the fighter."""
+        """Define a saúde do lutador."""
         self._health = value
 
     @property
     def position(self) -> Vector2:
-        """Gets the position of the fighter."""
+        """Retorna a posição do lutador."""
         return self._position
 
     @position.setter
     def position(self, value: Vector2):
-        """Sets the position of the fighter."""
+        """Define a posição do lutador."""
         if value.x < 0 or value.y < 0:
-            raise ValueError("Position coordinates cannot be negative")
+            raise ValueError("As coordenadas da posição não podem ser negativas")
         self._position = value
 
     @property
     def size(self) -> Vector2:
-        """Gets the size of the fighter."""
+        """Retorna o tamanho do lutador."""
         return self._size
 
     @property
     def attack_power(self) -> int:
-        """Gets the attack power of the fighter."""
+        """Retorna o poder de ataque do lutador."""
         return self._attack_power
 
     def get_animation_by_name(self, name: str) -> Animation:
@@ -159,7 +174,7 @@ class Fighter:
         Returns:
             Animation: O objeto Animation correspondente.
 
-        Raises:
+        Levanta:
             ValueError: Se a animação com o nome fornecido não for encontrada.
         """
         for animation in self._animations:
@@ -169,7 +184,7 @@ class Fighter:
 
     def set_action(self, action: str) -> None:
         """
-        Atualiza a ação atual do fighter e define a animação correspondente.
+        Atualiza a ação atual do lutador e define a animação correspondente.
 
         Args:
             action (str): A nova ação (e.g., 'idle', 'walk', 'attack', 'jump').
@@ -180,12 +195,11 @@ class Fighter:
 
     def move(self, direction: str) -> None:
         """
-        Moves the fighter in the specified direction.
+        Move o lutador na direção especificada.
 
         Args:
-            direction (str): The direction to move ("left" or "right").
+            direction (str): A direção para mover ("left" ou "right").
         """
-
         displacement = self._physic.update_horizontal(self._delta_time)
 
         if direction == "left" and self._current_action not in ("block"):
@@ -203,7 +217,7 @@ class Fighter:
                     self.set_action("walk")
 
     def jump(self):
-        """Makes the fighter jump."""
+        """Faz o lutador pular."""
         if self._on_ground:
             self._physic.vertical_speed = -self._jump_speed
             self._initial_y_position = self._position.y
@@ -214,8 +228,7 @@ class Fighter:
             self.set_coordinate()
 
     def apply_gravity(self):
-        """Applies gravity to the fighter, making it fall if not on the ground."""
-
+        """Aplica a gravidade ao lutador, fazendo-o cair se não estiver no chão."""
         if not self._on_ground:
             vertical_displacement = self._physic.update_vertical(self._delta_time)
             new_y = self._position.y + vertical_displacement
@@ -230,7 +243,7 @@ class Fighter:
             self._position.y = new_y
 
     def attack(self) -> None:
-        """Executes an attack and returns the attack power."""
+        """Executa um ataque e retorna o poder de ataque."""
         if self._current_action not in ("jump, block, attack"):
             self._is_attacking = True
             self.set_action("attack")
@@ -238,9 +251,13 @@ class Fighter:
             self._swoosh_fx.volume_sound(GC.FX_VOLUME)
 
     def block(self) -> None:
+        """Define a ação de bloqueio do lutador."""
         self.set_action("block")
 
     def set_coordinate(self):
+        """
+        Atualiza as coordenadas da sprite do lutador com base no tempo e animação atual.
+        """
         self.time += self._delta_time  # Incrementa o tempo usando delta_time
 
         # Obter a lista de sprites da animação atual

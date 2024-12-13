@@ -1,5 +1,5 @@
 """
-This module contains the abstract base class for renderers.
+Este módulo contém a classe base abstrata para renderizadores.
 """
 
 from abc import ABC, abstractmethod
@@ -10,9 +10,9 @@ from core.shared.vector_2 import Vector2
 
 class Renderer(ABC):
     """
-    An abstract base class for rendering shapes on a Pygame screen.
+    Uma classe base abstrata para renderizar formas na tela do Pygame.
 
-    This class defines the interface that all renderers must implement.
+    Esta classe define a interface que todos os renderizadores devem implementar.
     """
 
     @abstractmethod
@@ -23,12 +23,15 @@ class Renderer(ABC):
         dimensions: Tuple[int, int],
     ):
         """
-        Draws a shape on the screen.
+        Desenha uma forma na tela.
 
-        Args:
-            color (Tuple[int, int, int]): The color of the shape in RGB format.
-            position (Tuple[int, int]): The (x, y) coordinates of the shape's
-                top-left corner.
-            dimensions (Tuple[int, int]): The (width, height) dimensions of the shape.
+        Parâmetros:
+            color (Tuple[int, int, int]): A cor da forma no formato RGB.
+            position (Tuple[int, int]): As coordenadas (x, y) do canto superior esquerdo
+                da forma.
+            dimensions (Tuple[int, int]): As dimensões (largura, altura) da forma.
+
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclasse.
         """
-        raise NotImplementedError("Subclasses must implement draw method.")
+        raise NotImplementedError("As subclasses devem implementar o método draw.")

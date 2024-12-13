@@ -1,4 +1,17 @@
 def credits_screen(screen, clock):
+    """
+    Exibe a tela de créditos do jogo.
+
+    Esta função exibe informações sobre as disciplinas de desenvolvimento, professores orientadores e desenvolvedores
+    do projeto. A tela também permite que o jogador retorne ao menu pressionando a tecla ESC.
+
+    Args:
+        screen (pygame.Surface): Superfície onde os elementos gráficos serão renderizados.
+        clock (pygame.time.Clock): Relógio utilizado para controlar o FPS do jogo.
+
+    Retorna:
+        GameState: O estado do jogo para determinar se o jogo deve continuar ou retornar ao menu.
+    """
     import os
     import pygame
     from core.shared.game_state import GameState
@@ -66,7 +79,6 @@ def credits_screen(screen, clock):
         screen.blit(developer_2, ((GC.SCREENSIZEWIDTH - developer_2.get_width()) // 2, current_y))
 
         screen.blit(footer_text, (20, GC.SCREENSIZEHEIGHT - footer_text.get_height() - 20))
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

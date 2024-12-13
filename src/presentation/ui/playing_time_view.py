@@ -1,6 +1,6 @@
 """
-This module contains the PlayingTimeView class, which is responsible 
-for rendering and updating the playing time in the game.
+Este módulo contém a classe PlayingTimeView, que é responsável por renderizar 
+e atualizar o tempo de jogo no jogo.
 """
 
 import os
@@ -17,10 +17,10 @@ import pygame
 
 class PlayingTimeView:
     """
-    A view for displaying the playing time in the game.
+    Uma visão para exibir o tempo de jogo no jogo.
 
-    This class handles the rendering of the countdown timer on the screen
-    and updates its visual representation based on the remaining time.
+    Esta classe gerencia a renderização do cronômetro na tela e atualiza 
+    sua representação visual com base no tempo restante.
     """
 
     def __init__(
@@ -31,14 +31,14 @@ class PlayingTimeView:
         initial_time: int,
     ):
         """
-        Initializes the PlayingTimeView.
+        Inicializa a PlayingTimeView.
 
         Args:
-            screen: The Pygame screen surface where the timer will be drawn.
-            position (Vector2): The (x, y) coordinates of the timer's position.
-            playing_time_presenter (Type[PlayingTimePresenter]): The presenter responsible for
-                managing time updates and interactions.
-            initial_time (int): The initial time for the countdown in seconds.
+            screen: A superfície da tela do Pygame onde o cronômetro será desenhado.
+            position (Vector2): As coordenadas (x, y) da posição do cronômetro.
+            playing_time_presenter (Type[PlayingTimePresenter]): O presenter responsável por
+                gerenciar as atualizações de tempo e interações.
+            initial_time (int): O tempo inicial para a contagem regressiva em segundos.
         """
         self.screen = screen
         self.position = position
@@ -51,10 +51,10 @@ class PlayingTimeView:
 
     def update_time(self, delta_time: float):
         """
-        Updates the remaining time in the countdown.
+        Atualiza o tempo restante na contagem regressiva.
 
         Args:
-            delta_time (float): The time passed since the last frame, in seconds.
+            delta_time (float): O tempo passado desde o último quadro, em segundos.
         """
         self.time_accumulator += delta_time
 
@@ -74,10 +74,10 @@ class PlayingTimeView:
 
     def on_time_tick(self, time_delta: int):
         """
-        Processes the passing of time and updates the timer.
+        Processa a passagem do tempo e atualiza o cronômetro.
 
         Args:
-            time_delta (int): The amount of time that has passed since the last update.
+            time_delta (int): A quantidade de tempo que passou desde a última atualização.
         """
         self.presenter.update(time_delta)
 

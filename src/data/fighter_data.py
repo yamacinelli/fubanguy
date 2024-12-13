@@ -1,15 +1,17 @@
-# __FIGHTERS__
-import os
+"""
+Este módulo define os dados dos lutadores do jogo, incluindo suas posições, tamanhos, poder de ataque e animações.
+Cada lutador tem suas informações associadas em um dicionário, como nome, saúde, posição na tela, tamanho, poder de ataque e animações.
+
+O cálculo das posições dos lutadores é feito com base nas dimensões da tela e a largura dos lutadores, posicionando-os no cenário de forma adequada.
+
+As animações para cada lutador são definidas em `ANIMATION_DATA`, que contém as diferentes ações do lutador (como idle, walk, attack, etc.).
+"""
 from core.shared.vector_2 import Vector2
 from data.animation_data import ANIMATION_DATA
 import infra.game_config as GC
 
 # Definindo a largura dos lutadores
 vertical_offset = 20  # Valor para ajustar a posição vertical para cima
-
-# largura = 62,5 % da altura
-# altura = 47,05 % da altura da tela
-# chão = tamanho da tela y - tamanho do personagem + vertical_offset
 
 heigth = GC.SCREENSIZEHEIGHT / 100 * 47.05
 width = heigth / 100 * 62.5

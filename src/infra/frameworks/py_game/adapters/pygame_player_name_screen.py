@@ -1,9 +1,25 @@
-import pygame
+'''
+Função para desenhar a tela de entrada de nomes
+'''
 
+import pygame
 from infra.frameworks.py_game.adapters.pygame_ranking_screen import salvar_ranking
 
-# Função para desenhar a tela de entrada de nomes
 def player_name_screen(display, clock):
+    """
+    Exibe a tela de entrada de nomes para os jogadores.
+
+    Esta função cria uma tela onde os jogadores devem inserir seus nomes, um de cada vez. 
+    O nome do primeiro jogador é inserido, seguido do nome do segundo jogador. Após a inserção 
+    de cada nome, o ranking é atualizado chamando a função `salvar_ranking`.
+
+    Parâmetros:
+        display (object): O objeto que contém o display e o manipulador de pontuação dos jogadores.
+        clock (pygame.time.Clock): O relógio para controlar a taxa de atualização da tela.
+
+    Retorna:
+        str: Retorna "QUIT" se o jogo for fechado ou a função terminar com sucesso.
+    """
     screen = display.screen
     # Configurações de fonte e cor
     font = pygame.font.SysFont("Arial", 24)
@@ -82,15 +98,3 @@ def player_name_screen(display, clock):
 
         pygame.display.flip()
         clock.tick(30)
-
-# Configuração do Pygame
-# pygame.init()
-# screen = pygame.display.set_mode((800, 600))
-# pygame.display.set_caption("Tela de Entrada")
-# clock = pygame.time.Clock()
-
-# # Chama a função da tela de entrada
-# nome1, nome2 = player_name_screen(screen, clock)
-# print(f"Player 1: {nome1}, Player 2: {nome2}")
-
-pygame.quit()

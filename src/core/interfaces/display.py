@@ -1,12 +1,12 @@
 """
-Module defining the interface for the display system in the game.
+Módulo que define a interface para o sistema de exibição no jogo.
 
-This module contains the `DisplayInterface` class, which provides an abstract base class
-for any display implementation in the game. Any subclass of `DisplayInterface` must implement
-the `update` method to handle rendering the game's display.
+Este módulo contém a classe `DisplayInterface`, que fornece uma classe base abstrata
+para qualquer implementação de exibição no jogo. Qualquer subclasse de `DisplayInterface` deve implementar
+o método `update` para lidar com a renderização da exibição do jogo.
 
 Classes:
-    DisplayInterface: Abstract base class for display implementations.
+    DisplayInterface: Classe base abstrata para implementações de exibição.
 """
 
 from abc import ABC, abstractmethod
@@ -14,25 +14,25 @@ from abc import ABC, abstractmethod
 
 class DisplayInterface(ABC):
     """
-    Abstract base class for the display system in the game.
+    Classe base abstrata para o sistema de exibição no jogo.
 
-    This class defines the interface that any display implementation must follow. Subclasses
-    are required to implement the `update` method to handle the rendering logic for the
-    game's display.
+    Esta classe define a interface que qualquer implementação de exibição deve seguir. As subclasses
+    são obrigadas a implementar o método `update` para lidar com a lógica de renderização da
+    exibição do jogo.
     """
 
     @abstractmethod
     def update(self, player_1, player_2):
         """
-        Abstract method to update the display with the current states of the players.
+        Método abstrato para atualizar a exibição com os estados atuais dos jogadores.
 
-        This method must be implemented by any subclass to render the game's display.
+        Este método deve ser implementado por qualquer subclasse para renderizar a exibição do jogo.
 
-        Args:
-            player_1: The first player's controller with fighter attributes.
-            player_2: The second player's controller with fighter attributes.
+        Parâmetros:
+            player_1: O controlador do primeiro jogador com atributos do lutador.
+            player_2: O controlador do segundo jogador com atributos do lutador.
 
-        Raises:
-            NotImplementedError: If the subclass does not implement this method.
+        Lança:
+            NotImplementedError: Se a subclasse não implementar este método.
         """
-        raise NotImplementedError("Subclasses must implement update method.")
+        raise NotImplementedError("As subclasses devem implementar o método update.")

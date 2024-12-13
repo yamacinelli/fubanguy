@@ -1,42 +1,42 @@
 """
-This module contains the PlayingTimePresenter class, responsible for
-handling the logic of updating and managing the playing time.
+Este módulo contém a classe PlayingTimePresenter, responsável por
+lidar com a lógica de atualização e gerenciamento do tempo de jogo.
 """
 
 
 class PlayingTimePresenter:
     """
-    A presenter for managing the playing time in the game.
+    Um presenter para gerenciar o tempo de jogo.
 
-    This class processes time-related updates and informs the view
-    to update its display accordingly.
+    Esta classe processa as atualizações relacionadas ao tempo e 
+    informa a visualização para atualizar sua exibição de acordo.
     """
 
     def __init__(self, initial_time: int):
         """
-        Initializes the PlayingTimePresenter with an initial time.
+        Inicializa o PlayingTimePresenter com um tempo inicial.
 
         Args:
-            initial_time (int): The initial time for the countdown in seconds.
+            initial_time (int): O tempo inicial para a contagem regressiva em segundos.
         """
         self.initial_time = initial_time
         self.elapsed_time = 0
 
     def update(self, delta_time: int):
         """
-        Updates the elapsed time and processes the logic for updating the view.
+        Atualiza o tempo decorrido e processa a lógica para atualizar a visualização.
 
         Args:
-            delta_time (int): The amount of time that has passed since the last update.
+            delta_time (int): A quantidade de tempo que passou desde a última atualização.
         """
         self.elapsed_time += delta_time
 
     def get_remaining_time(self) -> int:
         """
-        Returns the remaining time in the countdown.
+        Retorna o tempo restante na contagem regressiva.
 
         Returns:
-            int: The remaining time in seconds.
+            int: O tempo restante em segundos.
         """
         return self.initial_time - self.elapsed_time
 

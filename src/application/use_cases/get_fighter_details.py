@@ -1,31 +1,45 @@
 """
-This module provides functionality to create Fighter instances based on predefined data.
+Este módulo fornece funcionalidade para criar instâncias de Fighter com base em dados predefinidos.
 
-The module imports fighter data from `data.fighter_assets` and defines a function
-to create Fighter instances using this data.
+O módulo importa os dados dos lutadores de `data.fighter_assets` e define uma função
+para criar instâncias de Fighter utilizando esses dados.
 
-Functions:
-    execute(fighter_name: str) -> Fighter: 
-        Creates and returns a Fighter instance based on the provided fighter name.
+Funções:
+    execute(fighter_name: str, jump_fx, land_fx, swoosh_fx, sound_fx_list, sprite_sheet) -> Fighter:
+        Cria e retorna uma instância de Fighter com base no nome do lutador fornecido.
 """
 
 from application.use_cases import animation_handler
 from data.fighter_data import FIGHTERS_DATA
 from domain.entities.fighter import Fighter
 
-
 def execute(fighter_name: str, jump_fx, land_fx, swoosh_fx, sound_fx_list, sprite_sheet) -> Fighter:
     """
-    Creates and returns a Fighter instance based on the provided fighter name.
+    Cria e retorna uma instância de Fighter com base no nome do lutador fornecido.
 
     Args:
-        fighter_name (str): The name of the fighter to create.
+        fighter_name (str): O nome do lutador a ser criado.
+        jump_fx: Efeito sonoro para o salto do lutador.
+        land_fx: Efeito sonoro para o pouso do lutador.
+        swoosh_fx: Efeito sonoro para os ataques do lutador.
+        sound_fx_list: Lista de efeitos sonoros adicionais para o lutador.
+        sprite_sheet: Sprite sheet associada ao lutador.
 
     Returns:
-        Fighter: An instance of the Fighter class with attributes loaded from FIGHTERS_DATA.
+        Fighter: Uma instância da classe Fighter com atributos carregados a partir de FIGHTERS_DATA.
 
     Raises:
-        ValueError: If no fighter with the given name is found in FIGHTERS_DATA.
+        ValueError: Se nenhum lutador com o nome fornecido for encontrado em FIGHTERS_DATA.
+
+    Exemplo:
+        fighter = execute(
+            fighter_name="Ryu",
+            jump_fx=jump_sound,
+            land_fx=land_sound,
+            swoosh_fx=swoosh_sound,
+            sound_fx_list=[punch_sound, kick_sound],
+            sprite_sheet=ryu_sprite_sheet
+        )
     """
     _fighter_data = FIGHTERS_DATA.get(fighter_name)
 

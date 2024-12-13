@@ -5,17 +5,52 @@ from domain.entities.control import Control
 from data.control_data import CONTROLS_DATA
 
 class PyGameController:
+    """
+    Classe que gerencia os controles do jogador no Pygame.
+
+    Esta classe é responsável por mapear as teclas de controle, processar entradas
+    de teclado e repassar os comandos para o lutador através do controlador.
+
+    Atributos:
+        controller (Controller): Controlador responsável por manipular as ações do lutador.
+        control_key (dict): Mapeamento das teclas de controle a partir do arquivo de configuração.
+        enabled (bool): Indica se o controlador está habilitado ou não.
+    """
+
     def __init__(self, fighter: Fighter, control_name: str):
+        """
+        Inicializa o controlador do jogador.
+
+        Args:
+            fighter (Fighter): O lutador que será controlado.
+            control_name (str): O nome do perfil de controle a ser carregado.
+        """
         self.controller = Controller(fighter)
         self.control_key = self.load_control_keys(control_name)
         self.enabled = True
 
     def load_control_keys(self, control_key_name: str) -> dict:
-        """Carrega as teclas de controle do arquivo control_data."""
+        """
+        Carrega as teclas de controle do arquivo control_data.
+
+        Args:
+            control_key_name (str): O nome do perfil de controle que será carregado.
+
+        Retorna:
+            dict: Um dicionário contendo as teclas de controle associadas ao perfil.
+        """
         return CONTROLS_DATA.get(control_key_name)
 
     def _get_key(self, key_name: str) -> int:
-        """Maps string key names to pygame key constants."""
+        """
+        Mapeia os nomes das teclas para os constantes de teclas do Pygame.
+
+        Args:
+            key_name (str): O nome da tecla (ex: "a", "space").
+
+        Retorna:
+            int: O valor correspondente da tecla no Pygame.
+        """
         key_mapping = {
             "a": pygame.K_a,
             "s": pygame.K_s,
@@ -31,7 +66,12 @@ class PyGameController:
         return key_mapping.get(key_name)
 
     def get_control(self) -> Control:
-        """Obtém o estado dos controles do jogador."""
+        """
+        Obtém o estado atual dos controles do jogador, verificando as teclas pressionadas.
+
+        Retorna:
+            Control: Um objeto Control que representa o estado atual dos controles (movimento, pulo, ataque, etc.).
+        """
         if not self.enabled:
             return Control(False, False, False, False, False)
 
@@ -54,13 +94,22 @@ class PyGameController:
         return control
 
     def handle_event(self, event):
-        """Lida com eventos de entrada, como teclas pressionadas."""
+        """
+        Lida com eventos de entrada, como teclas pressionadas.
+
+        Args:
+            event: O evento Pygame que contém a informação da entrada do usuário.
+        """
         if event.type == pygame.KEYDOWN:
             if event.key == self._get_key(self.control_key["attack"]):
                 self.controller.handle_input(Control(False, False, False, True, False))
 
     def update(self):
-        """Atualiza o estado do controlador e processa a entrada."""
+        """
+        Atualiza o estado do controlador e processa a entrada do jogador.
+
+        Este método obtém o estado atual dos controles e repassa para o controlador
+        para processar as ações do lutador.
+        """
         control = self.get_control()
         self.controller.handle_input(control)
-

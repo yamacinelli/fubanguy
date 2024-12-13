@@ -1,6 +1,6 @@
 """
-This module contains the RectangleRenderer class, which is responsible 
-for rendering rectangles on a Pygame screen.
+Este módulo contém a classe PyGameRenderer, que é responsável por 
+renderizar retângulos e textos na tela do Pygame.
 """
 
 from typing import Any, Tuple
@@ -12,18 +12,18 @@ from core.shared.vector_2 import Vector2
 
 class PyGameRenderer(Renderer):
     """
-    A renderer for drawing rectangles on a Pygame screen.
+    Um renderizador para desenhar retângulos na tela do Pygame.
 
-    This class provides methods to draw rectangles with specified colors,
-    positions, and dimensions on the provided screen surface.
+    Esta classe fornece métodos para desenhar retângulos com cores, 
+    posições e dimensões especificadas na superfície da tela fornecida.
     """
 
     def __init__(self, screen: Any):
         """
-        Initializes the RectangleRenderer.
+        Inicializa o PyGameRenderer.
 
         Args:
-            screen (Any): The Pygame screen surface where rectangles will be drawn.
+            screen (Any): A superfície da tela do Pygame onde os retângulos serão desenhados.
         """
         self.screen = screen
 
@@ -34,44 +34,26 @@ class PyGameRenderer(Renderer):
         dimensions: Tuple[int, int],
     ):
         """
-        Draws a rectangle on the screen.
+        Desenha um retângulo na tela.
 
         Args:
-            color (Tuple[int, int, int]): The color of the rectangle in RGB format.
-            position (Vector2): The (x, y) coordinates of the rectangle's top-left corner.
-            dimensions (Tuple[int, int]): The (width, height) dimensions of the rectangle.
+            color (Tuple[int, int, int]): A cor do retângulo no formato RGB.
+            position (Vector2): As coordenadas (x, y) do canto superior esquerdo do retângulo.
+            dimensions (Tuple[int, int]): As dimensões (largura, altura) do retângulo.
         """
-
         rect_args = (position.x, position.y, *dimensions)
-
         pygame.draw.rect(self.screen, color, rect_args)
-
-    # def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple):
-    #     """
-    #     Draws text on the screen at the specified position.
-
-    #     Args:
-    #         text (str): The text to be rendered.
-    #         position (Vector2): The position (x, y) where the text should be drawn.
-    #         font_size (int): The size of the font.
-    #         color (tuple): The RGB color of the text.
-    #     """
-
-    #     # font = pygame.font.SysFont(None, font_size)
-    #     font = fonts
-    #     text_surface = font.render(text, True, color)
-    #     self.screen.blit(text_surface, (position.x, position.y))
 
     def draw_text(self, fonts: any, text: str, position: Vector2, color: tuple, centered=False):
         """
-        Draws text on the screen at the specified position, with an option to center the text.
+        Desenha o texto na tela na posição especificada, com uma opção para centralizar o texto.
 
         Args:
-            fonts (any): The font object to use for rendering the text.
-            text (str): The text to be rendered.
-            position (Vector2): The position (x, y) where the text should be drawn.
-            color (tuple): The RGB color of the text.
-            centered (bool): Whether to center the text on the given position.
+            fonts (any): O objeto de fonte a ser usado para renderizar o texto.
+            text (str): O texto a ser renderizado.
+            position (Vector2): A posição (x, y) onde o texto deve ser desenhado.
+            color (tuple): A cor RGB do texto.
+            centered (bool): Se o texto deve ser centralizado na posição fornecida.
         """
         text_surface = fonts.render(text, True, color)
         text_rect = text_surface.get_rect()

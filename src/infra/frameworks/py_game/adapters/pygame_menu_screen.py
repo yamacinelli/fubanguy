@@ -1,3 +1,10 @@
+'''
+# Função que exibe a tela de menu do jogo.
+# A tela inclui opções como 'Jogar', 'Créditos', 'Ranking' e 'Sair'.
+# O método também lida com os eventos de clique do mouse para navegar entre as opções.
+# Retorna o estado do jogo de acordo com a opção selecionada.
+'''
+
 import pygame
 import os
 from core.shared.game_state import GameState
@@ -5,8 +12,24 @@ from core.settings import FONTS_DIR
 from core.settings import IMAGE_DIR
 import infra.game_config as GC
 
-
 def menu_screen(screen, clock):
+    """
+    Exibe a tela de menu inicial do jogo.
+
+    Esta função cria e exibe uma tela com o título do jogo e quatro opções: 
+    "Jogar", "Créditos", "Ranking" e "Sair". A tela de fundo é carregada e escalada, e 
+    o texto das opções é renderizado usando uma fonte customizada. 
+    O método lida com a interação do usuário através de eventos de clique no mouse, 
+    retornando o estado apropriado do jogo baseado na escolha do jogador.
+
+    Parâmetros:
+        screen (pygame.Surface): A superfície onde o conteúdo será renderizado.
+        clock (pygame.time.Clock): O objeto de relógio para controlar a taxa de quadros.
+
+    Retorna:
+        GameState: O próximo estado do jogo (GameState.GAME, GameState.CREDITS, 
+                   GameState.RANKING ou GameState.QUIT).
+    """
     font_path = os.path.join(FONTS_DIR, "Vintage Warehouse.ttf")
     font_size = 30
     font = pygame.font.Font(font_path, font_size)

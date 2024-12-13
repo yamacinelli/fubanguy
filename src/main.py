@@ -1,3 +1,8 @@
+"""
+Este módulo contém o código principal do jogo, incluindo a inicialização, controle de estados do jogo e loop principal.
+Ele também gerencia o carregamento de sons, imagens e interações dos jogadores, além de controlar a navegação entre diferentes telas do jogo, como menu, jogo, créditos e ranking.
+"""
+
 import pygame  # pylint: disable=E1101
 import os
 from application.use_cases import get_fighter_details, get_stage_details
@@ -24,6 +29,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"
 
 
 def main():
+    """
+    Função principal que inicializa o jogo, carrega os recursos (sons, imagens, controles), configura os lutadores, o cenário e a música, 
+    e gerencia a navegação entre as telas do jogo (menu, jogo, créditos, ranking).
+    A função também inicia o loop principal do jogo e trata o estado de execução até que o jogo seja encerrado.
+    """
     pygame.init()  # pylint: disable=E1101
 
     # Variáveis de tempo
@@ -149,6 +159,19 @@ def main():
 
 
 def game_loop(display, player_1, player_2, clock):
+    """
+    Função que gerencia o loop principal do jogo, onde as interações do jogador, atualização da tela e controle de tempo são realizados.
+    Este loop executa até que o jogador decida sair, retornando ao menu ou encerrando o jogo.
+    
+    Args:
+        display: O objeto responsável por exibir os elementos do jogo na tela.
+        player_1: O controlador do primeiro jogador.
+        player_2: O controlador do segundo jogador.
+        clock: O relógio do Pygame que controla a taxa de quadros.
+
+    Returns:
+        GameState: O estado do jogo após a execução do loop (MENU ou QUIT).
+    """
     last_time = pygame.time.get_ticks() / 1000.0
     running = True
 
@@ -175,6 +198,7 @@ def game_loop(display, player_1, player_2, clock):
         clock.tick(GC.FPS)
 
     return GameState.MENU
+
 
 if __name__ == "__main__":
     main()

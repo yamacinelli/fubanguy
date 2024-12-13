@@ -1,3 +1,7 @@
+"""
+Este módulo contém a classe ScoreView, que é responsável por exibir a pontuação do jogador na tela do jogo.
+"""
+
 import os
 import pygame  # Import do Pygame para renderização
 from core.shared.vector_2 import Vector2
@@ -7,7 +11,8 @@ from presentation.presenters.score_presenter import ScorePresenter
 
 class ScoreView:
     """
-    View para exibir a pontuação do jogador.
+    A classe ScoreView é responsável por exibir a pontuação do jogador na tela.
+    Ela utiliza o PyGameRenderer para desenhar a pontuação na posição especificada.
     """
 
     def __init__(self, screen, position: Vector2, score_presenter: ScorePresenter):
@@ -27,6 +32,9 @@ class ScoreView:
     def update_score(self):
         """
         Atualiza e exibe a pontuação na tela.
+
+        Este método obtém a pontuação atual do presenter e renderiza o texto correspondente na tela.
+        A pontuação é exibida na posição especificada usando a fonte configurada.
         """
         score_text = f"WIN: {self.score_presenter.get_score()}"
         font_size = 20

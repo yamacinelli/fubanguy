@@ -1,9 +1,8 @@
 """
-This module defines the control interface for capturing player inputs in a fighting game.
+Este módulo define a interface de controle para capturar as entradas do jogador em um jogo de luta.
 
-The ControlInterface class is an abstract base class that defines methods that must be
-implemented by subclasses to obtain player inputs, such as moving left, right, jumping,
-and attacking.
+A classe ControlInterface é uma classe abstrata que define métodos que devem ser
+implementados pelas subclasses para obter as entradas do jogador, como mover para a esquerda, direita, pular e atacar.
 """
 
 from abc import ABC, abstractmethod
@@ -11,73 +10,73 @@ from abc import ABC, abstractmethod
 
 class ControlInterface(ABC):
     """
-    Abstract interface for capturing player inputs.
+    Interface abstrata para capturar as entradas do jogador.
 
-    This class defines the methods that must be implemented by subclasses to
-    obtain player inputs. Each method represents an action that the player can
-    perform, such as moving left, right, jumping, and attacking.
+    Esta classe define os métodos que devem ser implementados pelas subclasses para
+    obter as entradas do jogador. Cada método representa uma ação que o jogador pode
+    realizar, como mover para a esquerda, direita, pular e atacar.
     """
 
     @abstractmethod
     def get_input_left(self):
         """
-        Gets the input for moving left.
+        Obtém a entrada para mover para a esquerda.
 
-        Raises:
-            NotImplementedError: If the method is not implemented by the subclass.
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclass.
 
-        Returns:
-            bool: True if the input for moving left is active, False otherwise.
+        Retorna:
+            bool: True se a entrada para mover para a esquerda estiver ativa, False caso contrário.
         """
-        raise NotImplementedError("Subclasses must implement get_input_left method.")
+        raise NotImplementedError("As subclasses devem implementar o método get_input_left.")
 
     @abstractmethod
     def get_input_right(self):
         """
-        Gets the input for moving right.
+        Obtém a entrada para mover para a direita.
 
-        Raises:
-            NotImplementedError: If the method is not implemented by the subclass.
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclass.
 
-        Returns:
-            bool: True if the input for moving right is active, False otherwise.
+        Retorna:
+            bool: True se a entrada para mover para a direita estiver ativa, False caso contrário.
         """
-        raise NotImplementedError("Should implement method: get_input_right")
+        raise NotImplementedError("Deve implementar o método: get_input_right")
 
     @abstractmethod
     def get_input_jump(self):
         """
-        Gets the input for jumping.
+        Obtém a entrada para pular.
 
-        Raises:
-            NotImplementedError: If the method is not implemented by the subclass.
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclass.
 
-        Returns:
-            bool: True if the input for jumping is active, False otherwise.
+        Retorna:
+            bool: True se a entrada para pular estiver ativa, False caso contrário.
         """
-        raise NotImplementedError("Should implement method: get_input_jump")
+        raise NotImplementedError("Deve implementar o método: get_input_jump")
 
     @abstractmethod
     def get_input_attack_1(self):
         """
-        Gets the input for the first attack.
+        Obtém a entrada para o primeiro ataque.
 
-        Raises:
-            NotImplementedError: If the method is not implemented by the subclass.
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclass.
 
-        Returns:
-            bool: True if the input for the first attack is active, False otherwise.
+        Retorna:
+            bool: True se a entrada para o primeiro ataque estiver ativa, False caso contrário.
         """
-        raise NotImplementedError("Should implement method: get_input_attack_1")
+        raise NotImplementedError("Deve implementar o método: get_input_attack_1")
 
     def get_input_attack_2(self):
         """
-        Gets the input for the second attack.
+        Obtém a entrada para o segundo ataque.
 
-        Raises:
-            NotImplementedError: If the method is not implemented by the subclass.
+        Lança:
+            NotImplementedError: Se o método não for implementado pela subclass.
 
-        Returns:
-            bool: True if the input for the second attack is active, False otherwise.
+        Retorna:
+            bool: True se a entrada para o segundo ataque estiver ativa, False caso contrário.
         """
-        raise NotImplementedError("Should implement method: get_input_attack_2")
+        raise NotImplementedError("Deve implementar o método: get_input_attack_2")

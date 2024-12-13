@@ -1,3 +1,7 @@
+'''
+Função para carregar o ranking do arquivo JSON
+'''
+
 import pygame
 from core.shared.game_state import GameState
 import infra.game_config as GC
@@ -5,8 +9,17 @@ import json
 import os
 from core.settings import FILE_DIR
 
-# Função para carregar o ranking do arquivo JSON
 def carregar_ranking():
+    """
+    Carrega o ranking de jogadores a partir de um arquivo JSON.
+
+    Esta função tenta abrir o arquivo `ranking.json` localizado no diretório definido em `FILE_DIR`.
+    Se o arquivo não for encontrado ou se ocorrer um erro de leitura (como um erro de formatação JSON),
+    um ranking vazio é retornado.
+
+    Retorna:
+        list: Uma lista de dicionários com os dados do ranking (nome do jogador e pontuação).
+    """
     arquivo_ranking = os.path.join(FILE_DIR, "ranking.json")
     try:
         with open(arquivo_ranking, "r", encoding="utf-8") as file:
@@ -17,6 +30,17 @@ def carregar_ranking():
 
 # Função para salvar o ranking no arquivo JSON
 def salvar_ranking(nome_jogador, pontuacao):
+    """
+    Salva o ranking de jogadores no arquivo JSON.
+
+    Esta função carrega os dados do ranking existente, adiciona um novo jogador com sua pontuação
+    e ordena os jogadores pelo score. O ranking é limitado aos 10 primeiros jogadores, e os dados
+    são então salvos de volta no arquivo `ranking.json`.
+
+    Parâmetros:
+        nome_jogador (str): O nome do jogador a ser adicionado ao ranking.
+        pontuacao (int): A pontuação do jogador a ser salva no ranking.
+    """
     arquivo_ranking = os.path.join(FILE_DIR, "ranking.json")
     ranking_data = carregar_ranking()
 
@@ -34,6 +58,19 @@ def salvar_ranking(nome_jogador, pontuacao):
         json.dump(ranking_data, file, indent=4, ensure_ascii=False)
 
 def ranking_screen(screen, clock):
+    """
+    Exibe a tela do ranking dos jogadores.
+
+    Esta função desenha a tela de ranking, mostrando os 10 primeiros jogadores com suas pontuações.
+    O jogador pode retornar ao menu pressionando a tecla ESC.
+
+    Parâmetros:
+        screen (pygame.Surface): A superfície onde o ranking será desenhado.
+        clock (pygame.time.Clock): O relógio para controlar a taxa de atualização da tela.
+
+    Retorna:
+        GameState: O estado do jogo, que pode ser `QUIT` ou `MENU`, dependendo da interação do usuário.
+    """
     # Fontes e tamanhos
     title_font = pygame.font.SysFont("Courier New", 35)
     text_font = pygame.font.SysFont("Courier New", 16)
@@ -68,7 +105,6 @@ def ranking_screen(screen, clock):
             y_offset += 30
 
         screen.blit(footer_text, (20, GC.SCREENSIZEHEIGHT - footer_text.get_height() - 20))
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

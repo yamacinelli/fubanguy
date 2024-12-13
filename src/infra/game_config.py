@@ -1,4 +1,4 @@
-"""Module that provides settings for the game."""
+"""Módulo que fornece as configurações do jogo."""
 
 # __SCREEN__
 # SCREENSIZEWIDTH = 400
